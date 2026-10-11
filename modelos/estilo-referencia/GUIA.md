@@ -1,0 +1,97 @@
+# Modelo de edição (estrutura da referência + identidade Sálvia)
+
+Este é o modelo **padrão** dos vídeos do usuário.
+
+- **Estrutura e ritmo** vêm de um vídeo de referência que o usuário mandou como modelo: 2min13s, vertical 9:16, uma pessoa falando para a câmera e explicando "3 princípios" de outra criadora.
+- **Aparência** é a identidade própria do usuário, **Sálvia**.
+- **Usuário:** @luismacciel. Tema: emagrecimento, saúde e longevidade. Estilo: elegante e minimalista, com cores mais vivas em alguns momentos.
+
+Use este guia para planejar a edição, o `montar.py` para gerar a composição do HyperFrames e o `ferramentas/finalizar.py --mix` para a mixagem final.
+
+## Identidade visual
+
+Cada identidade fica em `identidades/<nome>.json` e define:
+- cores;
+- fontes (Inter, Fraunces e Cormorant Garamond, todas OFL, em `assets/`);
+- jeito de animar: com quique (`pop`) ou suave (desfoque e subida);
+- zoom seco ou suave;
+- transição: clarão ou véu de luz;
+- quais efeitos sonoros cada elemento dispara.
+
+No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia`.**
+
+| Identidade | Visual |
+| --- | --- |
+| **`salvia`** (escolhida) | Verde-sálvia `#B5CBA8`, off-white `#F5F2EA` e Fraunces itálico; voz secundária em areia `#E3D3AE`; animação suave, véu de luz |
+| `oceano` | Azul-gelo, branco e Inter minimalista; suave |
+| `champanhe` | Preto e branco com dourado e Cormorant Garamond itálico; suave |
+| `referencia` | Cópia da referência: laranja, Inter Black, quique |
+
+**Cores vivas** (pedido do usuário: "em alguns momentos"): `"vivo": 1` usa **coral** `#FF8A5B` e `"vivo": 2` usa **verde-lima** `#D4F25E`. Elas valem para `titulo`, `capitulo` (no número) e `final`. Use em 1 a 3 momentos fortes por vídeo, como um número que choca, a resposta principal ou o hábito mais importante. Nunca use em todos.
+
+## Estrutura do roteiro (para mapear os eventos)
+
+| Trecho | Na referência | O que entra na edição |
+| --- | --- | --- |
+| Gancho (0–10 s) | Trecho do vídeo citado + frase provocativa | `janela` ou `inserto` com o vídeo de gatilho; `vozes` quando é a voz de outra pessoa |
+| Credibilidade e promessa (10–20 s) | Números e "3 princípios que…" | `titulo` com a palavra-chave; `janela` com print |
+| Lista numerada | "1.", "2.", "3." | `transicao` + `capitulo` no início de cada ponto; `janela` com exemplos |
+| Objeção | Imita o espectador: "ai, mas pra mim é difícil…" | `pb` (com voz abafada) + `vozes` |
+| CTA final (últimos 3–5 s) | "toca no link da minha bio" | `final` |
+
+## Ritmo
+
+- **Zero silêncio:** depois do Video Use não sobra pausa maior que ~0,15 s. A referência tem 205 palavras/min e só 2 pausas acima de 0,3 s em 2 minutos.
+- **Novidade constante:** algo novo na tela a cada **4–6 s**. Alterne zoom, janela, título, P&B e inserto, sem repetir o mesmo recurso duas vezes seguidas.
+- **Gatilhos visuais:** a referência tem ~20 imagens e vídeos de gatilho em 2 min. Prints, fotos e trechos emocionais ilustram cada afirmação.
+- **Payoff no tempo da fala:** o elemento aterrissa na palavra falada (tempos no `transcript.json`).
+
+## Elementos
+
+| Tipo | Quando usar | Na Sálvia |
+| --- | --- | --- |
+| legenda | Sempre (automática) | Inter Medium 42 px off-white, 2–3 palavras, na altura do peito (y ≈ 1090). Some durante título, capítulo e tela final. Corrija os erros do Whisper no `transcript.json` antes de montar. |
+| `vozes` | Outra pessoa falando: imitação, objeção, trecho citado | Legenda em areia `#E3D3AE` |
+| `titulo` | Promessa, número forte, palavra-chave | Palavras pequenas em caixa alta espaçada + palavra-chave em Fraunces itálico sálvia (ou `vivo`) |
+| `capitulo` | Início de cada ponto da lista | "01" em Fraunces + rótulo pequeno + palavra grande, no alto à esquerda |
+| `janela` | Citar post, perfil, print, foto, vídeo de gatilho | Cartão com borda fina, no alto, sem cobrir o rosto. `"som": true` toca o som do vídeo. |
+| `inserto` | Mostrar o vídeo citado com destaque | Cartão grande no centro; o fundo fica P&B, escuro e desfocado. `"som": true` toca o som do vídeo. |
+| `pb` | Apartes, brincadeiras, objeção imitada | Câmera em P&B e voz levemente abafada (`"voz_abafada": false` desliga) |
+| `zoom` | Ênfase | Aproximação suave (1,12×); `"estilo": "seco"` faz punch-in |
+| `transicao` | Antes de cada capítulo | Véu de luz que atravessa a tela |
+| marca d'água | Sempre (automática) | Ícone + @LUISMACCIEL, muda de lugar a cada ~6 s e desvia dos outros elementos |
+| `final` | Últimos 3–5 s | CTA (por exemplo "me segue para / *mais dicas*"); depois escurece e mostra o ícone com o @ |
+
+Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` se a imagem estiver sem graça.
+
+## Som
+
+Na referência, o som tem quatro camadas: trilha que troca a cada capítulo, efeitos sonoros quando algo entra na tela, voz abafada nos apartes em P&B e vídeos citados tocando com o próprio som. O modelo reproduz as quatro. O `montar.py` grava as deixas no `mix.json` e o `ferramentas/mixar.py` faz a mixagem.
+
+| Camada | Como funciona | Onde ajustar |
+| --- | --- | --- |
+| Efeitos | Sintetizados em `ferramentas/efeitos.py`, sem direitos autorais: `whoosh_suave` (título), `tick` (capítulo), `respiro` (transição), `pop_suave` (janela), `sino` (final), entre outros. O ponto de impacto cai no instante do evento. | `sons` na identidade; volume em `GANHO_DB` ou `"efeitos_volume_db"` no roteiro |
+| Trilha | Gerada em `ferramentas/trilha.py`, sem direitos autorais. Uma seção por capítulo, com os humores `calma` → `leve` → `inspira`; cai e troca na virada e termina num acorde aberto na tela final. Ducking: fica ~20 dB abaixo da voz enquanto há fala e sobe nas pausas. | `"humor"` no `capitulo`, `"humor_inicial"`, `"trilha": {"volume_db": -3}` no roteiro |
+| Música do usuário | Se o usuário mandar faixas: `"musica": [{"arquivo": "assets/x.mp3", "inicio": 0, "fim": 30, "volume_db": 0}]`. Isso substitui a trilha gerada, com o mesmo ducking. | roteiro |
+| Voz abafada | Corte suave de agudos (~ -5 dB acima de 2,5 kHz) nos trechos `pb` | `"voz_abafada"` no `pb` |
+| Inserto com som | `janela`/`inserto` com `"som": true`. O áudio do clipe entra no nível da voz (`"ganho_db"` ajusta). Abra espaço na fala na etapa do Video Use: um trecho de silêncio com `"manter": true` no `edl.json`. | evento |
+
+No final, tudo é normalizado em dois passes para **-14 LUFS** e pico de **-1 dBTP**. Eu não consigo ouvir: meço os níveis (voz, trilha sob a fala, efeitos) e peço o retorno do usuário.
+
+## Como gerar
+
+1. Video Use → `edit/cortado.mp4` (sem legenda).
+   - Silêncios intencionais, como o respiro da tela final ou o espaço para um inserto com som, levam `"manter": true` no `edl.json` para o `ajustar_cortes.py` não apertá-los.
+   - Deixe ~1,5–2,5 s depois da última fala para a tela final.
+2. `python3 ferramentas/transcrever.py edit/cortado.mp4 --edit-dir edit/hf --flat edit/hf/transcript.json`. Depois corrija os erros de transcrição no `transcript.json` (só o `text`; mantenha os tempos).
+3. Copie `cortado.mp4` e as mídias para `edit/hf/assets/` e escreva `edit/hf/roteiro.json` (modelo em `exemplo-roteiro.json`). Os tempos estão em segundos do vídeo cortado.
+4. `python3 modelos/estilo-referencia/montar.py edit/hf/roteiro.json` gera `index.html` + `mix.json` e copia fontes e GSAP.
+5. Na pasta `edit/hf/`, rode `npx --yes hyperframes@0.8.145 lint` (zero erros) e depois `render --quality looks --output com_animacoes.mp4`.
+6. `python3 ferramentas/finalizar.py --video edit/hf/com_animacoes.mp4 --audio edit/cortado.mp4 --mix edit/hf/mix.json -o edit/final.mp4`. Não use `--legenda-edl`: a legenda já está na composição.
+
+O canvas é 1080×1920. Vídeo horizontal é recortado no centro (`object-fit: cover`), então confira o enquadramento.
+
+## Limitações
+
+- Prints, fotos e vídeos de gatilho vêm do usuário. Não baixe conteúdo de terceiros por conta própria. Para imagens e vídeos de banco, peça uma chave gratuita do Pexels.
+- A trilha gerada é simples, de fundo. Se o usuário quiser algo específico, ele manda a música.

@@ -1,0 +1,28 @@
+# Mídia: grande demais para o git (GitHub recusa > 100 MB)
+*.mp4
+*.mov
+*.m4v
+*.mkv
+*.webm
+*.avi
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+videos/**/*.png
+videos/**/*.jpg
+videos/**/*.jpeg
+
+# Saídas intermediárias de edição
+videos/*/edit/clips_graded/
+videos/*/edit/verify/
+videos/*/edit/downloads/
+videos/*/edit/hf/assets/
+
+# Python / Node
+__pycache__/
+*.pyc
+node_modules/
+.ruff_cache/
+.env

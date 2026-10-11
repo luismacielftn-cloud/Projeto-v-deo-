@@ -1,0 +1,15 @@
+{
+  "nome": "Referência",
+  "descricao": "Cópia do vídeo de referência: laranja vibrante, Inter Black, animações com quique.",
+  "cores": {"texto": "#FFFFFF", "destaque": "#E9870A", "voz": "#F1F454", "numero": "#FFFFFF", "veu": "rgba(255,120,20,.9)"},
+  "legenda": {"familia": "Inter", "peso": 500, "italico": true, "tam": 44},
+  "pequeno": {"familia": "Inter", "peso": 700, "tam": 50, "caixa": "normal", "tracking": "0"},
+  "destaque": {"familia": "Inter", "peso": 900, "italico": false, "caixa": "alta", "tracking": "-0.02em", "tam_max": 170, "largura_char": 0.74},
+  "numero": {"familia": "Inter", "peso": 900, "formato": "{n}.", "tam": 150},
+  "capitulo_grande": {"familia": "Inter", "peso": 900, "italico": false, "caixa": "alta", "largura_char": 0.74},
+  "movimento": {"ease": "power3.out", "dur": 0.45, "pop": true, "zoom": "seco"},
+  "transicao": "clarao",
+  "janela": {"raio": 30, "borda": "none"},
+  "marca": {"opacidade": 1},
+  "sons": {"titulo": ["whoosh", "impacto"], "capitulo": ["whoosh", "impacto"], "janela": ["pop"], "inserto": ["whoosh"], "transicao": ["whoosh"], "zoom": ["tick"], "pb": ["tick"], "final": ["impacto", "sino"]}
+}
