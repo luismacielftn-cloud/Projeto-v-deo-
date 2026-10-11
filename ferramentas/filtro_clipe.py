@@ -7,6 +7,8 @@ Dois visuais, aplicados ao clipe já recortado no tamanho final:
          escuros, um pouco de desfoque e grão.
   lente  para a tela dividida e a tela cheia: o centro fica nítido e as bordas
          ganham um borrão de zoom (radial), com cantos escuros e grão.
+  desfoque  "lembrança" para a tela dividida: o clipe todo fica muito suave,
+         escuro e avermelhado (print do usuário com o Beckham no topo).
 
 Uso:
     python3 ferramentas/filtro_clipe.py tv    entrada.mp4 -o saida.mp4
@@ -105,8 +107,19 @@ def aplicar(
                 "vignette=angle=PI/4.2,noise=alls=7:allf=t+u,format=yuv420p[o]",
             ]
             filtro = ";".join(partes)
+        elif estilo == "desfoque":
+            # "lembrança": muito suave (imagem pequena ampliada + desfoque), escura e
+            # puxada para o vermelho, como o clipe de cima do print do usuário
+            pequeno = max(96, int(w / (6 * forca)) // 2 * 2)
+            filtro = (
+                f"[0:v]lutrgb=r=val*{brilho:.2f}:g=val*{brilho:.2f}:b=val*{brilho:.2f},"
+                f"scale={pequeno}:-2:flags=area,gblur=sigma=1.4,scale={w}:{h}:flags=bicubic,"
+                "eq=contrast=0.96:saturation=1.15:gamma=0.66:brightness=-0.05,"
+                "colorbalance=rs=0.16:gs=-0.04:bs=-0.12:rm=0.13:gm=-0.04:bm=-0.10:rh=0.05:bh=-0.05,"
+                "vignette=angle=PI/3.6,noise=alls=6:allf=t+u,format=yuv420p[o]"
+            )
         else:
-            raise SystemExit(f"estilo desconhecido: {estilo} (use tv ou lente)")
+            raise SystemExit(f"estilo desconhecido: {estilo} (use tv, lente ou desfoque)")
         cmd += [
             "-filter_complex", filtro, "-map", "[o]", "-an",
             "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-r", "30",
@@ -117,7 +130,7 @@ def aplicar(
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Filtro de TV de tubo ou lente nos clipes de prova")
-    ap.add_argument("estilo", choices=["tv", "lente"])
+    ap.add_argument("estilo", choices=["tv", "lente", "desfoque"])
     ap.add_argument("entrada", type=Path)
     ap.add_argument("-o", "--output", type=Path, required=True)
     ap.add_argument("--forca", type=float, default=1.0, help="intensidade (1,0 = como a referência)")
