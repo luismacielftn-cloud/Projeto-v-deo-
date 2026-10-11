@@ -88,6 +88,16 @@
     "lista": [],
     "lista_item": [
       "pop"
-    ]
+    ],
+    "cena": [
+      "whoosh"
+    ],
+    "cena_saida": [
+      "whoosh"
+    ],
+    "cena_item": [
+      "pop"
+    ],
+    "titulo_vivo": []
   }
 }

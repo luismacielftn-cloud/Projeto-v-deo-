@@ -26,6 +26,9 @@ import sys
 from pathlib import Path
 
 AQUI = Path(__file__).resolve().parent
+sys.path.insert(0, str(AQUI))
+import cenas
+
 W, H = 1080, 1920
 
 # família -> [(arquivo, peso, estilo)]
@@ -415,6 +418,8 @@ def montar(roteiro_path: Path) -> Path:
                 comp.entra_texto(f"#{ev}-d", t0 + 0.4)
             comp.sai(f"#{ev}-in", t1)
             comp.som("titulo", t0 + 0.15)
+            if e.get("vivo"):
+                comp.som("titulo_vivo", t0 + 0.15)
 
         elif tipo == "capitulo":
             num = idt["numero"]["formato"].replace("{n}", str(int(e["numero"])))
@@ -433,6 +438,35 @@ def montar(roteiro_path: Path) -> Path:
             comp.entra_destaque(f"#{ev}-g", t0 + 0.2)
             comp.sai(f"#{ev}-in", t1)
             comp.som("capitulo", t0)
+
+        elif tipo == "cena":
+            corpo, js_cena, sons_cena = cenas.construir(e["modelo"], ev, e, t0, t1, idt)
+            comp.clip(
+                ev,
+                "cena",
+                t0,
+                t1,
+                f'<div class="cena-in" id="{ev}-in">{corpo}</div>',
+                "position:absolute;inset:0",
+            )
+            # entra e sai como um corte rápido com desfoque ("whip"), com whoosh
+            comp.tween(
+                f"#{ev}-in",
+                t0,
+                'opacity: 0, scale: 1.08, filter: "blur(16px)"',
+                'opacity: 1, scale: 1, filter: "blur(0px)"',
+                0.35,
+                "power3.out",
+            )
+            comp.js.append(
+                f'tl.to("#{ev}-in", {{opacity: 0, scale: 0.97, filter: "blur(12px)", duration: 0.28, ease: "power2.in"}}, {t1 - 0.28:.3f});'
+            )
+            comp.js.extend(js_cena)
+            zonas.append((t0, t1, (0, 0, W, L["legenda_y"] - 70)))
+            comp.som("cena", t0)
+            comp.som("cena_saida", t1 - 0.15)
+            for ts, nome in sons_cena:
+                comp.som(nome, ts)
 
         elif tipo == "lista":
             itens = e["itens"]
@@ -582,6 +616,16 @@ def montar(roteiro_path: Path) -> Path:
 
     # --- Legenda -----------------------------------------------------------
     leg = r.get("legenda", {})
+    karaoke = leg.get("estilo") == "destaque"
+    cor_ativa = leg.get("cor", "#FFD43B")
+    base_cor = idt["cores"]["texto"]
+    css_legenda = ""
+    if karaoke:
+        css_legenda = f"""
+.leg.k {{ font-family: "Inter"; font-style: normal; font-weight: 900; font-size: {int(leg.get("tam", 66))}px; letter-spacing: -0.01em;
+  line-height: 1.12; text-transform: none; text-shadow: 0 0 4px #000, 0 0 4px #000, 0 4px 16px rgba(0,0,0,.85); }}
+.leg.k .w {{ display: inline-block; margin: 0 .17em; transform-origin: 50% 75%; }}
+"""
     if leg.get("ativa", True) and r.get("transcricao"):
         palavras = [
             w
@@ -599,13 +643,42 @@ def montar(roteiro_path: Path) -> Path:
                 continue
             t1 = min([t1] + [a for a, _ in janelas_sem_legenda if t0 < a < t1])
             voz = " voz" if any(a <= meio <= z for a, z in vozes) else ""
+            if not karaoke:
+                comp.clip(
+                    f"leg{i}",
+                    f"leg{voz}",
+                    t0,
+                    min(t1, dur),
+                    esc(" ".join(w["text"] for w in b)),
+                )
+                continue
+            # Palavra falada acende em amarelo e cresce; as outras ficam na cor base.
+            cor_base = idt["cores"]["voz"] if voz else base_cor
+            spans = " ".join(
+                f'<span class="w" id="leg{i}-w{k}">{esc(w["text"])}</span>'
+                for k, w in enumerate(b)
+            )
             comp.clip(
                 f"leg{i}",
-                f"leg{voz}",
+                f"leg k{voz}",
                 t0,
                 min(t1, dur),
-                esc(" ".join(w["text"] for w in b)),
+                f'<span id="leg{i}-in">{spans}</span>',
             )
+            comp.tween(
+                f"#leg{i}-in",
+                t0,
+                "opacity: 0, y: 12, scale: 0.94",
+                "opacity: 1, y: 0, scale: 1",
+                0.14,
+                "power2.out",
+            )
+            for k, w in enumerate(b):
+                fim_w = b[k + 1]["start"] if k + 1 < len(b) else min(t1, dur)
+                comp.setar(
+                    f"#leg{i}-w{k}", w["start"], f'color: "{cor_ativa}", scale: 1.12'
+                )
+                comp.setar(f"#leg{i}-w{k}", fim_w, f'color: "{cor_base}", scale: 1')
 
     # --- Marca d'água: muda de lugar e desvia dos outros elementos ----------
     marca = r.get("marca", {})
@@ -649,7 +722,7 @@ def montar(roteiro_path: Path) -> Path:
     <meta name="viewport" content="width={W}, height={H}" />
     <script src="assets/gsap.min.js"></script>
     <style>
-{font_faces}{css_identidade(idt, L)}
+{font_faces}{css_identidade(idt, L)}{cenas.css(idt)}{css_legenda}
     </style>
   </head>
   <body>

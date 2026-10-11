@@ -65,6 +65,25 @@ No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia`.**
 
 Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` se a imagem estiver sem graça.
 
+## Preferências do usuário (pedidas depois do 1º vídeo)
+
+- **Legenda em destaque:** grande (Inter Black 66 px), e a palavra falada acende em **amarelo** `#FFD43B` e cresce. No roteiro: `"legenda": {"estilo": "destaque", "cor": "#FFD43B", "tam": 66}`.
+- **Cenas em tela cheia cobrindo a câmera:** ele não precisa aparecer o tempo todo. Mire em ~30–35% do vídeo coberto por cenas animadas ligadas ao conteúdo.
+- **Mais gatilhos visuais com whoosh:** zooms secos (`"estilo": "seco"`) a cada poucos segundos, whoosh na entrada e saída das cenas e nos títulos, impacto nos títulos `vivo`.
+
+## Cenas em tela cheia (`"tipo": "cena"`, código em `cenas.py`)
+
+| `modelo` | Para quê | Campos |
+| --- | --- | --- |
+| `numero` | Número de impacto ("3 hábitos", "60–90 minutos") | `grande`, `unidade`, `texto`, `t`, `vivo` |
+| `barras` | Comparar níveis (cortisol ↑, dopamina ↓, foco ↑) | `itens: [{rotulo, valor 0–100, seta, t, vivo}]` |
+| `notificacoes` | Celular recebendo notificações e vibrando | `itens: [{titulo, sub, t}]` |
+| `pico` | Gráfico com pico e queda | `t_pico`, `rotulo_pico`, `t_queda`, `rotulo_queda` |
+| `sol` | Nascer do sol + lista de hábitos bons | `itens: [{texto, t}]` |
+| `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque}]` |
+
+Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), peça uma chave gratuita do Pexels.
+
 ## Layout: não cobrir o rosto
 
 As posições padrão servem para um rosto no terço superior. Antes de montar, olhe 3 quadros do vídeo e, se o rosto ocupar o meio do quadro, desça os textos para a altura do peito:

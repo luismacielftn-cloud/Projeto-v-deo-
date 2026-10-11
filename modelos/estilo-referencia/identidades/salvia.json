@@ -63,12 +63,14 @@
   },
   "sons": {
     "titulo": [
-      "whoosh_suave"
+      "whoosh"
     ],
     "capitulo": [
+      "whoosh",
       "tick"
     ],
     "janela": [
+      "whoosh_suave",
       "pop_suave"
     ],
     "inserto": [
@@ -77,7 +79,9 @@
     "transicao": [
       "respiro"
     ],
-    "zoom": [],
+    "zoom": [
+      "whoosh_suave"
+    ],
     "pb": [],
     "final": [
       "sino"
@@ -85,6 +89,18 @@
     "lista": [],
     "lista_item": [
       "tick"
+    ],
+    "titulo_vivo": [
+      "impacto"
+    ],
+    "cena": [
+      "whoosh"
+    ],
+    "cena_saida": [
+      "whoosh_suave"
+    ],
+    "cena_item": [
+      "pop_suave"
     ]
   }
 }
