@@ -51,7 +51,17 @@ FONTES = {
 IDENTIDADE_PADRAO = "salvia"  # identidade escolhida pelo usuário
 HUMORES = ["calma", "leve", "inspira"]  # trilha automática: um humor por seção
 # Eventos que já mostram texto: a legenda some enquanto estão ativos.
-TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final"}
+TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista"}
+# Posição vertical (px) dos blocos de texto. O roteiro pode sobrescrever em "layout"
+# para não cobrir o rosto (ex.: rosto ocupando o meio do quadro -> textos na altura do peito).
+LAYOUT_PADRAO = {
+    "legenda_y": 1090,
+    "titulo_y": 1020,
+    "capitulo_y": 250,
+    "cta_y": 1150,
+    "lista_y": 1020,
+    "fim_ig_y": 640,
+}
 POSICOES_MARCA = [(40, 1130), (860, 300), (860, 1160), (40, 380), (40, 1650)]
 TAM_MARCA = (260, 90)
 POSICOES_JANELA = {
@@ -136,7 +146,7 @@ def fonte_css(f: dict) -> str:
     return "; ".join(partes)
 
 
-def css_identidade(idt: dict) -> str:
+def css_identidade(idt: dict, L: dict) -> str:
     c = idt["cores"]
     leg, peq, dest, num = idt["legenda"], idt["pequeno"], idt["destaque"], idt["numero"]
     capg = idt["capitulo_grande"]
@@ -149,7 +159,7 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
 #root {{ position: relative; width: {W}px; height: {H}px; overflow: hidden; font-family: "Inter", sans-serif; }}
 #cam {{ position: absolute; inset: 0; transform-origin: 50% 35%; }}
 #a-roll {{ position: absolute; inset: 0; width: {W}px; height: {H}px; object-fit: cover; }}
-.leg {{ position: absolute; left: 60px; width: 960px; top: 1090px; text-align: center; line-height: 1.2;
+.leg {{ position: absolute; left: 60px; width: 960px; top: {L["legenda_y"]}px; text-align: center; line-height: 1.2;
   {fonte_css(leg)}; font-size: {leg["tam"]}px; color: {c["texto"]}; text-shadow: 0 2px 8px rgba(0,0,0,.65); }}
 .leg.voz {{ color: {c["voz"]}; {voz_it} }}
 .marca {{ position: absolute; width: 260px; color: {c["texto"]}; opacity: {idt.get("marca", {}).get("opacidade", 1)}; }}
@@ -158,9 +168,15 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
   letter-spacing: .08em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }}
 .peq {{ {fonte_css(peq)}; font-size: {peq["tam"]}px; line-height: 1.15; color: {c["texto"]}; text-shadow: {sombra}; }}
 .big {{ {fonte_css(dest)}; color: {c["destaque"]}; line-height: 1; display: block; text-shadow: 0 4px 22px rgba(0,0,0,.4); }}
-.tit {{ position: absolute; left: 70px; width: 940px; top: 1020px; }}
+.tit {{ position: absolute; left: 70px; width: 940px; top: {L["titulo_y"]}px; }}
+.lista {{ position: absolute; left: 70px; width: 940px; top: {L["lista_y"]}px; }}
+.lista .item {{ display: flex; align-items: baseline; gap: 24px; margin-top: 16px; }}
+.lista .ico {{ font-family: "{dest["familia"]}"; font-weight: 500; color: {c["destaque"]}; font-size: 62px;
+  width: 56px; text-align: center; line-height: 1; text-shadow: {sombra}; }}
+.lista .txt {{ font-family: "Inter"; font-weight: 500; font-size: 54px; line-height: 1.1; color: {c["texto"]};
+  text-shadow: {sombra}; }}
 .tit .peq.dir, .cta .dep {{ text-align: right; }}
-.cap {{ position: absolute; left: 70px; top: 250px; }}
+.cap {{ position: absolute; left: 70px; top: {L["capitulo_y"]}px; }}
 .cap .num {{ font-family: "{num["familia"]}"; font-weight: {num["peso"]}; font-size: {num["tam"]}px; line-height: .8;
   font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1;
   color: {c["numero"]}; text-shadow: {sombra}; }}
@@ -176,10 +192,10 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
 .veu {{ position: absolute; top: 0; left: 0; width: {W}px; height: {H}px; mix-blend-mode: screen;
   background: linear-gradient(100deg, rgba(0,0,0,0) 25%, {c["veu"]} 50%, rgba(0,0,0,0) 75%); }}
 .fim-escuro {{ position: absolute; inset: 0; background: #000; }}
-.fim-ig {{ position: absolute; left: 0; width: {W}px; top: 640px; text-align: center; color: {c["texto"]}; }}
+.fim-ig {{ position: absolute; left: 0; width: {W}px; top: {L["fim_ig_y"]}px; text-align: center; color: {c["texto"]}; }}
 .fim-ig svg {{ width: 130px; height: 130px; display: inline-block; }}
 .fim-ig span {{ display: block; margin-top: 18px; font-family: "Inter"; font-weight: 600; font-size: 36px; letter-spacing: .12em; }}
-.cta {{ position: absolute; left: 70px; width: 940px; top: 1150px; }}
+.cta {{ position: absolute; left: 70px; width: 940px; top: {L["cta_y"]}px; }}
 """
 
 
@@ -330,6 +346,7 @@ def montar(roteiro_path: Path) -> Path:
     r = json.loads(roteiro_path.read_text())
     idt = carregar_identidade(r.get("identidade", IDENTIDADE_PADRAO))
     dest_cfg, capg_cfg = idt["destaque"], idt["capitulo_grande"]
+    L = {**LAYOUT_PADRAO, **r.get("layout", {})}
 
     video = r["video"]
     dur = float(r.get("duracao") or duracao_midia(pasta / video))
@@ -390,7 +407,7 @@ def montar(roteiro_path: Path) -> Path:
                     f'<div class="peq dir" id="{ev}-d">{esc(e["depois"])}</div>'
                 )
             comp.clip(ev, "tit", t0, t1, f'<div id="{ev}-in">{"".join(partes)}</div>')
-            zonas.append((t0, t1, (0, 1000, W, 1440)))
+            zonas.append((t0, t1, (0, L["titulo_y"] - 130, W, L["titulo_y"] + 420)))
             if e.get("antes"):
                 comp.entra_texto(f"#{ev}-a", t0)
             comp.entra_destaque(f"#{ev}-b", t0 + 0.15)
@@ -410,16 +427,39 @@ def montar(roteiro_path: Path) -> Path:
                 f'<div class="grande" id="{ev}-g" style="font-size:{tam}px">{esc(grande)}</div></div></div>'
             )
             comp.clip(ev, "cap", t0, t1, conteudo)
-            zonas.append((t0, t1, (0, 200, W, 440)))
+            zonas.append((t0, t1, (0, L["capitulo_y"] - 110, W, L["capitulo_y"] + 190)))
             comp.entra_destaque(f"#{ev}-n", t0)
             comp.entra_texto(f"#{ev}-p", t0 + 0.12)
             comp.entra_destaque(f"#{ev}-g", t0 + 0.2)
             comp.sai(f"#{ev}-in", t1)
             comp.som("capitulo", t0)
 
+        elif tipo == "lista":
+            itens = e["itens"]
+            partes = []
+            if e.get("titulo"):
+                partes.append(f'<div class="peq" id="{ev}-h">{esc(e["titulo"])}</div>')
+            for i, it in enumerate(itens):
+                partes.append(
+                    f'<div class="item" id="{ev}-i{i}"><span class="ico" style="{cor_viva(idt, it)}">'
+                    f'{esc(it.get("icone", "·"))}</span><span class="txt">{esc(it["texto"])}</span></div>'
+                )
+            comp.clip(ev, "lista", t0, t1, f'<div id="{ev}-in">{"".join(partes)}</div>')
+            altura = 80 * bool(e.get("titulo")) + 90 * len(itens) + 60
+            zonas.append((t0, t1, (0, L["lista_y"] - 130, W, L["lista_y"] + altura)))
+            if e.get("titulo"):
+                comp.entra_texto(f"#{ev}-h", t0)
+                comp.som("lista", t0)
+            for i, it in enumerate(itens):
+                ti = float(it.get("t", t0 + 0.3 + 0.6 * i))
+                comp.entra_destaque(f"#{ev}-i{i}", ti)
+                comp.som("lista_item", ti)
+            comp.sai(f"#{ev}-in", t1)
+
         elif tipo in ("janela", "inserto"):
             if tipo == "janela":
                 lado, margem, topo = POSICOES_JANELA[e.get("posicao", "topo-direita")]
+                topo = int(e.get("topo", topo))
                 larg = int(W * float(e.get("largura", 0.42)))
                 alt = int(larg * float(e.get("proporcao", 1.15)))
                 x0 = (
@@ -571,13 +611,14 @@ def montar(roteiro_path: Path) -> Path:
     marca = r.get("marca", {})
     if marca.get("ativa", True):
         passo = float(marca.get("intervalo", 6))
+        posicoes = [tuple(p) for p in marca.get("posicoes", POSICOES_MARCA)]
         fim_marca = min([e["inicio"] for e in eventos if e["tipo"] == "final"] + [dur])
         t, j = 0.0, 0
         while t < fim_marca - 0.1:
             t2 = min(t + passo, fim_marca)
             ocupado = [z for a, b, z in zonas if a < t2 and b > t]
-            for n in range(len(POSICOES_MARCA)):
-                left, top = POSICOES_MARCA[(j + n) % len(POSICOES_MARCA)]
+            for n in range(len(posicoes)):
+                left, top = posicoes[(j + n) % len(posicoes)]
                 rx = (left, top, left + TAM_MARCA[0], top + TAM_MARCA[1])
                 if not any(
                     rx[0] < z[2] and rx[2] > z[0] and rx[1] < z[3] and rx[3] > z[1]
@@ -608,7 +649,7 @@ def montar(roteiro_path: Path) -> Path:
     <meta name="viewport" content="width={W}, height={H}" />
     <script src="assets/gsap.min.js"></script>
     <style>
-{font_faces}{css_identidade(idt)}
+{font_faces}{css_identidade(idt, L)}
     </style>
   </head>
   <body>

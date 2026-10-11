@@ -56,6 +56,7 @@ No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia`.**
 | `capitulo` | Início de cada ponto da lista | "01" em Fraunces + rótulo pequeno + palavra grande, no alto à esquerda |
 | `janela` | Citar post, perfil, print, foto, vídeo de gatilho | Cartão com borda fina, no alto, sem cobrir o rosto. `"som": true` toca o som do vídeo. |
 | `inserto` | Mostrar o vídeo citado com destaque | Cartão grande no centro; o fundo fica P&B, escuro e desfocado. `"som": true` toca o som do vídeo. |
+| `lista` | Dados, mecanismos, passo a passo ("cortisol ↑, dopamina ↓, foco ↑"; "no lugar disso: …") | Título pequeno + itens com ícone (`↑ ↓ →`) que entram um a um no tempo da palavra (`"t"` de cada item). A legenda some enquanto a lista está na tela. `"vivo"` também vale por item. |
 | `pb` | Apartes, brincadeiras, objeção imitada | Câmera em P&B e voz levemente abafada (`"voz_abafada": false` desliga) |
 | `zoom` | Ênfase | Aproximação suave (1,12×); `"estilo": "seco"` faz punch-in |
 | `transicao` | Antes de cada capítulo | Véu de luz que atravessa a tela |
@@ -63,6 +64,21 @@ No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia`.**
 | `final` | Últimos 3–5 s | CTA (por exemplo "me segue para / *mais dicas*"); depois escurece e mostra o ícone com o @ |
 
 Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` se a imagem estiver sem graça.
+
+## Layout: não cobrir o rosto
+
+As posições padrão servem para um rosto no terço superior. Antes de montar, olhe 3 quadros do vídeo e, se o rosto ocupar o meio do quadro, desça os textos para a altura do peito:
+
+```json
+"layout": {"legenda_y": 1400, "titulo_y": 1340, "capitulo_y": 1380, "cta_y": 1360, "lista_y": 1330, "fim_ig_y": 560},
+"marca": {"intervalo": 6, "posicoes": [[40, 420], [840, 1110], [40, 140], [820, 1230], [40, 1230]]}
+```
+
+- Janelas: `"topo": 80` (com `"largura": 0.40` e `"proporcao": 0.95`) as coloca acima da cabeça.
+- Marca d'água: escolha posições sobre fundo escuro, longe de quadros claros e do rosto. Ela desvia sozinha dos títulos, capítulos, listas e janelas.
+- Confira com `npx hyperframes snapshot --at t1,t2,…` antes do render completo, que leva ~3,5× a duração do vídeo.
+
+Exemplo real (vídeo "primeira hora do dia"): rosto entre y 555 e 1260, quadro amarelo atrás da cabeça e camiseta preta. Os textos foram para y 1330–1400, sobre a camiseta, onde o contraste é ótimo.
 
 ## Som
 
@@ -82,12 +98,13 @@ No final, tudo é normalizado em dois passes para **-14 LUFS** e pico de **-1 dB
 
 1. Video Use → `edit/cortado.mp4` (sem legenda).
    - Silêncios intencionais, como o respiro da tela final ou o espaço para um inserto com som, levam `"manter": true` no `edl.json` para o `ajustar_cortes.py` não apertá-los.
-   - Deixe ~1,5–2,5 s depois da última fala para a tela final.
+   - Deixe ~1,5–2,5 s depois da última fala para a tela final. Se não houver silêncio no fim do arquivo, congele o último quadro: `ffmpeg -i cortado_base.mp4 -vf tpad=stop_mode=clone:stop_duration=1.5 -af apad=pad_dur=1.5 … cortado.mp4`. No `final`, use `"escurecer_em"` para escurecer só depois que a fala termina.
 2. `python3 ferramentas/transcrever.py edit/cortado.mp4 --edit-dir edit/hf --flat edit/hf/transcript.json`. Depois corrija os erros de transcrição no `transcript.json` (só o `text`; mantenha os tempos).
 3. Copie `cortado.mp4` e as mídias para `edit/hf/assets/` e escreva `edit/hf/roteiro.json` (modelo em `exemplo-roteiro.json`). Os tempos estão em segundos do vídeo cortado.
 4. `python3 modelos/estilo-referencia/montar.py edit/hf/roteiro.json` gera `index.html` + `mix.json` e copia fontes e GSAP.
 5. Na pasta `edit/hf/`, rode `npx --yes hyperframes@0.8.145 lint` (zero erros) e depois `render --quality looks --output com_animacoes.mp4`.
-6. `python3 ferramentas/finalizar.py --video edit/hf/com_animacoes.mp4 --audio edit/cortado.mp4 --mix edit/hf/mix.json -o edit/final.mp4`. Não use `--legenda-edl`: a legenda já está na composição.
+6. `python3 ferramentas/finalizar.py --video edit/hf/com_animacoes.mp4 --audio edit/cortado.mp4 --mix edit/hf/mix.json --crf 20 -o edit/final.mp4 --entrega edit/entrega/<nome>.mp4`. Não use `--legenda-edl`: a legenda já está na composição.
+   - `--entrega` grava uma cópia abaixo de 30 MB, que é o limite de envio pelo chat, e é essa que vai pelo `SendUserFile`.
 
 O canvas é 1080×1920. Vídeo horizontal é recortado no centro (`object-fit: cover`), então confira o enquadramento.
 

@@ -112,6 +112,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
   - `ffmpeg -af ebur128=peak=true` (alvo: -14 LUFS, pico ≤ -1 dBTP);
   - durações com `ffprobe`.
 - Entregue com `SendUserFile` (`display: "render"`) e um resumo de uma linha: quanto foi cortado e o que foi animado.
+  - O envio pelo chat aceita **no máximo 30 MB**. Use `--entrega` no `finalizar.py`, que grava uma cópia em duas passadas abaixo desse limite, mantendo 1080×1920.
 - Registre a sessão em `videos/x/edit/project.md` (memória do Video Use).
 
 ## Atualizar as ferramentas
