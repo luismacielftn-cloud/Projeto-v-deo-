@@ -23,6 +23,8 @@ import urllib.request
 from pathlib import Path
 
 API = "https://pixabay.com/api/videos/"
+# O Pixabay recusa (403) o User-Agent padrão do Python.
+UA = {"User-Agent": "Mozilla/5.0"}
 
 
 def buscar(termo: str, por_pagina: int = 20) -> list[dict]:
@@ -35,7 +37,7 @@ def buscar(termo: str, por_pagina: int = 20) -> list[dict]:
     q = urllib.parse.urlencode(
         {"key": chave, "q": termo, "per_page": por_pagina, "safesearch": "true"}
     )
-    with urllib.request.urlopen(f"{API}?{q}", timeout=30) as r:
+    with urllib.request.urlopen(urllib.request.Request(f"{API}?{q}", headers=UA), timeout=30) as r:
         dados = json.load(r)
     opcoes = []
     for h in dados.get("hits", []):
@@ -83,7 +85,8 @@ def main() -> None:
         return
     o = opcoes[args.escolha]
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    urllib.request.urlretrieve(o["url"], args.output)
+    with urllib.request.urlopen(urllib.request.Request(o["url"], headers=UA), timeout=120) as r, open(args.output, "wb") as f:
+        f.write(r.read())
     print(f"baixado: {args.output}  (Pixabay {o['id']}, {o['pagina']})")
 
 
