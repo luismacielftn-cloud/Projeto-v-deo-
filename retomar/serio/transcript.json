@@ -1,0 +1,1552 @@
+[
+{
+"text": "Coisas",
+"start": 0.0,
+"end": 0.34
+},
+{
+"text": "que",
+"start": 0.34,
+"end": 0.5
+},
+{
+"text": "eu",
+"start": 0.5,
+"end": 0.56
+},
+{
+"text": "não",
+"start": 0.56,
+"end": 0.64
+},
+{
+"text": "faço",
+"start": 0.64,
+"end": 0.92
+},
+{
+"text": "mais",
+"start": 0.92,
+"end": 1.18
+},
+{
+"text": "na",
+"start": 1.18,
+"end": 1.32
+},
+{
+"text": "primeira",
+"start": 1.32,
+"end": 1.6
+},
+{
+"text": "hora",
+"start": 1.6,
+"end": 1.88
+},
+{
+"text": "do",
+"start": 1.88,
+"end": 2.04
+},
+{
+"text": "meu",
+"start": 2.04,
+"end": 2.2
+},
+{
+"text": "dia,",
+"start": 2.2,
+"end": 2.56
+},
+{
+"text": "depois",
+"start": 2.62,
+"end": 2.9
+},
+{
+"text": "de",
+"start": 2.9,
+"end": 3.08
+},
+{
+"text": "estudar",
+"start": 3.08,
+"end": 3.44
+},
+{
+"text": "neurociência.",
+"start": 3.44,
+"end": 4.2
+},
+{
+"text": "Eu",
+"start": 4.36,
+"end": 4.46
+},
+{
+"text": "passei",
+"start": 4.46,
+"end": 4.86
+},
+{
+"text": "anos",
+"start": 4.86,
+"end": 5.12
+},
+{
+"text": "acordando",
+"start": 5.12,
+"end": 5.98
+},
+{
+"text": "e",
+"start": 5.98,
+"end": 6.06
+},
+{
+"text": "fazendo",
+"start": 6.06,
+"end": 6.42
+},
+{
+"text": "tudo",
+"start": 6.42,
+"end": 6.66
+},
+{
+"text": "errado,",
+"start": 6.66,
+"end": 7.02
+},
+{
+"text": "sem",
+"start": 7.12,
+"end": 7.26
+},
+{
+"text": "saber.",
+"start": 7.26,
+"end": 7.6
+},
+{
+"text": "Tem",
+"start": 7.7,
+"end": 7.82
+},
+{
+"text": "três",
+"start": 7.82,
+"end": 8.18
+},
+{
+"text": "hábitos",
+"start": 8.18,
+"end": 8.62
+},
+{
+"text": "que",
+"start": 8.62,
+"end": 8.8
+},
+{
+"text": "a",
+"start": 8.8,
+"end": 8.86
+},
+{
+"text": "maioria",
+"start": 8.86,
+"end": 9.1
+},
+{
+"text": "das",
+"start": 9.1,
+"end": 9.34
+},
+{
+"text": "pessoas",
+"start": 9.34,
+"end": 9.6
+},
+{
+"text": "faz",
+"start": 9.6,
+"end": 9.94
+},
+{
+"text": "de",
+"start": 9.94,
+"end": 10.12
+},
+{
+"text": "logo",
+"start": 10.12,
+"end": 10.22
+},
+{
+"text": "acordar,",
+"start": 10.22,
+"end": 10.94
+},
+{
+"text": "que",
+"start": 11.04,
+"end": 11.22
+},
+{
+"text": "literalmente",
+"start": 11.22,
+"end": 11.94
+},
+{
+"text": "sequestram",
+"start": 11.94,
+"end": 12.68
+},
+{
+"text": "o",
+"start": 12.68,
+"end": 12.9
+},
+{
+"text": "seu",
+"start": 12.9,
+"end": 13.06
+},
+{
+"text": "cérebro",
+"start": 13.06,
+"end": 13.64
+},
+{
+"text": "pro",
+"start": 13.64,
+"end": 13.8
+},
+{
+"text": "resto",
+"start": 13.8,
+"end": 14.14
+},
+{
+"text": "do",
+"start": 14.14,
+"end": 14.38
+},
+{
+"text": "dia.",
+"start": 14.38,
+"end": 14.72
+},
+{
+"text": "E",
+"start": 14.88,
+"end": 14.98
+},
+{
+"text": "eu",
+"start": 14.98,
+"end": 15.08
+},
+{
+"text": "só",
+"start": 15.08,
+"end": 15.2
+},
+{
+"text": "descobri",
+"start": 15.2,
+"end": 15.56
+},
+{
+"text": "isso,",
+"start": 15.56,
+"end": 15.84
+},
+{
+"text": "estudando",
+"start": 15.96,
+"end": 16.28
+},
+{
+"text": "como",
+"start": 16.28,
+"end": 16.58
+},
+{
+"text": "o",
+"start": 16.58,
+"end": 16.86
+},
+{
+"text": "cérebro",
+"start": 16.86,
+"end": 17.06
+},
+{
+"text": "funciona",
+"start": 17.06,
+"end": 17.54
+},
+{
+"text": "nas",
+"start": 17.54,
+"end": 17.96
+},
+{
+"text": "primeiras",
+"start": 17.96,
+"end": 18.4
+},
+{
+"text": "horas.",
+"start": 18.4,
+"end": 18.72
+},
+{
+"text": "O",
+"start": 19.0,
+"end": 19.08
+},
+{
+"text": "seu",
+"start": 19.08,
+"end": 19.26
+},
+{
+"text": "cérebro,",
+"start": 19.26,
+"end": 19.92
+},
+{
+"text": "nos",
+"start": 19.98,
+"end": 20.1
+},
+{
+"text": "primeiros",
+"start": 20.1,
+"end": 20.46
+},
+{
+"text": "60",
+"start": 20.46,
+"end": 20.84
+},
+{
+"text": "e",
+"start": 20.84,
+"end": 21.12
+},
+{
+"text": "90",
+"start": 21.12,
+"end": 21.4
+},
+{
+"text": "minutos,",
+"start": 21.4,
+"end": 21.9
+},
+{
+"text": "depois",
+"start": 22.08,
+"end": 22.26
+},
+{
+"text": "que",
+"start": 22.26,
+"end": 22.42
+},
+{
+"text": "você",
+"start": 22.42,
+"end": 22.58
+},
+{
+"text": "acorda,",
+"start": 22.58,
+"end": 23.0
+},
+{
+"text": "está",
+"start": 23.1,
+"end": 23.18
+},
+{
+"text": "em",
+"start": 23.18,
+"end": 23.3
+},
+{
+"text": "um",
+"start": 23.3,
+"end": 23.36
+},
+{
+"text": "estado",
+"start": 23.36,
+"end": 23.6
+},
+{
+"text": "neuroquímico,",
+"start": 23.6,
+"end": 24.72
+},
+{
+"text": "que",
+"start": 24.74,
+"end": 24.86
+},
+{
+"text": "seria",
+"start": 24.86,
+"end": 25.06
+},
+{
+"text": "cortisol",
+"start": 25.06,
+"end": 25.44
+},
+{
+"text": "alto,",
+"start": 25.44,
+"end": 25.82
+},
+{
+"text": "o",
+"start": 25.92,
+"end": 25.96
+},
+{
+"text": "que",
+"start": 25.96,
+"end": 25.98
+},
+{
+"text": "é",
+"start": 25.98,
+"end": 26.08
+},
+{
+"text": "até",
+"start": 26.08,
+"end": 26.2
+},
+{
+"text": "normal",
+"start": 26.2,
+"end": 26.48
+},
+{
+"text": "e",
+"start": 26.48,
+"end": 26.74
+},
+{
+"text": "bom,",
+"start": 26.74,
+"end": 26.84
+},
+{
+"text": "dopamina",
+"start": 26.84,
+"end": 27.34
+},
+{
+"text": "baixa",
+"start": 27.34,
+"end": 27.98
+},
+{
+"text": "e",
+"start": 27.98,
+"end": 28.12
+},
+{
+"text": "a",
+"start": 28.12,
+"end": 28.18
+},
+{
+"text": "capacidade",
+"start": 28.18,
+"end": 28.74
+},
+{
+"text": "de",
+"start": 28.74,
+"end": 28.94
+},
+{
+"text": "foco",
+"start": 28.94,
+"end": 29.3
+},
+{
+"text": "no",
+"start": 29.3,
+"end": 29.42
+},
+{
+"text": "máximo.",
+"start": 29.42,
+"end": 29.86
+},
+{
+"text": "É",
+"start": 30.0,
+"end": 30.08
+},
+{
+"text": "a",
+"start": 30.08,
+"end": 30.14
+},
+{
+"text": "janela",
+"start": 30.14,
+"end": 30.46
+},
+{
+"text": "mais",
+"start": 30.46,
+"end": 30.72
+},
+{
+"text": "valiosa",
+"start": 30.72,
+"end": 31.12
+},
+{
+"text": "do",
+"start": 31.12,
+"end": 31.34
+},
+{
+"text": "seu",
+"start": 31.34,
+"end": 31.54
+},
+{
+"text": "dia",
+"start": 31.54,
+"end": 31.9
+},
+{
+"text": "e",
+"start": 31.9,
+"end": 32.42
+},
+{
+"text": "a",
+"start": 32.42,
+"end": 32.5
+},
+{
+"text": "maioria",
+"start": 32.5,
+"end": 32.78
+},
+{
+"text": "destrói",
+"start": 32.78,
+"end": 33.3
+},
+{
+"text": "ela",
+"start": 33.3,
+"end": 33.4
+},
+{
+"text": "em",
+"start": 33.4,
+"end": 33.5
+},
+{
+"text": "5",
+"start": 33.5,
+"end": 33.78
+},
+{
+"text": "minutos",
+"start": 33.78,
+"end": 34.04
+},
+{
+"text": "de",
+"start": 34.04,
+"end": 34.26
+},
+{
+"text": "celular.",
+"start": 34.26,
+"end": 34.66
+},
+{
+"text": "Se",
+"start": 34.86,
+"end": 34.94
+},
+{
+"text": "você",
+"start": 34.94,
+"end": 35.16
+},
+{
+"text": "acorda",
+"start": 35.16,
+"end": 35.72
+},
+{
+"text": "e",
+"start": 35.72,
+"end": 35.82
+},
+{
+"text": "a",
+"start": 35.82,
+"end": 35.88
+},
+{
+"text": "primeira",
+"start": 35.88,
+"end": 36.12
+},
+{
+"text": "coisa",
+"start": 36.12,
+"end": 36.46
+},
+{
+"text": "que",
+"start": 36.46,
+"end": 36.64
+},
+{
+"text": "faz",
+"start": 36.64,
+"end": 36.98
+},
+{
+"text": "é",
+"start": 36.98,
+"end": 37.24
+},
+{
+"text": "pegar",
+"start": 37.24,
+"end": 37.44
+},
+{
+"text": "o",
+"start": 37.44,
+"end": 37.66
+},
+{
+"text": "celular",
+"start": 37.66,
+"end": 37.98
+},
+{
+"text": "para",
+"start": 37.98,
+"end": 38.18
+},
+{
+"text": "checar",
+"start": 38.18,
+"end": 38.48
+},
+{
+"text": "uma",
+"start": 38.48,
+"end": 38.62
+},
+{
+"text": "notificação,",
+"start": 38.62,
+"end": 39.26
+},
+{
+"text": "checa",
+"start": 39.4,
+"end": 39.56
+},
+{
+"text": "e-mail,",
+"start": 39.56,
+"end": 39.98
+},
+{
+"text": "rede",
+"start": 40.12,
+"end": 40.26
+},
+{
+"text": "social,",
+"start": 40.26,
+"end": 40.68
+},
+{
+"text": "antes",
+"start": 41.06,
+"end": 41.26
+},
+{
+"text": "de",
+"start": 41.26,
+"end": 41.4
+},
+{
+"text": "levantar",
+"start": 41.4,
+"end": 41.78
+},
+{
+"text": "da",
+"start": 41.78,
+"end": 41.92
+},
+{
+"text": "cama,",
+"start": 41.92,
+"end": 42.26
+},
+{
+"text": "se",
+"start": 42.48,
+"end": 42.52
+},
+{
+"text": "toma",
+"start": 42.52,
+"end": 42.7
+},
+{
+"text": "café",
+"start": 42.7,
+"end": 43.14
+},
+{
+"text": "e",
+"start": 43.14,
+"end": 43.32
+},
+{
+"text": "já",
+"start": 43.32,
+"end": 43.46
+},
+{
+"text": "fica",
+"start": 43.46,
+"end": 43.66
+},
+{
+"text": "com",
+"start": 43.66,
+"end": 43.88
+},
+{
+"text": "a",
+"start": 43.88,
+"end": 43.94
+},
+{
+"text": "cabeça",
+"start": 43.94,
+"end": 44.2
+},
+{
+"text": "a",
+"start": 44.2,
+"end": 44.46
+},
+{
+"text": "mil",
+"start": 44.46,
+"end": 44.64
+},
+{
+"text": "pensando",
+"start": 44.64,
+"end": 45.0
+},
+{
+"text": "em",
+"start": 45.0,
+"end": 45.24
+},
+{
+"text": "tudo",
+"start": 45.24,
+"end": 45.4
+},
+{
+"text": "o",
+"start": 45.4,
+"end": 45.6
+},
+{
+"text": "que",
+"start": 45.6,
+"end": 45.62
+},
+{
+"text": "você",
+"start": 45.62,
+"end": 45.88
+},
+{
+"text": "precisa",
+"start": 45.88,
+"end": 46.26
+},
+{
+"text": "resolver,",
+"start": 46.26,
+"end": 46.92
+},
+{
+"text": "é",
+"start": 46.92,
+"end": 47.2
+},
+{
+"text": "exatamente",
+"start": 47.2,
+"end": 47.58
+},
+{
+"text": "disso",
+"start": 47.58,
+"end": 47.94
+},
+{
+"text": "que",
+"start": 47.94,
+"end": 48.06
+},
+{
+"text": "eu",
+"start": 48.06,
+"end": 48.16
+},
+{
+"text": "estou",
+"start": 48.16,
+"end": 48.22
+},
+{
+"text": "falando.",
+"start": 48.22,
+"end": 48.56
+},
+{
+"text": "Os",
+"start": 48.74,
+"end": 48.9
+},
+{
+"text": "3",
+"start": 48.9,
+"end": 49.12
+},
+{
+"text": "hábitos",
+"start": 49.12,
+"end": 49.58
+},
+{
+"text": "que",
+"start": 49.58,
+"end": 49.7
+},
+{
+"text": "eu",
+"start": 49.7,
+"end": 49.8
+},
+{
+"text": "cortei",
+"start": 49.8,
+"end": 50.14
+},
+{
+"text": "foram",
+"start": 50.14,
+"end": 50.44
+},
+{
+"text": "primeiro,",
+"start": 50.44,
+"end": 51.06
+},
+{
+"text": "celular",
+"start": 51.26,
+"end": 51.62
+},
+{
+"text": "na",
+"start": 51.62,
+"end": 51.9
+},
+{
+"text": "primeira",
+"start": 51.9,
+"end": 52.18
+},
+{
+"text": "hora,",
+"start": 52.18,
+"end": 52.6
+},
+{
+"text": "porque",
+"start": 52.6,
+"end": 53.02
+},
+{
+"text": "cada",
+"start": 53.02,
+"end": 53.32
+},
+{
+"text": "notificação",
+"start": 53.32,
+"end": 54.04
+},
+{
+"text": "dispara",
+"start": 54.04,
+"end": 54.54
+},
+{
+"text": "um",
+"start": 54.54,
+"end": 54.64
+},
+{
+"text": "pico",
+"start": 54.64,
+"end": 54.98
+},
+{
+"text": "de",
+"start": 54.98,
+"end": 55.1
+},
+{
+"text": "dopamina",
+"start": 55.1,
+"end": 55.56
+},
+{
+"text": "que",
+"start": 55.56,
+"end": 55.72
+},
+{
+"text": "rouba",
+"start": 55.72,
+"end": 55.98
+},
+{
+"text": "o",
+"start": 55.98,
+"end": 56.1
+},
+{
+"text": "seu",
+"start": 56.1,
+"end": 56.22
+},
+{
+"text": "foco",
+"start": 56.22,
+"end": 56.56
+},
+{
+"text": "natural.",
+"start": 56.56,
+"end": 57.02
+},
+{
+"text": "Segundo,",
+"start": 57.24,
+"end": 57.64
+},
+{
+"text": "decisões",
+"start": 57.94,
+"end": 58.34
+},
+{
+"text": "complexas",
+"start": 58.34,
+"end": 58.88
+},
+{
+"text": "logo",
+"start": 58.88,
+"end": 59.08
+},
+{
+"text": "de",
+"start": 59.08,
+"end": 59.22
+},
+{
+"text": "cara,",
+"start": 59.22,
+"end": 59.46
+},
+{
+"text": "o",
+"start": 59.66,
+"end": 59.72
+},
+{
+"text": "seu",
+"start": 59.72,
+"end": 59.9
+},
+{
+"text": "cérebro",
+"start": 59.9,
+"end": 60.32
+},
+{
+"text": "ainda",
+"start": 60.32,
+"end": 60.48
+},
+{
+"text": "não",
+"start": 60.48,
+"end": 60.72
+},
+{
+"text": "está",
+"start": 60.72,
+"end": 60.88
+},
+{
+"text": "100%",
+"start": 60.88,
+"end": 61.32
+},
+{
+"text": "online",
+"start": 61.32,
+"end": 61.64
+},
+{
+"text": "para",
+"start": 61.64,
+"end": 61.84
+},
+{
+"text": "isso.",
+"start": 61.84,
+"end": 62.06
+},
+{
+"text": "Terceiro,",
+"start": 62.26,
+"end": 62.66
+},
+{
+"text": "luz",
+"start": 62.86,
+"end": 62.96
+},
+{
+"text": "artificial",
+"start": 62.96,
+"end": 63.38
+},
+{
+"text": "forte",
+"start": 63.38,
+"end": 63.76
+},
+{
+"text": "antes",
+"start": 63.76,
+"end": 63.94
+},
+{
+"text": "de",
+"start": 63.94,
+"end": 64.08
+},
+{
+"text": "pegar",
+"start": 64.08,
+"end": 64.28
+},
+{
+"text": "a",
+"start": 64.28,
+"end": 64.48
+},
+{
+"text": "luz",
+"start": 64.48,
+"end": 64.48
+},
+{
+"text": "solar,",
+"start": 64.48,
+"end": 64.82
+},
+{
+"text": "isso",
+"start": 65.0,
+"end": 65.12
+},
+{
+"text": "atrasa",
+"start": 65.12,
+"end": 65.46
+},
+{
+"text": "a",
+"start": 65.46,
+"end": 65.56
+},
+{
+"text": "regulação",
+"start": 65.56,
+"end": 66.06
+},
+{
+"text": "do",
+"start": 66.06,
+"end": 66.18
+},
+{
+"text": "seu",
+"start": 66.18,
+"end": 66.34
+},
+{
+"text": "relógio",
+"start": 66.34,
+"end": 66.7
+},
+{
+"text": "biológico.",
+"start": 66.7,
+"end": 67.22
+},
+{
+"text": "No",
+"start": 67.34,
+"end": 67.4
+},
+{
+"text": "lugar",
+"start": 67.4,
+"end": 67.6
+},
+{
+"text": "disso,",
+"start": 67.6,
+"end": 67.9
+},
+{
+"text": "luz",
+"start": 68.22,
+"end": 68.36
+},
+{
+"text": "natural",
+"start": 68.36,
+"end": 68.74
+},
+{
+"text": "nos",
+"start": 68.74,
+"end": 68.92
+},
+{
+"text": "primeiros",
+"start": 68.92,
+"end": 69.3
+},
+{
+"text": "minutos,",
+"start": 69.3,
+"end": 69.66
+},
+{
+"text": "silêncio",
+"start": 70.0,
+"end": 70.56
+},
+{
+"text": "ou",
+"start": 70.56,
+"end": 70.8
+},
+{
+"text": "algum",
+"start": 70.8,
+"end": 71.04
+},
+{
+"text": "movimento",
+"start": 71.04,
+"end": 71.3
+},
+{
+"text": "leve.",
+"start": 71.3,
+"end": 71.76
+},
+{
+"text": "E",
+"start": 72.0,
+"end": 72.12
+},
+{
+"text": "só",
+"start": 72.12,
+"end": 72.2
+},
+{
+"text": "depois,",
+"start": 72.2,
+"end": 72.5
+},
+{
+"text": "entrando",
+"start": 72.56,
+"end": 72.78
+},
+{
+"text": "no",
+"start": 72.78,
+"end": 72.92
+},
+{
+"text": "mundo",
+"start": 72.92,
+"end": 73.04
+},
+{
+"text": "digital,",
+"start": 73.04,
+"end": 73.48
+},
+{
+"text": "manda",
+"start": 73.64,
+"end": 73.82
+},
+{
+"text": "esse",
+"start": 73.82,
+"end": 73.96
+},
+{
+"text": "vídeo",
+"start": 73.96,
+"end": 74.1
+},
+{
+"text": "para",
+"start": 74.1,
+"end": 74.24
+},
+{
+"text": "aquela",
+"start": 74.24,
+"end": 74.42
+},
+{
+"text": "pessoa",
+"start": 74.42,
+"end": 74.74
+},
+{
+"text": "que",
+"start": 74.74,
+"end": 74.88
+},
+{
+"text": "dorme",
+"start": 74.88,
+"end": 75.12
+},
+{
+"text": "com",
+"start": 75.12,
+"end": 75.26
+},
+{
+"text": "o",
+"start": 75.26,
+"end": 75.34
+},
+{
+"text": "celular",
+"start": 75.34,
+"end": 75.62
+},
+{
+"text": "do",
+"start": 75.62,
+"end": 75.78
+},
+{
+"text": "lado",
+"start": 75.78,
+"end": 75.94
+},
+{
+"text": "da",
+"start": 75.94,
+"end": 76.12
+},
+{
+"text": "cama",
+"start": 76.12,
+"end": 76.38
+},
+{
+"text": "e",
+"start": 76.38,
+"end": 76.74
+},
+{
+"text": "já",
+"start": 76.74,
+"end": 76.9
+},
+{
+"text": "acorda",
+"start": 76.9,
+"end": 77.24
+},
+{
+"text": "checando",
+"start": 77.24,
+"end": 77.6
+},
+{
+"text": "notificação.",
+"start": 77.6,
+"end": 78.32
+},
+{
+"text": "Então",
+"start": 78.5,
+"end": 78.64
+},
+{
+"text": "você",
+"start": 78.64,
+"end": 78.84
+},
+{
+"text": "precisa",
+"start": 78.84,
+"end": 79.12
+},
+{
+"text": "entender",
+"start": 79.12,
+"end": 79.5
+},
+{
+"text": "o",
+"start": 79.5,
+"end": 79.64
+},
+{
+"text": "seguinte:",
+"start": 79.64,
+"end": 79.86
+},
+{
+"text": "não",
+"start": 80.32,
+"end": 80.44
+},
+{
+"text": "é",
+"start": 80.44,
+"end": 80.56
+},
+{
+"text": "sobre",
+"start": 80.56,
+"end": 80.74
+},
+{
+"text": "ter",
+"start": 80.74,
+"end": 80.98
+},
+{
+"text": "mais",
+"start": 80.98,
+"end": 81.2
+},
+{
+"text": "disciplina,",
+"start": 81.2,
+"end": 81.68
+},
+{
+"text": "é",
+"start": 81.86,
+"end": 81.94
+},
+{
+"text": "sobre",
+"start": 81.94,
+"end": 82.22
+},
+{
+"text": "proteger",
+"start": 82.22,
+"end": 82.68
+},
+{
+"text": "a",
+"start": 82.68,
+"end": 82.78
+},
+{
+"text": "única",
+"start": 82.78,
+"end": 82.94
+},
+{
+"text": "janela",
+"start": 82.94,
+"end": 83.46
+},
+{
+"text": "do",
+"start": 83.46,
+"end": 83.6
+},
+{
+"text": "dia",
+"start": 83.6,
+"end": 83.94
+},
+{
+"text": "em",
+"start": 83.94,
+"end": 84.38
+},
+{
+"text": "que",
+"start": 84.38,
+"end": 84.5
+},
+{
+"text": "o",
+"start": 84.5,
+"end": 84.6
+},
+{
+"text": "seu",
+"start": 84.6,
+"end": 84.86
+},
+{
+"text": "cérebro",
+"start": 84.86,
+"end": 85.4
+},
+{
+"text": "trabalha",
+"start": 85.4,
+"end": 85.92
+},
+{
+"text": "a",
+"start": 85.92,
+"end": 85.98
+},
+{
+"text": "seu",
+"start": 85.98,
+"end": 86.06
+},
+{
+"text": "favor.",
+"start": 86.06,
+"end": 86.4
+},
+{
+"text": "Comenta",
+"start": 86.64,
+"end": 86.9
+},
+{
+"text": "aqui,",
+"start": 86.9,
+"end": 87.2
+},
+{
+"text": "qual",
+"start": 87.48,
+"end": 87.6
+},
+{
+"text": "desses",
+"start": 87.6,
+"end": 87.88
+},
+{
+"text": "3",
+"start": 87.88,
+"end": 88.16
+},
+{
+"text": "hábitos",
+"start": 88.16,
+"end": 88.62
+},
+{
+"text": "você",
+"start": 88.62,
+"end": 88.86
+},
+{
+"text": "vai",
+"start": 88.86,
+"end": 89.04
+},
+{
+"text": "cortar",
+"start": 89.04,
+"end": 89.34
+},
+{
+"text": "amanhã",
+"start": 89.34,
+"end": 89.64
+},
+{
+"text": "de",
+"start": 89.64,
+"end": 89.72
+},
+{
+"text": "manhã.",
+"start": 89.72,
+"end": 89.96
+}
+]

@@ -1,0 +1,344 @@
+{
+  "identidade": "salvia-forte",
+  "tom": "tenso",
+  "video": "assets/cortado.mp4",
+  "transcricao": "transcript.json",
+  "arroba": "@luismacciel",
+  "legenda": {
+    "ativa": true,
+    "estilo": "destaque",
+    "cor": "#F2C94C",
+    "tam": 66,
+    "max_palavras": 3
+  },
+  "layout": {
+    "legenda_y": 1400,
+    "titulo_y": 1340,
+    "capitulo_y": 1380,
+    "cta_y": 1360,
+    "lista_y": 1330,
+    "fim_ig_y": 560
+  },
+  "marca": {
+    "ativa": true,
+    "intervalo": 3,
+    "posicoes": [
+      [
+        40,
+        420
+      ],
+      [
+        840,
+        1110
+      ],
+      [
+        40,
+        140
+      ],
+      [
+        820,
+        1230
+      ],
+      [
+        40,
+        1230
+      ]
+    ]
+  },
+  "eventos": [
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 0.0,
+      "fim": 2.55,
+      "escala": 1.22,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 6.42,
+      "fim": 7.62,
+      "escala": 1.3,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "cena",
+      "modelo": "numero",
+      "inicio": 7.66,
+      "fim": 10.98,
+      "grande": "3",
+      "unidade": "hábitos",
+      "texto": "que a maioria faz logo ao acordar",
+      "t": 7.82
+    },
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 11.94,
+      "fim": 14.8,
+      "escala": 1.28,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "cena",
+      "modelo": "rede",
+      "inicio": 15.9,
+      "fim": 18.95,
+      "titulo": "neurociência",
+      "t": 16.86
+    },
+    {
+      "tipo": "cena",
+      "modelo": "numero",
+      "inicio": 19.95,
+      "fim": 22.55,
+      "grande": "60–90",
+      "unidade": "minutos",
+      "texto": "depois que você acorda",
+      "t": 20.46
+    },
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 23.1,
+      "fim": 24.78,
+      "escala": 1.25,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "cena",
+      "modelo": "barras",
+      "inicio": 24.82,
+      "fim": 29.95,
+      "titulo": "seu cérebro ao acordar",
+      "itens": [
+        {
+          "rotulo": "cortisol",
+          "valor": 85,
+          "seta": "↑",
+          "t": 25.06
+        },
+        {
+          "rotulo": "dopamina",
+          "valor": 22,
+          "seta": "↓",
+          "t": 26.84
+        },
+        {
+          "rotulo": "foco",
+          "valor": 96,
+          "seta": "↑",
+          "t": 28.94
+        }
+      ]
+    },
+    {
+      "tipo": "zoom",
+      "inicio": 30.0,
+      "fim": 32.35,
+      "escala": 1.12,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "cena",
+      "modelo": "numero",
+      "inicio": 32.4,
+      "fim": 34.82,
+      "titulo": "e a maioria destrói em",
+      "grande": "5",
+      "unidade": "minutos de celular",
+      "t": 33.5,
+      "vivo": 1
+    },
+    {
+      "tipo": "zoom",
+      "inicio": 34.86,
+      "fim": 37.55,
+      "escala": 1.15,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "cena",
+      "modelo": "notificacoes",
+      "inicio": 37.6,
+      "fim": 40.98,
+      "itens": [
+        {
+          "titulo": "Mensagem nova",
+          "sub": "agora",
+          "t": 38.62
+        },
+        {
+          "titulo": "E-mail",
+          "sub": "3 não lidos",
+          "t": 39.4
+        },
+        {
+          "titulo": "Rede social",
+          "sub": "+12 novidades",
+          "t": 40.12
+        }
+      ]
+    },
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 43.94,
+      "fim": 46.88,
+      "escala": 1.3,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "transicao",
+      "inicio": 50.25
+    },
+    {
+      "tipo": "capitulo",
+      "inicio": 50.44,
+      "fim": 52.55,
+      "numero": 1,
+      "pequeno": "na primeira hora",
+      "grande": "Celular"
+    },
+    {
+      "tipo": "cena",
+      "modelo": "pico",
+      "inicio": 52.6,
+      "fim": 57.15,
+      "titulo": "cada notificação",
+      "t_pico": 54.64,
+      "rotulo_pico": "pico de dopamina",
+      "t_queda": 55.72,
+      "rotulo_queda": "foco roubado"
+    },
+    {
+      "tipo": "transicao",
+      "inicio": 57.1
+    },
+    {
+      "tipo": "capitulo",
+      "inicio": 57.24,
+      "fim": 59.62,
+      "numero": 2,
+      "pequeno": "logo de cara",
+      "grande": "Decisões"
+    },
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 59.66,
+      "fim": 62.15,
+      "escala": 1.25,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "transicao",
+      "inicio": 62.12
+    },
+    {
+      "tipo": "capitulo",
+      "inicio": 62.26,
+      "fim": 64.95,
+      "numero": 3,
+      "pequeno": "antes do sol",
+      "grande": "Luz artificial",
+      "humor": "tensa_pulso"
+    },
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 65.0,
+      "fim": 67.28,
+      "escala": 1.28,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "cena",
+      "modelo": "sol",
+      "inicio": 67.34,
+      "fim": 73.58,
+      "titulo": "no lugar disso",
+      "itens": [
+        {
+          "texto": "luz natural",
+          "t": 68.22
+        },
+        {
+          "texto": "silêncio",
+          "t": 70.0
+        },
+        {
+          "texto": "movimento leve",
+          "t": 71.04
+        },
+        {
+          "texto": "só depois, o digital",
+          "t": 72.56
+        }
+      ]
+    },
+    {
+      "tipo": "pb",
+      "inicio": 73.64,
+      "fim": 78.42
+    },
+    {
+      "tipo": "zoom",
+      "estilo": "seco",
+      "inicio": 78.5,
+      "fim": 80.25,
+      "escala": 1.25,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "cena",
+      "modelo": "frase",
+      "inicio": 80.3,
+      "fim": 83.98,
+      "palavras": [
+        {
+          "texto": "não é",
+          "t": 80.32
+        },
+        {
+          "texto": "disciplina.",
+          "t": 81.2,
+          "quebra": true
+        },
+        {
+          "texto": "é",
+          "t": 81.86
+        },
+        {
+          "texto": "proteger",
+          "t": 82.22,
+          "destaque": 2
+        },
+        {
+          "texto": "a única",
+          "t": 82.78
+        },
+        {
+          "texto": "janela",
+          "t": 82.94
+        }
+      ]
+    },
+    {
+      "tipo": "zoom",
+      "inicio": 84.38,
+      "fim": 86.55,
+      "escala": 1.12,
+      "foco_y": 0.42
+    },
+    {
+      "tipo": "final",
+      "inicio": 86.64,
+      "cta_antes": "comenta qual",
+      "cta_destaque": "hábito",
+      "cta_depois": "você vai cortar",
+      "escurecer_em": 3.4
+    }
+  ]
+}

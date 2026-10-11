@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/serio/fonte.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 0.06,
+      "end": 4.3,
+      "quote": "Coisas que eu não faço mais na primeira hora do meu dia, depois de estudar neurociência."
+    },
+    {
+      "source": "fonte",
+      "start": 4.5,
+      "end": 15.0,
+      "quote": "Eu passei anos acordando e fazendo tudo errado, sem saber. Tem três hábitos que a maioria das pessoas faz de logo acordar, que, literalmente, sequestram o seu cérebro para o resto do dia."
+    },
+    {
+      "source": "fonte",
+      "start": 15.24,
+      "end": 19.32,
+      "quote": "E eu só descobri isso, estudando como o cérebro funciona nas primeiras horas."
+    },
+    {
+      "source": "fonte",
+      "start": 19.6,
+      "end": 22.64,
+      "quote": "O seu cérebro, nos primeiros 60 e 90 minutos,"
+    },
+    {
+      "source": "fonte",
+      "start": 22.76,
+      "end": 27.64,
+      "quote": "depois que você acorda, está em um estado neuroquímico, que seria cortisol alto, o que é até normal e bom,",
+      "reason": "corta o \"tá?\" solto (27.68-27.82)"
+    },
+    {
+      "source": "fonte",
+      "start": 28.14,
+      "end": 31.16,
+      "quote": "da opamina baixa e a capacidade de foco no máximo,"
+    },
+    {
+      "source": "fonte",
+      "start": 31.5,
+      "end": 36.28,
+      "quote": "é a janela mais valiosa do seu dia e a maioria destrói -la em 5 minutos de celular."
+    },
+    {
+      "source": "fonte",
+      "start": 36.78,
+      "end": 41.32,
+      "quote": "Se você acorda e a primeira coisa que faz é pegar o celular para checar uma notificação,"
+    },
+    {
+      "source": "fonte",
+      "start": 41.6,
+      "end": 42.28,
+      "quote": "check e meio,"
+    },
+    {
+      "source": "fonte",
+      "start": 42.44,
+      "end": 43.34,
+      "quote": "rede social,"
+    },
+    {
+      "source": "fonte",
+      "start": 43.46,
+      "end": 49.46,
+      "quote": "antes de levantar da cama, se toma café e já fica com a cabeça a mil pensando em tudo o que você precisa resolver,"
+    },
+    {
+      "source": "fonte",
+      "start": 49.98,
+      "end": 51.6,
+      "quote": "é exatamente disso que eu estou falando."
+    },
+    {
+      "source": "fonte",
+      "start": 52.0,
+      "end": 54.56,
+      "quote": "Os 3 hábitos que eu cortei foram primeiro,"
+    },
+    {
+      "source": "fonte",
+      "start": 54.76,
+      "end": 56.24,
+      "quote": "celular na primeira hora,"
+    },
+    {
+      "source": "fonte",
+      "start": 56.32,
+      "end": 61.38,
+      "quote": "porque cada notificação de dispara, um pico de dopamina é que rouba o seu foco natural. Segundo,"
+    },
+    {
+      "source": "fonte",
+      "start": 61.54,
+      "end": 63.22,
+      "quote": "decisões complexas logo de cara,"
+    },
+    {
+      "source": "fonte",
+      "start": 63.28,
+      "end": 66.44,
+      "quote": "o seu cérebro ainda não está 100 % online para isso. Terceiro,"
+    },
+    {
+      "source": "fonte",
+      "start": 66.62,
+      "end": 68.72,
+      "quote": "luz artificial forte antes de pegar a luz solar,"
+    },
+    {
+      "source": "fonte",
+      "start": 68.94,
+      "end": 72.12,
+      "quote": "isso atrasa a regulação do seu relógio biológico. No lugar disso,"
+    },
+    {
+      "source": "fonte",
+      "start": 72.32,
+      "end": 74.16,
+      "quote": "luz natural nos primeiros minutos,"
+    },
+    {
+      "source": "fonte",
+      "start": 74.28,
+      "end": 76.18,
+      "quote": "silêncio ou algum movimento leve."
+    },
+    {
+      "source": "fonte",
+      "start": 76.44,
+      "end": 78.04,
+      "quote": "E só depois, entrando no mundo digital,"
+    },
+    {
+      "source": "fonte",
+      "start": 78.18,
+      "end": 83.0,
+      "quote": "manda esse vídeo para aquela pessoa que dorme com o celular do lado da cama e já acorda checando notificação."
+    },
+    {
+      "source": "fonte",
+      "start": 83.3,
+      "end": 86.66,
+      "quote": "Então você precisa entender o seguinte. não é sobre ter mais ciplina,"
+    },
+    {
+      "source": "fonte",
+      "start": 86.86,
+      "end": 91.64,
+      "quote": "é sobre proteger a única janela do dia em que o seu cérebro trabalha a seu favor."
+    },
+    {
+      "source": "fonte",
+      "start": 92.08,
+      "end": 95.467,
+      "quote": "Comenta aqui qual desses 3 hábitos você vai cortar amanhã de manhã."
+    }
+  ],
+  "grade": "none",
+  "total_duration_s": 89.19
+}
