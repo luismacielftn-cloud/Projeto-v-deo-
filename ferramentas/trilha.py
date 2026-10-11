@@ -108,6 +108,17 @@ HUMORES["tensa_pulso"] = {
     "palma": [],
     "brilho": 1100,
 }
+HUMORES["batida"] = {
+    # Batida marcada para "drops" curtos depois de um momento forte (não para o vídeo inteiro).
+    "bpm": 92,
+    "acordes": [[38, 45, 50, 53], [34, 41, 46, 50], [36, 43, 48, 51], [33, 40, 45, 49]],
+    "arpejo": [0, None, 2, None, None, 3, None, None],
+    "passo": 0.5,
+    "bumbo": [0, 1.5, 2.5],
+    "chocalho": True,
+    "palma": [1, 3],
+    "brilho": 1500,
+}
 TEMPOS_POR_ACORDE = 8  # dois compassos de 4/4
 
 

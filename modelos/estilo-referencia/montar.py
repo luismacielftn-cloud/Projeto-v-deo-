@@ -51,7 +51,7 @@ FONTES = {
         ("CormorantGaramond-Italic.ttf", "300 700", "italic"),
     ],
 }
-IDENTIDADE_PADRAO = "salvia"  # identidade escolhida pelo usuário
+IDENTIDADE_PADRAO = "salvia-forte"  # identidade escolhida pelo usuário (Inter Black, dourado)
 HUMORES = ["calma", "leve", "inspira"]
 # "tom": "tenso" no roteiro: vídeos sérios (sons de cinema e trilha sombria).
 HUMORES_TENSOS = ["tensa", "tensa_pulso", "tensa"]
@@ -107,7 +107,9 @@ CSS_PROVA = f"""
 .div-topo img, .div-topo video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
 .broll {{ position: absolute; inset: 0; background: #000; }}
 .broll-cheia {{ position: absolute; inset: 0; }}
-.broll-cartao {{ position: absolute; left: 90px; top: 360px; width: 900px; height: 900px; border-radius: 26px; overflow: hidden; }}
+.broll-cartao {{ position: absolute; left: 120px; top: 460px; width: 840px; height: 800px; border-radius: 24px; overflow: hidden; }}
+.broll-cartao::after {{ content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 38px 16px rgba(0,0,0,.85); }}
 .broll img, .broll video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
 """
 
@@ -400,6 +402,7 @@ def montar(roteiro_path: Path) -> Path:
     ]
     zonas: list[tuple[float, float, tuple[int, int, int, int]]] = []
     abafar: list[list[float]] = []
+    radio: list[list[float]] = []
     insertos_som: list[dict] = []
     divididas: list[tuple[float, float, int]] = []
 
@@ -427,7 +430,15 @@ def montar(roteiro_path: Path) -> Path:
         elif tipo == "pb":
             comp.setar("#cam", t0, 'filter: "grayscale(1) contrast(1.08)"')
             comp.setar("#cam", t1, 'filter: "none"')
-            if e.get("voz_abafada", True):
+            # "voz": "radio" (rádio/celular: só a faixa média, como no vídeo sério),
+            # "abafada" (corte suave de agudos) ou "normal". Padrão: "voz_pb" do roteiro
+            # ou "radio", que é o que o usuário pede.
+            voz = e.get("voz", r.get("voz_pb", "radio"))
+            if e.get("voz_abafada") is False:
+                voz = "normal"
+            if voz == "radio":
+                radio.append([round(t0, 3), round(t1, 3)])
+            elif voz != "normal":
                 abafar.append([round(t0, 3), round(t1, 3)])
             comp.som("pb", t0)
 
@@ -546,8 +557,13 @@ def montar(roteiro_path: Path) -> Path:
             ini_m = float(e.get("inicio_midia", 0))
             cartao = e.get("estilo", "cheia") == "cartao"
             classe = "broll-cartao" if cartao else "broll-cheia"
+            # cartão: "largura", "altura" e "topo" (px) mudam o tamanho; centralizado
+            estilo_c = ""
+            if cartao and any(k in e for k in ("largura", "altura", "topo")):
+                lg, al = int(e.get("largura", 840)), int(e.get("altura", 800))
+                estilo_c = f' style="left:{(W - lg) // 2}px;width:{lg}px;height:{al}px;top:{int(e.get("topo", 460))}px"'
             comp.html.append(
-                f'<div id="{ev}" class="broll" style="opacity:0"><div class="{classe}">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div></div>'
+                f'<div id="{ev}" class="broll" style="opacity:0"><div class="{classe}"{estilo_c}>{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div></div>'
             )
             comp.setar(f"#{ev}", 0, "opacity: 0")
             comp.tween(
@@ -897,6 +913,7 @@ def montar(roteiro_path: Path) -> Path:
         "identidade": idt["nome"],
         "sons": sorted(comp.sons, key=lambda s: s["t"]),
         "abafar": abafar,
+        "radio": radio,
         "insertos": insertos_som,
         "musica": musica,
         "trilha": trilha,

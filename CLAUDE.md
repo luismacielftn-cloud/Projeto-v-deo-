@@ -13,10 +13,13 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 **Modelo padrão: `modelos/estilo-referencia/`.** Todo vídeo sai nesse modelo, a não ser que o usuário peça outro. Leia o `GUIA.md` antes de planejar a edição.
 
 - **Estrutura e ritmo:** vêm de um vídeo de referência que o usuário mandou. A arquitetura é gancho → promessa → lista numerada → objeção → chamada final, com zero silêncio e algo novo na tela a cada 4–6 s.
-- **Aparência:** é a identidade própria do usuário, **Sálvia**: verde-sálvia, off-white e Fraunces itálico, com animações suaves. Em 1 a 3 momentos fortes por vídeo entram cores vivas (`"vivo": 1` coral, `"vivo": 2` verde-lima).
-- **Som:** trilha gerada sem direitos autorais, que troca a cada capítulo e abaixa sob a fala; efeitos sonoros sintetizados; voz abafada nos apartes em P&B; vídeos de gatilho com o próprio som.
+- **Aparência:** identidade **Sálvia forte** (`salvia-forte`, a padrão): todo texto em Inter Black como a legenda em destaque, palavra-chave em dourado `#F2C94C`, cenas escuras. **Nunca** use o título fino da Sálvia original (caixa alta espaçada + Fraunces itálico): o usuário recusou duas vezes. Em 1 a 3 momentos fortes por vídeo entram cores vivas (`"vivo": 1` coral, `"vivo": 2` verde-lima).
+- **Formatos de clipe (3ª referência do usuário, vídeo de @elias.maman):** alterne tela dividida (`dividida`), **formato menor** (`broll` com `"estilo": "cartao"`: cartão de cantos suaves no meio, fundo preto, legenda logo abaixo) e tela cheia (`broll`). Clipe horizontal fica melhor no cartão.
+- **Som:** trilha gerada sem direitos autorais, que troca a cada capítulo e abaixa sob a fala; efeitos sonoros sintetizados; **voz de rádio/celular** nos apartes em P&B (o usuário chama de "voz de rádio": só a faixa média, voz e trilha juntas, bem perceptível; é o padrão do `pb`); vídeos de gatilho com o próprio som.
 
 **Usuário:** @luismacciel. Tema: emagrecimento, saúde e longevidade. Estilo: elegante e minimalista.
+
+**Gancho visual nos primeiros 3 segundos:** todo vídeo abre com algo forte na tela já no 0 s (clipe de banco, inserto ou animação ligada à primeira frase). Não comece só com o rosto. O gancho precisa causar impacto e curiosidade: prefira uma pessoa numa situação forte (exausta, aflita, no limite), como o homem acabado no chuveiro do exemplo do usuário. Paisagem bonita (nascer do sol etc.) não serve de gancho.
 
 ## O que já está no repositório
 
@@ -26,7 +29,7 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 | `.claude/skills/hyperframes*`, `talking-head-recut`, `motion-graphics` | Skills do HyperFrames (heygen-com/hyperframes @ 64c47cf, Apache-2.0). Comece por `hyperframes/SKILL.md`. Para animar em cima de vídeo de pessoa falando, use `talking-head-recut`. |
 | `ferramentas/transcrever.py` | Transcrição local e gratuita (faster-whisper), no mesmo formato JSON do ElevenLabs Scribe. |
 | `ferramentas/ajustar_cortes.py` | Encosta as bordas do `edl.json` no silêncio real do áudio. |
-| `modelos/estilo-referencia/` | Modelo padrão: `GUIA.md` (receita), `montar.py` (gera `index.html` + `mix.json` a partir de um `roteiro.json`), `identidades/` (Sálvia é a padrão), `exemplo-roteiro.json`, fontes e GSAP. |
+| `modelos/estilo-referencia/` | Modelo padrão: `GUIA.md` (receita), `montar.py` (gera `index.html` + `mix.json` a partir de um `roteiro.json`), `identidades/` (Sálvia forte é a padrão), `exemplo-roteiro.json`, fontes e GSAP. |
 | `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio. Com `--mix`, usa a mixagem completa do `mixar.py`. Queima legenda só fora do modelo. |
 | `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados e trilhas geradas. Tudo sem direitos autorais. |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |

@@ -18,14 +18,15 @@ Cada identidade fica em `identidades/<nome>.json` e define:
 - transição: clarão ou véu de luz;
 - quais efeitos sonoros cada elemento dispara.
 
-No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia`.**
+No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia-forte`** (o usuário recusou o título fino da `salvia`).
 
 | Identidade | Visual |
 | --- | --- |
-| **`salvia`** (escolhida) | Verde-sálvia `#B5CBA8`, off-white `#F5F2EA` e Fraunces itálico; voz secundária em areia `#E3D3AE`; animação suave, véu de luz |
+| `salvia` (só cenas; o título dela foi recusado) | Verde-sálvia `#B5CBA8`, off-white `#F5F2EA` e Fraunces itálico; voz secundária em areia `#E3D3AE`; animação suave, véu de luz |
 | `oceano` | Azul-gelo, branco e Inter minimalista; suave |
 | `champanhe` | Preto e branco com dourado e Cormorant Garamond itálico; suave |
 | `referencia` | Cópia da referência: laranja, Inter Black, quique |
+| `salvia-forte` | Sálvia com letra forte: todo texto em Inter Black, palavra-chave em dourado `#F2C94C` (o mesmo da legenda em destaque) e cenas mais escuras. Usada no vídeo sério. |
 
 **Cores vivas** (pedido do usuário: "em alguns momentos"): `"vivo": 1` usa **coral** `#FF8A5B` e `"vivo": 2` usa **verde-lima** `#D4F25E`. Elas valem para `titulo`, `capitulo` (no número) e `final`. Use em 1 a 3 momentos fortes por vídeo, como um número que choca, a resposta principal ou o hábito mais importante. Nunca use em todos.
 
@@ -57,7 +58,7 @@ No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia`.**
 | `janela` | Citar post, perfil, print, foto, vídeo de gatilho | Cartão com borda fina, no alto, sem cobrir o rosto. `"som": true` toca o som do vídeo. |
 | `inserto` | Mostrar o vídeo citado com destaque | Cartão grande no centro; o fundo fica P&B, escuro e desfocado. `"som": true` toca o som do vídeo. |
 | `lista` | Dados, mecanismos, passo a passo ("cortisol ↑, dopamina ↓, foco ↑"; "no lugar disso: …") | Título pequeno + itens com ícone (`↑ ↓ →`) que entram um a um no tempo da palavra (`"t"` de cada item). A legenda some enquanto a lista está na tela. `"vivo"` também vale por item. |
-| `pb` | Apartes, brincadeiras, objeção imitada | Câmera em P&B e voz levemente abafada (`"voz_abafada": false` desliga) |
+| `pb` | Apartes, brincadeiras, objeção imitada | Câmera em P&B e **voz de rádio/celular** (`"voz": "radio"`, padrão; `"abafada"` = corte suave de agudos; `"normal"` desliga). `"voz_pb"` no roteiro muda o padrão do vídeo. |
 | `zoom` | Ênfase | Aproximação suave (1,12×); `"estilo": "seco"` faz punch-in |
 | `transicao` | Antes de cada capítulo | Véu de luz que atravessa a tela |
 | marca d'água | Sempre (automática) | Ícone + @LUISMACCIEL, muda de lugar a cada ~6 s e desvia dos outros elementos |
@@ -69,6 +70,7 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 
 - **Legenda em destaque:** grande (Inter Black 66 px), e a palavra falada acende em **amarelo** `#FFD43B` e cresce. No roteiro: `"legenda": {"estilo": "destaque", "cor": "#FFD43B", "tam": 66}`.
 - **Cenas em tela cheia cobrindo a câmera:** ele não precisa aparecer o tempo todo. Mire em ~30–35% do vídeo coberto por cenas animadas ligadas ao conteúdo.
+- **Nada de texto fino e espaçado** (pedido no vídeo sério): ele não gostou do título da Sálvia (caixa alta espaçada + Fraunces itálico). O texto na tela deve seguir a legenda em destaque: Inter Black, palavra marcando em **dourado `#F2C94C`**. Use `"identidade": "salvia-forte"` e não use eventos `titulo`; a ênfase vem de zoom seco e cenas.
 - **Mais gatilhos visuais com whoosh:** zooms secos (`"estilo": "seco"`) a cada poucos segundos, whoosh na entrada e saída das cenas e nos títulos, impacto nos títulos `vivo`.
 
 ## Cenas em tela cheia (`"tipo": "cena"`, código em `cenas.py`)
@@ -80,10 +82,11 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 | `notificacoes` | Celular recebendo notificações e vibrando | `itens: [{titulo, sub, t}]` |
 | `pico` | Gráfico com pico e queda | `t_pico`, `rotulo_pico`, `t_queda`, `rotulo_queda` |
 | `sol` | Nascer do sol + lista de hábitos bons | `itens: [{texto, t}]` |
-| `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque}]` |
+| `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque, quebra}]` (`destaque`: `true`/1 coral, 2 verde-lima; `quebra`: pula linha depois) |
+| `rede` | Rede de neurônios que se desenha e acende (cérebro, neurociência) | `t` (onda de luz), `rotulo` |
 | `queda` | Perda com a idade: linhas retas até um marco e caindo depois ("depois dos 40 perde músculo e osso") | `idades` ([30,40,50,60,70]), `marco` (índice, 1 = 40), `t_marco`, `linhas: [{rotulo, t, t_fim, tam}]` (até 3) |
 
-Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), use `ferramentas/buscar_clipes.py` (Pixabay).
+Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), use `ferramentas/buscar_clipes.py` (Pixabay). Se a chave for recusada ("Invalid or missing API key"), troque os clipes por cenas e avise o usuário.
 
 ## Vídeos de prova e tom tenso (2ª referência do usuário)
 
@@ -92,7 +95,7 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
 | Evento | O que faz | Campos |
 | --- | --- | --- |
 | `dividida` | Clipe/imagem na metade de cima; a câmera desce e você fica na de baixo; a legenda vai para a emenda | `midia`, `altura` (980), `descer` (445), `som`, `inicio_midia` |
-| `broll` | Clipe cobrindo a câmera: `"estilo": "cheia"` (tela cheia) ou `"cartao"` (cartão sobre fundo preto) | `midia`, `estilo`, `som`, `inicio_midia`, `ganho_db` |
+| `broll` | Clipe cobrindo a câmera: `"estilo": "cheia"` (tela cheia) ou `"cartao"` (**formato menor**: cartão 840×800 de cantos suaves e borda esfumada, centralizado sobre fundo preto, como no vídeo de @elias.maman) | `midia`, `estilo`, `som`, `inicio_midia`, `ganho_db`; no cartão, `largura`, `altura`, `topo` (px). Prepare o clipe já no tamanho do cartão (ffmpeg `scale`+`crop`). |
 
 - **Tom tenso, para vídeos sérios** (o usuário escolhe vídeo a vídeo): `"tom": "tenso"` no roteiro. Os sons passam a ser:
   - `riser` + `boom` nas entradas de clipe;
@@ -127,7 +130,7 @@ Na referência, o som tem quatro camadas: trilha que troca a cada capítulo, efe
 | Efeitos | Sintetizados em `ferramentas/efeitos.py`, sem direitos autorais: `whoosh_suave` (título), `tick` (capítulo), `respiro` (transição), `pop_suave` (janela), `sino` (final), entre outros. O ponto de impacto cai no instante do evento. | `sons` na identidade; volume em `GANHO_DB` ou `"efeitos_volume_db"` no roteiro |
 | Trilha | Gerada em `ferramentas/trilha.py`, sem direitos autorais. Uma seção por capítulo, com os humores `calma` → `leve` → `inspira`; cai e troca na virada e termina num acorde aberto na tela final. Ducking: fica ~20 dB abaixo da voz enquanto há fala e sobe nas pausas. | `"humor"` no `capitulo` (ou numa `transicao`, em vídeos sem lista numerada), `"humor_inicial"`, `"trilha": {"volume_db": -3}` no roteiro |
 | Música do usuário | Se o usuário mandar faixas: `"musica": [{"arquivo": "assets/x.mp3", "inicio": 0, "fim": 30, "volume_db": 0}]`. Isso substitui a trilha gerada, com o mesmo ducking. | roteiro |
-| Voz abafada | Corte suave de agudos (~ -5 dB acima de 2,5 kHz) nos trechos `pb` | `"voz_abafada"` no `pb` |
+| Voz de rádio | Nos trechos `pb`, voz **e trilha** passam por um passa-faixa 400–3000 Hz com leve saturação: ~20 dB a menos de graves e ~8 dB a menos de agudos, mesmo volume. Calibrado no vídeo sério, que o usuário aprovou ("voz de rádio ou celular"). A opção `"abafada"` (corte suave de agudos) quase não se percebe. | `"voz"` no `pb`, `"voz_pb"` no roteiro |
 | Inserto com som | `janela`/`inserto` com `"som": true`. O áudio do clipe entra no nível da voz (`"ganho_db"` ajusta). Abra espaço na fala na etapa do Video Use: um trecho de silêncio com `"manter": true` no `edl.json`. | evento |
 
 No final, tudo é normalizado em dois passes para **-14 LUFS** e pico de **-1 dBTP**. Eu não consigo ouvir: meço os níveis (voz, trilha sob a fala, efeitos) e peço o retorno do usuário.
@@ -138,7 +141,7 @@ No final, tudo é normalizado em dois passes para **-14 LUFS** e pico de **-1 dB
    - Silêncios intencionais, como o respiro da tela final ou o espaço para um inserto com som, levam `"manter": true` no `edl.json` para o `ajustar_cortes.py` não apertá-los.
    - Deixe ~1,5–2,5 s depois da última fala para a tela final. Se não houver silêncio no fim do arquivo, congele o último quadro: `ffmpeg -i cortado_base.mp4 -vf tpad=stop_mode=clone:stop_duration=1.5 -af apad=pad_dur=1.5 … cortado.mp4`. No `final`, use `"escurecer_em"` para escurecer só depois que a fala termina.
 2. `python3 ferramentas/transcrever.py edit/cortado.mp4 --edit-dir edit/hf --flat edit/hf/transcript.json`. Depois corrija os erros de transcrição no `transcript.json` (só o `text`; mantenha os tempos).
-3. Copie `cortado.mp4` e as mídias para `edit/hf/assets/` e escreva `edit/hf/roteiro.json` (modelo em `exemplo-roteiro.json`). Os tempos estão em segundos do vídeo cortado.
+3. Copie `cortado.mp4` para `edit/hf/assets/` com um quadro-chave por segundo (`ffmpeg -i edit/cortado.mp4 -c:v libx264 -crf 18 -r 30 -g 30 -keyint_min 30 -pix_fmt yuv420p -c:a copy edit/hf/assets/cortado.mp4`; sem isso o HyperFrames avisa "sparse keyframes" e a imagem pode congelar), copie as mídias e escreva `edit/hf/roteiro.json` (modelo em `exemplo-roteiro.json`). Os tempos estão em segundos do vídeo cortado.
 4. `python3 modelos/estilo-referencia/montar.py edit/hf/roteiro.json` gera `index.html` + `mix.json` e copia fontes e GSAP.
 5. Na pasta `edit/hf/`, rode `npx --yes hyperframes@0.8.145 lint` (zero erros) e depois `render --quality looks --output com_animacoes.mp4`.
 6. `python3 ferramentas/finalizar.py --video edit/hf/com_animacoes.mp4 --audio edit/cortado.mp4 --mix edit/hf/mix.json --crf 20 -o edit/final.mp4 --entrega edit/entrega/<nome>.mp4`. Não use `--legenda-edl`: a legenda já está na composição.
