@@ -36,7 +36,7 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 | `modelos/estilo-referencia/` | Modelo padrão: `GUIA.md` (receita), `montar.py` (gera `index.html` + `mix.json` a partir de um `roteiro.json`), `identidades/` (Sálvia forte é a padrão), `exemplo-roteiro.json`, fontes e GSAP. |
 | `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio. Com `--mix`, usa a mixagem completa do `mixar.py`. Queima legenda só fora do modelo. |
 | `ferramentas/filtro_clipe.py` | Filtros dos clipes de banco no estilo de @elias.maman: `tv` (cartão), `desfoque` (dividida) e `lente` (cheia). `--brilho 1.5` clareia clipe escuro. Rode no clipe já recortado e use o `_fx.mp4` no roteiro. |
-| `ferramentas/secao_musculo.py` | Ilustração animada da coxa em corte (30 × 70 anos, músculo encolhendo e gordura entrando) para falar de **sarcopenia / perda de músculo**. Vai no cartão com `filtro_clipe.py tv --brilho 1.2`. |
+| `ferramentas/secao_musculo.py` | Ilustração animada da coxa em corte (30 × 70 anos) para falar de **sarcopenia / perda de músculo**. Padrão: **fotos realistas** de carne em corte (`modelos/estilo-referencia/assets/sarcopenia/`, geradas no Canva); a de 70 anos vira músculo tomado de gordura. O usuário pediu "mais próximo do real"; `--desenho` é a versão antiga desenhada. Vai no cartão com `filtro_clipe.py tv --brilho 1.2`. |
 | `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados e trilhas geradas. Tudo sem direitos autorais. |
 | `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes. |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |
@@ -144,6 +144,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **ffmpeg com imagem em `-loop 1` sem `-t`** gera arquivo infinito; **`blend=multiply` em YUV** deixa a imagem verde (use `gbrp`).
 - **Comando interrompido pelo usuário pode ter rodado pela metade:** confira data e tamanho dos arquivos (`ls -la`) antes de renderizar de novo.
 - **Imagem que contradiz a fala:** um raio-X de corpo musculoso em "sarcopenia" foi recusado. Confira se o clipe mostra o mesmo sentido da frase (perda ≠ força).
+- **Ilustração de anatomia com cara de desenho:** o usuário prefere imagem realista (carne, textura de verdade), como os posts de corte de coxa "sem/com treino de força". Desenho chapado só se não houver foto.
 - **Corte de 1–8 centésimos** dá "pulo" na imagem sem ganhar tempo: junte trechos separados por menos de 0,1 s no `edl.json`.
 
 ## Memória entre sessões

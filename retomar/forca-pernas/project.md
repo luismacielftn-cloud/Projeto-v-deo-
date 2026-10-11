@@ -17,3 +17,6 @@
 **Retorno do usuário:** a imagem em "é o que os estudos sobre sarcopenia mostram" (raio-X de corpo musculoso) não condiz; precisa mostrar perda de músculo.
 **Feito:** `ferramentas/secao_musculo.py`: ilustração animada da coxa em corte, 30 × 70 anos; o corte de 70 anos envelhece em 0,5–1,4 s (músculo encolhe, gordura engrossa e entra no músculo), caindo no "sarcopenia" (35,6 s). Cartão com `tv --brilho 1.2`, 34,62–36,7 s. Script de clipes atualizado.
 **Medidas v2:** -14,0 LUFS, pico -1,2 dBTP, 102,6 s, 27,1 MB.
+
+**Retorno do usuário (2):** mandou um post de @rafaelladellasanta (coxa crua em corte, "sem/com treinamento de força") e pediu a imagem "mais próxima do real".
+**Feito:** duas fotos realistas geradas no Canva do usuário (coxa saudável e coxa com sarcopenia), guardadas em `modelos/estilo-referencia/assets/sarcopenia/`. O Canva só deixa baixar a prévia de 200 px; o `secao_musculo.py` amplia com lanczos + realce, recorta em círculo e mistura a de 70 anos de saudável → sarcopenia em 0,5–1,4 s. O filtro `tv` esconde a ampliação. Entregue como `forca-das-pernas-v3.mp4`.

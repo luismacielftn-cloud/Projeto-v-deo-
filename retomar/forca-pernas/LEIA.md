@@ -37,7 +37,7 @@ O vídeo em si não fica no git: se precisar refazer, peça o link do Drive ao u
 | 19,3–23 | "não precisa de academia lotada nem de 2 horas" | Lista × |
 | 23–29 | "depois dos 40… 10 e 15% por década" | Trilha tensa · cena número **10–15%** |
 | 32–34,5 | "depois dos 70… 25 a 40%" | Título **25–40%** (coral) |
-| 34,6–36,7 | "estudos sobre sarcopenia" | Cartão: ilustração da coxa em corte (30 × 70 anos), feita com `ferramentas/secao_musculo.py` — o raio-X de músculos fortes foi recusado |
+| 34,6–36,7 | "estudos sobre sarcopenia" | Cartão: coxa em corte **realista** (carne vermelha aos 30 → tomada de gordura aos 70), feita com `ferramentas/secao_musculo.py` — o raio-X de músculos fortes foi recusado e depois o desenho chapado também ("mais próximo do real") |
 | 36,8–41,4 | "perda de força vem antes da massa muscular" | Cena `queda` com duas idades |
 | 45,9–49 | "suas pernas cansam mais rápido" | Dividida: pernas em raio-X |
 | 50,7–52,2 | "isso não é coisa de idade que você tem que aceitar" | P&B + voz de rádio |

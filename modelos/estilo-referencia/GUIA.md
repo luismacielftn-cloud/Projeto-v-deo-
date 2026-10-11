@@ -105,6 +105,7 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
   A trilha usa os humores `tensa` e `tensa_pulso`. Sem `"tom"`, fica a Sálvia suave.
 - **Clipes com som próprio:** use `"som": true` e abra espaço na fala na etapa do Video Use (trecho com `"manter": true`).
 - **Origem dos clipes:** o usuário manda os clipes de terceiros (notícias, entrevistas). Não baixe por conta própria. Clipes genéricos vêm do Pixabay (`buscar_clipes.py`, com a `PIXABAY_API_KEY` do usuário). Busque termos simples em inglês ("skeleton", "knee", "luggage"): frases longas dão resultados fracos. Prefira pessoas maduras para o público 45+ e recorte cada clipe antes (trecho, enquadramento, câmera lenta) com ffmpeg para `hf/assets/`.
+- **Anatomia realista, não desenho:** quando a fala pede uma imagem do corpo por dentro (músculo, gordura), o usuário quer algo **próximo do real** (carne em corte, textura de verdade), como os posts "seu músculo sem/com treino de força". Para sarcopenia já existe `ferramentas/secao_musculo.py`: duas fotos realistas da coxa em corte (`assets/sarcopenia/`, geradas no Canva do usuário) lado a lado, 30 × 70 anos, e a de 70 anos passa de músculo vermelho para músculo tomado de gordura no meio do clipe. Cartão + `filtro_clipe.py tv --brilho 1.2`. Para outro tema, gere fotos realistas no Canva (`generate-image`); só a prévia de 200 px pode ser baixada, então amplie com lanczos e deixe o filtro `tv` disfarçar.
 
 ## Layout: não cobrir o rosto
 
