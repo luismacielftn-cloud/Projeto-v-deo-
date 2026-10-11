@@ -101,6 +101,20 @@ ICONE_IG = (
 )
 
 
+
+def icone_ig_colorido(gid: str) -> str:
+    """Ícone do Instagram com o gradiente da marca (amarelo → laranja → rosa → roxo)."""
+    return (
+        f'<svg viewBox="0 0 24 24" fill="none" stroke="url(#{gid})" stroke-width="1.8">'
+        f'<defs><linearGradient id="{gid}" x1="0" y1="1" x2="1" y2="0">'
+        '<stop offset="0" stop-color="#FEDA75"/><stop offset=".3" stop-color="#FA7E1E"/>'
+        '<stop offset=".6" stop-color="#D62976"/><stop offset=".85" stop-color="#962FBF"/>'
+        '<stop offset="1" stop-color="#4F5BD5"/></linearGradient></defs>'
+        '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/>'
+        f'<circle cx="17.3" cy="6.7" r="1.1" fill="url(#{gid})" stroke="none"/></svg>'
+    )
+
+
 CSS_PROVA = f"""
 .div-topo {{ position: absolute; left: 0; top: 0; width: {W}px; overflow: hidden; background: #000;
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 190px), transparent);
@@ -201,9 +215,12 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
   {fonte_css(leg)}; font-size: {leg["tam"]}px; color: {c["texto"]}; text-shadow: 0 2px 8px rgba(0,0,0,.65); }}
 .leg.voz {{ color: {c["voz"]}; {voz_it} }}
 .marca {{ position: absolute; width: 260px; color: {c["texto"]}; opacity: {idt.get("marca", {}).get("opacidade", 1)}; }}
-.marca svg {{ width: 44px; height: 44px; display: block; }}
-.marca span {{ display: block; margin-top: 6px; font-family: "Inter"; font-weight: 600; font-size: 21px;
-  letter-spacing: .08em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }}
+.marca .ig {{ position: relative; width: 50px; height: 50px; }}
+.marca .ig span {{ position: absolute; inset: 0; }}
+.marca .ig svg {{ width: 50px; height: 50px; display: block; filter: drop-shadow(0 1px 4px rgba(0,0,0,.5)); }}
+.marca .ig-c {{ opacity: 0; }}
+.marca .arroba {{ display: block; margin-top: 8px; font-family: "Inter"; font-weight: 700; font-size: 22px;
+  letter-spacing: .06em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }}
 .peq {{ {fonte_css(peq)}; font-size: {peq["tam"]}px; line-height: 1.15; color: {c["texto"]}; text-shadow: {sombra}; }}
 .big {{ {fonte_css(dest)}; color: {c["destaque"]}; line-height: 1; display: block; text-shadow: 0 4px 22px rgba(0,0,0,.4); }}
 .tit {{ position: absolute; left: 70px; width: 940px; top: {L["titulo_y"]}px; }}
@@ -511,7 +528,8 @@ def montar(roteiro_path: Path) -> Path:
                 f'tl.to("#{ev}-in", {{opacity: 0, scale: 0.97, filter: "blur(12px)", duration: 0.28, ease: "power2.in"}}, {t1 - 0.28:.3f});'
             )
             comp.js.extend(js_cena)
-            zonas.append((t0, t1, (0, 0, W, L["legenda_y"] - 70)))
+            # o @ pode ficar nos cantos da cena; só o miolo (conteúdo) é reservado
+            zonas.append((t0, t1, (60, 270, W - 60, L["legenda_y"] - 70)))
             comp.som("cena", t0)
             comp.som("cena_saida", t1 - 0.15)
             for ts, nome in sons_cena:
@@ -539,9 +557,10 @@ def montar(roteiro_path: Path) -> Path:
             comp.js.append(
                 f'tl.to("#{ev}", {{opacity: 0, duration: 0.2, ease: "power2.in"}}, {t1 - 0.2:.3f});'
             )
-            zonas.append((t0, t1, (0, 0, W, alt + 20)))
+            # clipe de banco não esconde o @ (como em @elias.maman, ele fica por cima)
             divididas.append((t0, t1, alt))
             comp.som("dividida", t0)
+            comp.som("dividida_saida", t1 - 0.1)
             if e.get("som") and eh_video(e["midia"]):
                 insertos_som.append(
                     {
@@ -578,7 +597,8 @@ def montar(roteiro_path: Path) -> Path:
             comp.js.append(
                 f'tl.to("#{ev}", {{opacity: 0, duration: 0.22, ease: "power2.in"}}, {t1 - 0.22:.3f});'
             )
-            zonas.append((t0, t1, (0, 0, W, H)))
+            if cartao:  # só o cartão é reservado; na tela cheia o @ fica por cima
+                zonas.append((t0, t1, (100, 440, W - 100, 1280)))
             comp.som("broll", t0)
             comp.som("broll_saida", t1 - 0.15)
             if e.get("som") and eh_video(e["midia"]):
@@ -814,25 +834,39 @@ def montar(roteiro_path: Path) -> Path:
         passo = float(marca.get("intervalo", 6))
         posicoes = [tuple(p) for p in marca.get("posicoes", POSICOES_MARCA)]
         fim_marca = min([e["inicio"] for e in eventos if e["tipo"] == "final"] + [dur])
-        t, j = 0.0, 0
+        t, j, ultima = 0.0, 0, None
         while t < fim_marca - 0.1:
             t2 = min(t + passo, fim_marca)
             ocupado = [z for a, b, z in zonas if a < t2 and b > t]
-            for n in range(len(posicoes)):
-                left, top = posicoes[(j + n) % len(posicoes)]
-                rx = (left, top, left + TAM_MARCA[0], top + TAM_MARCA[1])
-                if not any(
+
+            def livre(pos: tuple[int, int]) -> bool:
+                rx = (pos[0], pos[1], pos[0] + TAM_MARCA[0], pos[1] + TAM_MARCA[1])
+                return not any(
                     rx[0] < z[2] and rx[2] > z[0] and rx[1] < z[3] and rx[3] > z[1]
                     for z in ocupado
-                ):
+                )
+
+            ordem = [posicoes[(j + n) % len(posicoes)] for n in range(len(posicoes))]
+            # varia: não repete a posição anterior se houver outra livre
+            ordem = [p_ for p_ in ordem if p_ != ultima] + [p_ for p_ in ordem if p_ == ultima]
+            for left, top in ordem:
+                if livre((left, top)):
+                    ultima = (left, top)
                     comp.clip(
                         f"marca{j}",
                         "marca",
                         t,
                         t2,
-                        f"{ICONE_IG}<span>{esc(arroba)}</span>",
+                        f'<div class="ig"><span class="ig-b">{ICONE_IG}</span>'
+                        f'<span class="ig-c">{icone_ig_colorido(f"igg{j}")}</span></div>'
+                        f'<span class="arroba" id="marca{j}-a">{esc(arroba)}</span>',
                         f"left:{left}px;top:{top}px",
                     )
+                    if marca.get("animada", True):
+                        # como em @elias.maman: primeiro o ícone, depois o @, depois a cor
+                        comp.tween(f"#marca{j} .ig", t, "opacity: 0, scale: 0.6", "opacity: 1, scale: 1", 0.35, "back.out(2)")
+                        comp.tween(f"#marca{j}-a", t + 0.55, "opacity: 0, x: -12", "opacity: 1, x: 0", 0.4, "power2.out")
+                        comp.tween(f"#marca{j} .ig-c", t + 1.25, "opacity: 0", "opacity: 1", 0.5, "power1.inOut")
                     break
             t += passo
             j += 1

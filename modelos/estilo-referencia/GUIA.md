@@ -61,7 +61,7 @@ No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia-forte`**
 | `pb` | Apartes, brincadeiras, objeção imitada | Câmera em P&B e **voz de rádio/celular** (`"voz": "radio"`, padrão; `"abafada"` = corte suave de agudos; `"normal"` desliga). `"voz_pb"` no roteiro muda o padrão do vídeo. |
 | `zoom` | Ênfase | Aproximação suave (1,12×); `"estilo": "seco"` faz punch-in |
 | `transicao` | Antes de cada capítulo | Véu de luz que atravessa a tela |
-| marca d'água | Sempre (automática) | Ícone + @LUISMACCIEL, muda de lugar a cada ~6 s e desvia dos outros elementos |
+| marca d'água | Sempre (automática) | Ícone + @LUISMACCIEL, muda de lugar a cada ~4 s (`"marca": {"intervalo": 4, "posicoes": [...]}`), não repete a posição anterior e só desvia de textos (títulos, listas, miolo das cenas, cartão); fica por cima de tela cheia e dividida. Animação (`"animada": true`): ícone branco → @ → ícone colorido do Instagram |
 | `final` | Últimos 3–5 s | CTA (por exemplo "me segue para / *mais dicas*"); depois escurece e mostra o ícone com o @ |
 
 Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` se a imagem estiver sem graça.

@@ -222,6 +222,45 @@ def coracao() -> tuple[np.ndarray, float]:
     return _norm(_estereo(out)), 0.0
 
 
+def _tic_metal(n: int) -> np.ndarray:
+    """Tic metálico curto: parciais inarmônicas (~3, 5, 8,5 e 11 kHz) + clique."""
+    t = np.arange(n) / SR
+    x = np.zeros(n)
+    for f, a, tau in ((2980, 1.0, 0.035), (5120, 0.7, 0.025), (8450, 0.5, 0.018), (11200, 0.3, 0.012)):
+        x += a * np.sin(2 * np.pi * f * t) * np.exp(-t / tau)
+    b, a_ = signal.butter(2, 3000, btype="high", fs=SR)
+    x += 0.6 * signal.lfilter(b, a_, _ruido(n, 21)) * np.exp(-t / 0.002)
+    return x
+
+
+def corte_ref(saida: bool = False) -> tuple[np.ndarray, float]:
+    """Transição da 3ª referência (@elias.maman): tic metálico ~80 ms antes do
+    corte + swoosh suave subindo depois dele (tom 4,4→6,2 kHz e ruído varrendo
+    para cima). Na saída, só o tic e um sopro curto descendo. Âncora = o corte."""
+    pre = int(0.08 * SR)
+    if saida:
+        n = pre + int(0.32 * SR)
+        x = np.zeros(n)
+        x[: int(0.12 * SR)] += 0.7 * _tic_metal(int(0.12 * SR))
+        m = n - pre
+        sopro = _varredura(_ruido(m, 23), 6500, 4000, 2200, 3.0)
+        x[pre:] += 0.35 * sopro / (np.max(np.abs(sopro)) + 1e-9) * _env(m, 0.03, 0.18, 3)
+        return _norm(_estereo(x, 0.2, -0.2)), pre / SR
+    m = int(0.7 * SR)
+    n = pre + m
+    x = np.zeros(n)
+    x[: int(0.12 * SR)] += _tic_metal(int(0.12 * SR))
+    t = np.arange(m) / SR
+    f = 4400 * (6200 / 4400) ** (t / 0.6)
+    fase = 2 * np.pi * np.cumsum(f) / SR
+    tom = np.sin(fase) + 0.3 * np.sin(fase / 2)
+    env = np.sin(np.pi * np.clip(t / 0.62, 0, 1)) ** 1.5
+    ruido = _varredura(_ruido(m, 22), 900, 2500, 6000, 2.0)
+    ruido = ruido / (np.max(np.abs(ruido)) + 1e-9)
+    x[pre:] += (0.13 * tom + 0.34 * ruido) * env
+    return _norm(_estereo(x, -0.3, 0.3)), pre / SR
+
+
 EFEITOS = {
     "whoosh": lambda: whoosh(False),
     "whoosh_suave": lambda: whoosh(True),
@@ -235,6 +274,8 @@ EFEITOS = {
     "boom": boom,
     "hit_tenso": hit_tenso,
     "coracao": coracao,
+    "corte_ref": lambda: corte_ref(False),
+    "corte_ref_saida": lambda: corte_ref(True),
 }
 # Volume de cada efeito na mixagem, em dB relativos ao pico da voz.
 # Efeito bom é sentido, não notado: fica bem abaixo da fala.
@@ -251,6 +292,8 @@ GANHO_DB = {
     "boom": -12,
     "hit_tenso": -15,
     "coracao": -14,
+    "corte_ref": -14,
+    "corte_ref_saida": -19,
 }
 
 

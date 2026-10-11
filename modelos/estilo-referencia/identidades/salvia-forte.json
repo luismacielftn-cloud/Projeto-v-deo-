@@ -7,7 +7,10 @@
     "voz": "#E3D3AE",
     "numero": "#F2C94C",
     "veu": "rgba(225,236,214,.45)",
-    "cena_fundo": ["#1E2A22", "#060807"],
+    "cena_fundo": [
+      "#1E2A22",
+      "#060807"
+    ],
     "vivos": [
       "#FF8A5B",
       "#D4F25E"
@@ -69,19 +72,56 @@
     "opacidade": 0.8
   },
   "sons": {
-    "titulo": ["whoosh"],
-    "capitulo": ["whoosh", "tick"],
-    "janela": ["whoosh_suave", "pop_suave"],
-    "inserto": ["whoosh_suave"],
-    "transicao": ["respiro"],
-    "zoom": ["whoosh_suave"],
+    "titulo": [
+      "whoosh"
+    ],
+    "capitulo": [
+      "whoosh",
+      "tick"
+    ],
+    "janela": [
+      "corte_ref"
+    ],
+    "inserto": [
+      "corte_ref"
+    ],
+    "transicao": [
+      "respiro"
+    ],
+    "zoom": [
+      "whoosh_suave"
+    ],
     "pb": [],
-    "final": ["sino"],
+    "final": [
+      "sino"
+    ],
     "lista": [],
-    "lista_item": ["tick"],
-    "titulo_vivo": ["impacto"],
-    "cena": ["whoosh"],
-    "cena_saida": ["whoosh_suave"],
-    "cena_item": ["pop_suave"]
+    "lista_item": [
+      "tick"
+    ],
+    "titulo_vivo": [
+      "impacto"
+    ],
+    "cena": [
+      "corte_ref"
+    ],
+    "cena_saida": [
+      "corte_ref_saida"
+    ],
+    "cena_item": [
+      "pop_suave"
+    ],
+    "dividida": [
+      "corte_ref"
+    ],
+    "dividida_saida": [
+      "corte_ref_saida"
+    ],
+    "broll": [
+      "corte_ref"
+    ],
+    "broll_saida": [
+      "corte_ref_saida"
+    ]
   }
 }
