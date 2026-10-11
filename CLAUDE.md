@@ -8,7 +8,21 @@ O fluxo tem duas etapas fixas:
 1. **Video Use** corta todos os silêncios, repetições, falsos começos e hesitações.
 2. **HyperFrames** adiciona animações, visualizações e gráficos ligados ao que está sendo dito.
 
-Depois, `ferramentas/finalizar.py` junta tudo e coloca a legenda por último.
+Depois, `ferramentas/finalizar.py` junta tudo.
+
+**Estilo padrão: `modelos/estilo-referencia/`.** Todo vídeo sai nesse estilo, a não ser que o usuário peça outro. Leia o `GUIA.md` antes de planejar a edição. O estilo veio de um vídeo de referência que o usuário mandou como modelo (`videos/video1/fonte.mp4`, quando ainda existir na sessão).
+
+O estilo inclui:
+- legenda pequena em itálico;
+- palavra-chave laranja gigante;
+- capítulos numerados;
+- janelas flutuantes;
+- inserto com fundo preto e branco;
+- apartes em preto e branco;
+- zoom de ênfase;
+- clarão laranja;
+- marca d'água que muda de lugar;
+- tela final "tocar NO LINK".
 
 ## O que já está no repositório
 
@@ -18,6 +32,7 @@ Depois, `ferramentas/finalizar.py` junta tudo e coloca a legenda por último.
 | `.claude/skills/hyperframes*`, `talking-head-recut`, `motion-graphics` | Skills do HyperFrames (heygen-com/hyperframes @ 64c47cf, Apache-2.0). Comece por `hyperframes/SKILL.md`. Para animar em cima de vídeo de pessoa falando, use `talking-head-recut`. |
 | `ferramentas/transcrever.py` | Transcrição local e gratuita (faster-whisper), no mesmo formato JSON do ElevenLabs Scribe. |
 | `ferramentas/ajustar_cortes.py` | Encosta as bordas do `edl.json` no silêncio real do áudio. |
+| `modelos/estilo-referencia/` | Estilo padrão: `GUIA.md` (receita), `montar.py` (gera a composição HyperFrames a partir de um `roteiro.json`), `exemplo-roteiro.json`, fontes e GSAP. |
 | `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio do Video Use e queima a legenda (opcional). |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |
 | `ferramentas/licencas/` | Licenças das ferramentas copiadas. |
@@ -52,8 +67,13 @@ Siga `.claude/skills/video-use/SKILL.md` (Hard Rules inclusas). Para este projet
 Antes de executar, mostre ao usuário um plano curto e espere o OK (regra 11 do Video Use). O plano diz:
 - o que será cortado e a duração estimada;
 - quais animações entram, em que momentos;
-- o formato de saída;
+- o formato de saída (o padrão é vertical 1080×1920);
 - se vai ter legenda.
+
+No primeiro vídeo, pergunte também:
+- o @ do usuário;
+- se há prints ou vídeos citados para as janelas;
+- se há música.
 
 Um único OK vale para as duas etapas.
 
@@ -61,14 +81,15 @@ Um único OK vale para as duas etapas.
 
 1. Transcreva o vídeo cortado para sincronizar as animações:
    `python3 ferramentas/transcrever.py videos/x/edit/cortado.mp4 --edit-dir videos/x/edit/hf --flat videos/x/edit/hf/transcript.json`
-2. Monte a composição em `videos/x/edit/hf/index.html`, seguindo `talking-head-recut` e `hyperframes-core`:
+2. **Com o estilo padrão:** copie `cortado.mp4` e as mídias citadas para `hf/assets/` e escreva `hf/roteiro.json` com os eventos (veja `modelos/estilo-referencia/GUIA.md` e `exemplo-roteiro.json`). Depois rode `python3 modelos/estilo-referencia/montar.py videos/x/edit/hf/roteiro.json`. A legenda e a marca d'água já saem na composição. Pule para o passo 4.
+3. **Fora do estilo padrão** (o usuário pediu algo diferente), monte `videos/x/edit/hf/index.html` à mão, seguindo `talking-head-recut` e `hyperframes-core`:
    - `<video id="a-roll" class="clip" src="assets/cortado.mp4" data-has-audio="true">` cobrindo **toda** a duração.
    - Os cards (títulos, números, gráficos, citações, listas, ícones) são elementos `.clip` com `data-start`/`data-duration`, animados com GSAP.
    - Fontes e GSAP ficam em `.claude/skills/talking-head-recut/assets/` (copie para `hf/assets/`, sem depender de CDN).
    - Faça o "payoff" de cada animação aterrissar na palavra falada (veja os tempos no `transcript.json`).
    - Antes de posicionar os cards, extraia alguns quadros do vídeo para não cobrir o rosto de quem fala.
-3. `npx hyperframes init` foi bloqueado pelo filtro de segurança desta sessão. Crie os arquivos à mão a partir de `.claude/skills/talking-head-recut/references/`.
-4. Na pasta `hf/`, rode `npx --yes hyperframes@0.8.145 lint` (zero erros) e depois `npx --yes hyperframes@0.8.145 render --quality looks --output com_animacoes.mp4`.
+   - `npx hyperframes init` foi bloqueado pelo filtro de segurança desta sessão. Crie os arquivos à mão a partir de `.claude/skills/talking-head-recut/references/`.
+4. Antes de renderizar, extraia quadros do vídeo cortado para conferir que nada cobre o rosto. Depois, na pasta `hf/`, rode `npx --yes hyperframes@0.8.145 lint` (zero erros) e depois `npx --yes hyperframes@0.8.145 render --quality looks --output com_animacoes.mp4`.
 5. Use `HYPERFRAMES_NO_TELEMETRY=1`. Nunca rode `hyperframes feedback`: ele publica num canal público.
 6. Para vídeos de apoio (B-roll), não há banco de vídeos configurado. Use o que o usuário mandar ou visualizações geradas. Se o usuário quiser stock, peça uma chave gratuita do Pexels.
 
@@ -76,8 +97,10 @@ Um único OK vale para as duas etapas.
 
 ```bash
 python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
-  --audio videos/x/edit/cortado.mp4 -o videos/x/edit/final.mp4 [--legenda-edl videos/x/edit/edl.json]
+  --audio videos/x/edit/cortado.mp4 -o videos/x/edit/final.mp4
 ```
+
+- No estilo padrão, a legenda já está na composição. **Não** use `--legenda-edl` (ficaria duplicada). Use-o só fora do estilo padrão.
 
 - O HyperFrames remasteriza o áudio (+3 dB, comprimido). O `finalizar.py` devolve o áudio do Video Use (-14 LUFS), que é o correto.
 - **Autoavaliação antes de mostrar** (passo 7 do Video Use):

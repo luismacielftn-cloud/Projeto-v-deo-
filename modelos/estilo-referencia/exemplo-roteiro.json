@@ -1,0 +1,18 @@
+{
+  "video": "assets/cortado.mp4",
+  "transcricao": "transcript.json",
+  "arroba": "@seuperfil",
+  "legenda": {"ativa": true, "max_palavras": 3},
+  "vozes": [{"inicio": 12.8, "fim": 14.6}],
+  "marca": {"ativa": true, "intervalo": 5},
+  "eventos": [
+    {"tipo": "titulo", "inicio": 1.6, "fim": 4.4, "antes": "Hoje: o que muda com", "destaque": "IA", "depois": "nas empresas"},
+    {"tipo": "zoom", "inicio": 5.0, "fim": 8.3, "escala": 1.35, "foco_y": 0.32},
+    {"tipo": "janela", "inicio": 5.2, "fim": 8.2, "midia": "assets/print.png", "posicao": "topo-direita", "largura": 0.42},
+    {"tipo": "clarao", "inicio": 8.3},
+    {"tipo": "capitulo", "inicio": 8.5, "fim": 10.6, "numero": 1, "pequeno": "o dado de", "grande": "2024"},
+    {"tipo": "inserto", "inicio": 10.8, "fim": 12.6, "midia": "assets/clipe.mp4"},
+    {"tipo": "pb", "inicio": 12.8, "fim": 14.6},
+    {"tipo": "final", "inicio": 15.0, "cta_antes": "tocar", "cta_destaque": "NO LINK", "cta_depois": "da minha bio"}
+  ]
+}
