@@ -77,14 +77,14 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 
 | `modelo` | Para quê | Campos |
 | --- | --- | --- |
-| `numero` | Número de impacto ("3 hábitos", "60–90 minutos") | `grande`, `unidade`, `texto`, `t`, `vivo` |
+| `numero` | Número de impacto ("3 hábitos", "60–90 minutos") | `grande`, `unidade`, `texto`, `t`, `vivo`, `tam` (px; use ~210 para números compridos como "10–15%") |
 | `barras` | Comparar níveis (cortisol ↑, dopamina ↓, foco ↑) | `itens: [{rotulo, valor 0–100, seta, t, vivo}]` |
 | `notificacoes` | Celular recebendo notificações e vibrando | `itens: [{titulo, sub, t}]` |
 | `pico` | Gráfico com pico e queda | `t_pico`, `rotulo_pico`, `t_queda`, `rotulo_queda` |
 | `sol` | Nascer do sol + lista de hábitos bons | `itens: [{texto, t}]` |
 | `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque, quebra}]` (`destaque`: `true`/1 coral, 2 verde-lima; `quebra`: pula linha depois) |
 | `rede` | Rede de neurônios que se desenha e acende (cérebro, neurociência) | `t` (onda de luz), `rotulo` |
-| `queda` | Perda com a idade: linhas retas até um marco e caindo depois ("depois dos 40 perde músculo e osso") | `idades` ([30,40,50,60,70]), `marco` (índice, 1 = 40), `t_marco`, `linhas: [{rotulo, t, t_fim, tam}]` (até 3) |
+| `queda` | Perda com a idade: linhas retas até um marco e caindo depois ("depois dos 40 perde músculo e osso") | `idades` ([30,40,50,60,70]), `marco` (índice, 1 = 40), `t_marco`, `linhas: [{rotulo, t, t_fim, tam, marco}]` (até 3; `marco` por linha faz cada uma cair numa idade, ex.: força aos 40 e massa muscular aos 60) |
 
 Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), use `ferramentas/buscar_clipes.py` (Pixabay). Se a chave for recusada ("Invalid or missing API key"), troque os clipes por cenas e avise o usuário.
 
@@ -94,7 +94,7 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
 
 | Evento | O que faz | Campos |
 | --- | --- | --- |
-| `dividida` | Clipe/imagem na metade de cima; a câmera desce e você fica na de baixo; a legenda vai para a emenda. A borda de baixo do clipe se dissolve em 190 px (emenda esfumada, como em @elias.maman) | `midia`, `altura` (980), `descer` (445), `som`, `inicio_midia` |
+| `dividida` | Clipe/imagem na metade de cima; a câmera desce e você fica na de baixo; a legenda vai para a emenda (se o rosto estiver no alto do quadro, use `"descer": 820` para a legenda não cair no cabelo). A borda de baixo do clipe se dissolve em 190 px (emenda esfumada, como em @elias.maman) | `midia`, `altura` (980), `descer` (445), `som`, `inicio_midia` |
 | `broll` | Clipe cobrindo a câmera: `"estilo": "cheia"` (tela cheia) ou `"cartao"` (**formato menor**: cartão 840×800 de cantos suaves e borda esfumada, centralizado sobre fundo preto, como no vídeo de @elias.maman) | `midia`, `estilo`, `som`, `inicio_midia`, `ganho_db`; no cartão, `largura`, `altura`, `topo` (px). Prepare o clipe já no tamanho do cartão (ffmpeg `scale`+`crop`). |
 
 - **Tom tenso, para vídeos sérios** (o usuário escolhe vídeo a vídeo): `"tom": "tenso"` no roteiro. Os sons passam a ser:

@@ -5,7 +5,7 @@ ilustrando o que está sendo dito. O conteúdo fica entre y 200 e 1250 para a
 legenda (y ≈ 1400) continuar legível por cima. Todas usam as cores da identidade.
 
 Modelos (campo "modelo" do evento "cena"):
-    numero        número gigante + unidade + frase          {grande, unidade, texto}
+    numero        número gigante + unidade + frase          {grande, unidade, texto, tam?}
     barras        barras que sobem/descem na palavra        {titulo, itens:[{rotulo, valor 0-100, seta, t}]}
     notificacoes  celular recebendo notificações            {titulo, itens:[{titulo, sub, t}]}
     pico          gráfico de linha com pico e queda         {titulo, t_pico, rotulo_pico, t_queda, rotulo_queda}
@@ -13,7 +13,7 @@ Modelos (campo "modelo" do evento "cena"):
     frase         frase grande, palavra por palavra         {palavras:[{texto, t, destaque?, quebra?}]}
     rede          rede de neurônios que se desenha e acende {titulo, t, rotulo}
     queda         linhas retas até uma idade e depois caindo {titulo, idades, t_marco, rotulo_marco,
-                  (perda com a idade: músculo, osso, …)       linhas:[{rotulo, t, t_fim, cor?}]}
+                  (perda com a idade: músculo, osso, …)       linhas:[{rotulo, t, t_fim, cor?, marco?}]}
 
 construir() devolve (html, js, sons): o HTML do conteúdo, as linhas de GSAP e
 as deixas de som [(t, tipo)] — "cena_item" para cada elemento que entra.
@@ -116,6 +116,8 @@ def construir(
 
     if modelo == "numero":
         cor = f"color:{vivos[0]};" if e.get("vivo") else ""
+        if e.get("tam"):  # número comprido ("10–15%") precisa de letra menor
+            cor += f"font-size:{int(e['tam'])}px;top:{470 + (300 - int(e['tam'])) // 2}px;"
         html_.append(
             f'<div class="cena-num" id="{ev}-n" style="{cor}">{esc(e["grande"])}</div>'
         )
@@ -340,26 +342,29 @@ def construir(
         for i, ln in enumerate(e["linhas"][:3]):
             y0 = 140 + 95 * i
             y1 = y0 + 280 + 20 * i
-            reta = f"M 60 {y0} L {xm:.0f} {y0}"
-            curva = f"M {xm:.0f} {y0} C {xm + 160:.0f} {y0 + 10} {xm + 330:.0f} {y1 - 120} 840 {y1}"
+            # cada linha pode cair numa idade diferente ("marco" da linha)
+            xl = xs[int(ln["marco"])] if "marco" in ln else xm
+            larg = 840 - xl
+            reta = f"M 60 {y0} L {xl:.0f} {y0}"
+            curva = f"M {xl:.0f} {y0} C {xl + 0.27 * larg:.0f} {y0 + 10} {xl + 0.56 * larg:.0f} {y1 - 120} 840 {y1}"
             cor = ln.get("cor") or cores_linha[i]
             svg.append(
                 f'<path id="{ev}-r{i}" d="{reta}" fill="none" stroke="{cor}" stroke-width="10" stroke-linecap="round"'
-                f' stroke-dasharray="{xm:.0f}" stroke-dashoffset="{xm:.0f}"/>'
+                f' stroke-dasharray="{max(xl, 1):.0f}" stroke-dashoffset="{max(xl, 1):.0f}"/>'
                 f'<path id="{ev}-q{i}" d="{curva}" fill="none" stroke="{cor}" stroke-width="10" stroke-linecap="round"'
                 ' stroke-dasharray="900" stroke-dashoffset="900"/>'
             )
             ti = float(ln.get("t", tm + 0.6 + 0.9 * i))
             tf = float(ln.get("t_fim", ti + 1.2))
             js.append(
-                f'tl.fromTo("#{ev}-r{i}", {{strokeDashoffset: {xm:.0f}}}, {{strokeDashoffset: 0, duration: {max(0.3, tm - t0 - 0.2):.2f}, ease: "none"}}, {t0 + 0.15:.3f});'
+                f'tl.fromTo("#{ev}-r{i}", {{strokeDashoffset: {max(xl, 1):.0f}}}, {{strokeDashoffset: 0, duration: {max(0.3, tm - t0 - 0.2):.2f}, ease: "none"}}, {t0 + 0.15:.3f});'
             )
             js.append(
                 f'tl.fromTo("#{ev}-q{i}", {{strokeDashoffset: 900}}, {{strokeDashoffset: 0, duration: {max(0.6, tf - ti):.2f}, ease: "power1.in"}}, {ti:.3f});'
             )
             # rótulo: a 1ª linha leva acima da curva; as outras, abaixo do fim da linha
             if i == 0:
-                pos = f"left:{90 + xm + 300:.0f}px;top:{420 + y0 - 150:.0f}px"
+                pos = f"left:{90 + xl + 300:.0f}px;top:{420 + y0 - 150:.0f}px"
             else:
                 pos = f"right:80px;text-align:right;top:{420 + y1 + 30:.0f}px"
             rotulos.append(

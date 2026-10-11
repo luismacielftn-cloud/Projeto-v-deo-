@@ -1,0 +1,400 @@
+{
+ "identidade": "salvia-forte",
+ "video": "assets/cortado.mp4",
+ "transcricao": "transcript.json",
+ "arroba": "@luismacciel",
+ "humor_inicial": "calma",
+ "voz_pb": "radio",
+ "legenda": {
+  "ativa": true,
+  "max_palavras": 3,
+  "estilo": "destaque",
+  "cor": "#F2C94C",
+  "tam": 66
+ },
+ "layout": {
+  "legenda_y": 1400,
+  "titulo_y": 1340,
+  "capitulo_y": 1380,
+  "cta_y": 1360,
+  "lista_y": 1330,
+  "fim_ig_y": 520
+ },
+ "marca": {
+  "ativa": true,
+  "intervalo": 4,
+  "posicoes": [
+   [
+    850,
+    300
+   ],
+   [
+    40,
+    600
+   ],
+   [
+    850,
+    140
+   ],
+   [
+    850,
+    1110
+   ],
+   [
+    40,
+    140
+   ],
+   [
+    850,
+    520
+   ]
+  ]
+ },
+ "eventos": [
+  {
+   "tipo": "dividida",
+   "inicio": 0.0,
+   "fim": 2.95,
+   "midia": "assets/gancho_fx.mp4",
+   "descer": 820
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 4.6,
+   "fim": 6.5,
+   "estilo": "seco",
+   "escala": 1.22,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "broll",
+   "inicio": 6.55,
+   "fim": 9.6,
+   "midia": "assets/pernas_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 9.65,
+   "fim": 10.7,
+   "escala": 1.12,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "pb",
+   "inicio": 10.75,
+   "fim": 12.62
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 12.66,
+   "fim": 15.66,
+   "midia": "assets/cadeira_fx.mp4",
+   "descer": 820
+  },
+  {
+   "tipo": "broll",
+   "inicio": 15.7,
+   "fim": 18.95,
+   "midia": "assets/escada_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 19.25,
+   "fim": 23.0,
+   "titulo": "não precisa de",
+   "itens": [
+    {
+     "icone": "×",
+     "texto": "academia lotada",
+     "t": 20.9
+    },
+    {
+     "icone": "×",
+     "texto": "2 horas de treino",
+     "t": 22.1
+    }
+   ]
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 23.05,
+   "humor": "tensa"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 23.2,
+   "fim": 24.35,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "cena",
+   "modelo": "numero",
+   "inicio": 24.4,
+   "fim": 29.15,
+   "titulo": "depois dos 40",
+   "grande": "10–15%",
+   "unidade": "da força das pernas",
+   "texto": "a cada década",
+   "t": 26.65,
+   "tam": 210
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 29.35,
+   "fim": 31.9,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 32.0,
+   "fim": 34.55,
+   "antes": "depois dos 70",
+   "destaque": "25–40%",
+   "depois": "por década",
+   "vivo": 1
+  },
+  {
+   "tipo": "broll",
+   "inicio": 34.62,
+   "fim": 36.62,
+   "midia": "assets/sarcopenia_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "cena",
+   "modelo": "queda",
+   "inicio": 36.75,
+   "fim": 41.4,
+   "titulo": "o que cai primeiro",
+   "idades": [
+    40,
+    50,
+    60,
+    70,
+    80
+   ],
+   "marco": 0,
+   "t_marco": 37.2,
+   "linhas": [
+    {
+     "rotulo": "força",
+     "t": 38.45,
+     "t_fim": 39.5,
+     "marco": 0
+    },
+    {
+     "rotulo": "massa muscular",
+     "t": 40.05,
+     "t_fim": 41.0,
+     "marco": 2,
+     "tam": 50
+    }
+   ]
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 43.5,
+   "fim": 45.6,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 45.85,
+   "fim": 49.05,
+   "midia": "assets/pernas_raiox_fx.mp4",
+   "descer": 820
+  },
+  {
+   "tipo": "pb",
+   "inicio": 50.7,
+   "fim": 52.15
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 52.2,
+   "fim": 55.9,
+   "escala": 1.12,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 56.95,
+   "fim": 58.65,
+   "antes": "uma das coisas mais",
+   "destaque": "reversíveis",
+   "depois": "do corpo",
+   "vivo": 2
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 58.7,
+   "humor": "inspira"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 59.2,
+   "fim": 65.15,
+   "titulo": "faz comigo agora",
+   "itens": [
+    {
+     "icone": "✓",
+     "texto": "em pé, de frente pra cadeira",
+     "t": 60.5
+    },
+    {
+     "icone": "✓",
+     "texto": "sente e levante sem as mãos",
+     "t": 62.1
+    },
+    {
+     "icone": "✓",
+     "texto": "10 vezes seguidas",
+     "t": 64.2
+    }
+   ]
+  },
+  {
+   "tipo": "broll",
+   "inicio": 65.25,
+   "fim": 69.45,
+   "midia": "assets/aula_fx.mp4",
+   "estilo": "cheia"
+  },
+  {
+   "tipo": "broll",
+   "inicio": 69.6,
+   "fim": 73.35,
+   "midia": "assets/sofa_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 73.6,
+   "fim": 78.15,
+   "midia": "assets/casal_fx.mp4",
+   "descer": 820
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 78.35,
+   "fim": 79.55,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "broll",
+   "inicio": 79.6,
+   "fim": 81.35,
+   "midia": "assets/joelho_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 83.8,
+   "fim": 85.55,
+   "estilo": "seco",
+   "escala": 1.18,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "cena",
+   "modelo": "frase",
+   "inicio": 85.6,
+   "fim": 88.0,
+   "palavras": [
+    {
+     "texto": "não",
+     "t": 85.7
+    },
+    {
+     "texto": "existe",
+     "t": 85.78,
+     "quebra": true
+    },
+    {
+     "texto": "perna",
+     "t": 85.9
+    },
+    {
+     "texto": "forte",
+     "t": 86.4,
+     "quebra": true
+    },
+    {
+     "texto": "sem",
+     "t": 86.7
+    },
+    {
+     "texto": "exercício",
+     "t": 87.0,
+     "destaque": 1
+    },
+    {
+     "texto": "de",
+     "t": 87.4,
+     "destaque": 1
+    },
+    {
+     "texto": "força",
+     "t": 87.5,
+     "destaque": 1
+    }
+   ]
+  },
+  {
+   "tipo": "lista",
+   "inicio": 88.05,
+   "fim": 90.15,
+   "titulo": "não é",
+   "itens": [
+    {
+     "icone": "×",
+     "texto": "sorte",
+     "t": 88.3
+    },
+    {
+     "icone": "×",
+     "texto": "genética",
+     "t": 89.0
+    },
+    {
+     "icone": "✓",
+     "texto": "é estímulo",
+     "t": 89.6
+    }
+   ]
+  },
+  {
+   "tipo": "broll",
+   "inicio": 90.2,
+   "fim": 93.4,
+   "midia": "assets/halteres_fx.mp4",
+   "estilo": "cheia"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 94.7,
+   "fim": 97.2,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "final",
+   "inicio": 97.4,
+   "cta_antes": "comenta aqui",
+   "cta_destaque": "quantas vezes?",
+   "cta_depois": "você conseguiu",
+   "escurecer_em": 3.6
+  }
+ ]
+}
