@@ -103,7 +103,8 @@ ICONE_IG = (
 
 CSS_PROVA = f"""
 .div-topo {{ position: absolute; left: 0; top: 0; width: {W}px; overflow: hidden; background: #000;
-  box-shadow: 0 10px 40px rgba(0,0,0,.6); }}
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 190px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 190px), transparent); }}
 .div-topo img, .div-topo video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
 .broll {{ position: absolute; inset: 0; background: #000; }}
 .broll-cheia {{ position: absolute; inset: 0; }}
