@@ -92,7 +92,8 @@ Um único OK vale para as duas etapas.
    - `npx hyperframes init` foi bloqueado pelo filtro de segurança desta sessão. Crie os arquivos à mão a partir de `.claude/skills/talking-head-recut/references/`.
 4. Antes de renderizar, extraia quadros do vídeo cortado para conferir que nada cobre o rosto. Depois, na pasta `hf/`, rode `npx --yes hyperframes@0.8.145 lint` (zero erros) e depois `npx --yes hyperframes@0.8.145 render --quality looks --output com_animacoes.mp4`.
 5. Use `HYPERFRAMES_NO_TELEMETRY=1`. Nunca rode `hyperframes feedback`: ele publica num canal público.
-6. Para vídeos de apoio (B-roll), não há banco de vídeos configurado. Use o que o usuário mandar ou visualizações geradas. Se o usuário quiser stock, peça uma chave gratuita do Pexels.
+6. **Vídeos de apoio (B-roll):** use `python3 ferramentas/buscar_clipes.py "<termo em inglês>" --listar` e depois `-o hf/assets/x.mp4 --escolha N`. O banco é o Pixabay, com licença livre; precisa de `PIXABAY_API_KEY`, configurada pelo usuário nas variáveis de ambiente. O Pexels pausou a emissão de chaves. Encaixe os clipes com os eventos `broll` ou `dividida`.
+   - Clipes de terceiros (notícias, famosos) só entram se o usuário mandar o arquivo ou o link. Não busque esse tipo de material por conta própria.
 
 ## Finalizar e entregar
 
