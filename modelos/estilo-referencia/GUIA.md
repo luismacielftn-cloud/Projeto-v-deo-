@@ -4,6 +4,29 @@ Este é o estilo **padrão** dos vídeos do usuário. Ele foi tirado da análise
 
 Use este guia para planejar a edição e o `montar.py` para gerar a composição do HyperFrames.
 
+## Identidade visual
+
+A estrutura vem da referência, mas a aparência é configurável. Cada identidade fica em `identidades/<nome>.json` e define:
+- cores;
+- fontes (Inter, Fraunces e Cormorant Garamond, todas OFL, em `assets/`);
+- jeito de animar: com quique (`pop`) ou suave (desfoque e subida);
+- zoom seco ou suave;
+- transição: clarão ou véu de luz;
+- quais efeitos sonoros cada elemento dispara.
+
+No `roteiro.json`, escolha com `"identidade": "<nome>"`.
+
+| Identidade | Visual |
+| --- | --- |
+| `referencia` | Cópia da referência: laranja, Inter Black, quique |
+| `salvia` | Verde-sálvia, off-white e Fraunces itálico; suave |
+| `oceano` | Azul-gelo, branco e Inter minimalista; suave |
+| `champanhe` | Preto e branco com dourado e Cormorant Garamond itálico; suave |
+
+O usuário (tema: emagrecimento, saúde e longevidade; estilo elegante e minimalista; @luismacciel) está escolhendo entre `salvia`, `oceano` e `champanhe`.
+
+O `montar.py` também grava o `mix.json` com as deixas de som (efeitos, voz abafada nos `pb`, insertos com `"som": true`, trilha) para a mixagem final.
+
 ## Estrutura do roteiro (para mapear os eventos)
 
 | Trecho | Na referência | O que entra na edição |
