@@ -1,0 +1,10 @@
+# Video Use (helpers/)
+requests
+librosa
+matplotlib
+pillow
+numpy
+# Transcrição local (ferramentas/transcrever.py)
+faster-whisper
+# huggingface-hub (dependência do faster-whisper) exige click novo
+click>=8.4.2
