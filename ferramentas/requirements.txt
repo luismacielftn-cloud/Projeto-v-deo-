@@ -8,3 +8,5 @@ numpy
 faster-whisper
 # huggingface-hub (dependência do faster-whisper) exige click novo
 click>=8.4.2
+# Baixar vídeos grandes enviados por link do Google Drive
+gdown

@@ -27,7 +27,7 @@ O ambiente na nuvem precisa ter acesso à rede **Completo** (ou Custom com `hugg
 ## Recebendo o vídeo
 
 - Anexos do chat chegam em `/root/.claude/uploads/<sessão>/`. Liste a pasta para achar o arquivo.
-- Link do Google Drive: use `pip install --break-system-packages gdown` e `gdown --fuzzy <link>`. Link direto: `curl -L -o`.
+- O app do Claude limita anexos a 30 MB. Vídeos maiores chegam por link do Google Drive: baixe com `gdown --fuzzy "<link>" -O videos/<nome>/` (já instalado pelo hook). Link direto: `curl -L -o`.
 - Copie para `videos/<nome-curto>/` e trabalhe lá. Todas as saídas vão em `videos/<nome-curto>/edit/` (regra 12 do Video Use).
 - Vídeos e áudios estão no `.gitignore`. Nunca faça commit de mídia, porque o GitHub recusa arquivos acima de 100 MB.
 
