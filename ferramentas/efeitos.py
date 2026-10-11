@@ -158,6 +158,70 @@ def sino() -> tuple[np.ndarray, float]:
     return _norm(_estereo(x, -0.1, 0.1)), 0.0
 
 
+# --- Pacote "tenso" (vídeos sérios) -------------------------------------------
+
+
+def riser() -> tuple[np.ndarray, float]:
+    """Tensão que sobe: tom em varredura + ruído crescendo. O impacto é o FIM do som."""
+    dur = 1.8
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    f = 180 * (4400 / 180) ** (t / dur) ** 1.6
+    tom = np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.4 * np.sin(
+        4 * np.pi * np.cumsum(f) / SR
+    )
+    b, a = signal.butter(2, [1200, 9000], btype="band", fs=SR)
+    ar = signal.lfilter(b, a, _ruido(n, 31))
+    env = (t / dur) ** 2.5
+    x = (0.6 * tom + 0.5 * ar) * env
+    x[-int(0.01 * SR) :] *= np.linspace(1, 0, int(0.01 * SR))
+    return _norm(_estereo(x, -0.4, 0.4)), dur
+
+
+def boom() -> tuple[np.ndarray, float]:
+    """Impacto grave de cinema ("braam"): sub que cai + cauda longa."""
+    n = int(2.6 * SR)
+    t = np.arange(n) / SR
+    f = 55 * np.exp(-t * 1.2) + 32
+    sub = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.9)
+    corpo = (
+        sum(np.sin(2 * np.pi * h * 55 * t + h) / h for h in (2, 3, 4))
+        * np.exp(-t / 0.35)
+        * 0.5
+    )
+    b, a = signal.butter(2, 900, fs=SR)
+    estalo = signal.lfilter(b, a, _ruido(n, 41)) * np.exp(-t / 0.03)
+    x = np.tanh(1.8 * (sub + corpo + 0.8 * estalo))
+    return _norm(_estereo(x)), 0.0
+
+
+def hit_tenso() -> tuple[np.ndarray, float]:
+    """Batida curta e seca, metálica no ataque."""
+    n = int(0.7 * SR)
+    t = np.arange(n) / SR
+    f = 90 * np.exp(-t * 8) + 48
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.18)
+    metal = (
+        sum(np.sin(2 * np.pi * fr * t) for fr in (1830, 2460, 3170))
+        * np.exp(-t / 0.05)
+        * 0.15
+    )
+    return _norm(_estereo(np.tanh(1.5 * (x + metal)))), 0.0
+
+
+def coracao() -> tuple[np.ndarray, float]:
+    """Batida de coração (tum-tum)."""
+    n = int(0.9 * SR)
+    out = np.zeros(n)
+    for ini, g in ((0.0, 1.0), (0.22, 0.75)):
+        i = int(ini * SR)
+        t = np.arange(n - i) / SR
+        out[i:] += (
+            g * np.sin(2 * np.pi * (60 * np.exp(-t * 10) + 42) * t) * np.exp(-t / 0.09)
+        )
+    return _norm(_estereo(out)), 0.0
+
+
 EFEITOS = {
     "whoosh": lambda: whoosh(False),
     "whoosh_suave": lambda: whoosh(True),
@@ -167,6 +231,10 @@ EFEITOS = {
     "tick": tick,
     "respiro": respiro,
     "sino": sino,
+    "riser": riser,
+    "boom": boom,
+    "hit_tenso": hit_tenso,
+    "coracao": coracao,
 }
 # Volume de cada efeito na mixagem, em dB relativos ao pico da voz.
 # Efeito bom é sentido, não notado: fica bem abaixo da fala.
@@ -179,6 +247,10 @@ GANHO_DB = {
     "tick": -21,
     "respiro": -19,
     "sino": -15,
+    "riser": -17,
+    "boom": -12,
+    "hit_tenso": -15,
+    "coracao": -14,
 }
 
 
@@ -187,7 +259,11 @@ def efeito(nome: str) -> tuple[np.ndarray, float]:
         raise KeyError(
             f"efeito desconhecido: {nome} (disponíveis: {', '.join(EFEITOS)})"
         )
-    return EFEITOS[nome]()
+    som, ancora = EFEITOS[nome]()
+    f = int(0.015 * SR)  # fim suave: nenhum efeito termina com estalo
+    som = som.copy()
+    som[-f:] *= np.linspace(1, 0, f)[:, None]
+    return som, ancora
 
 
 def gravar_wav(path: Path, x: np.ndarray, sr: int = SR) -> None:

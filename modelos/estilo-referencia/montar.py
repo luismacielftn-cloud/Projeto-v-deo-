@@ -52,7 +52,28 @@ FONTES = {
     ],
 }
 IDENTIDADE_PADRAO = "salvia"  # identidade escolhida pelo usuário
-HUMORES = ["calma", "leve", "inspira"]  # trilha automática: um humor por seção
+HUMORES = ["calma", "leve", "inspira"]
+# "tom": "tenso" no roteiro: vídeos sérios (sons de cinema e trilha sombria).
+HUMORES_TENSOS = ["tensa", "tensa_pulso", "tensa"]
+SONS_TENSOS = {
+    "titulo": ["hit_tenso"],
+    "titulo_vivo": ["boom"],
+    "capitulo": ["boom"],
+    "zoom": ["hit_tenso"],
+    "janela": ["whoosh"],
+    "inserto": ["riser", "boom"],
+    "broll": ["riser", "boom"],
+    "broll_saida": ["whoosh"],
+    "dividida": ["whoosh", "hit_tenso"],
+    "transicao": ["riser"],
+    "cena": ["whoosh", "hit_tenso"],
+    "cena_saida": ["whoosh"],
+    "cena_item": ["tick"],
+    "lista": [],
+    "lista_item": ["tick"],
+    "pb": ["coracao"],
+    "final": ["boom"],
+}  # trilha automática: um humor por seção
 # Eventos que já mostram texto: a legenda some enquanto estão ativos.
 TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista"}
 # Posição vertical (px) dos blocos de texto. O roteiro pode sobrescrever em "layout"
@@ -78,6 +99,17 @@ ICONE_IG = (
     '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/>'
     '<circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>'
 )
+
+
+CSS_PROVA = f"""
+.div-topo {{ position: absolute; left: 0; top: 0; width: {W}px; overflow: hidden; background: #000;
+  box-shadow: 0 10px 40px rgba(0,0,0,.6); }}
+.div-topo img, .div-topo video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
+.broll {{ position: absolute; inset: 0; background: #000; }}
+.broll-cheia {{ position: absolute; inset: 0; }}
+.broll-cartao {{ position: absolute; left: 90px; top: 360px; width: 900px; height: 900px; border-radius: 26px; overflow: hidden; }}
+.broll img, .broll video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
+"""
 
 
 def esc(t: str) -> str:
@@ -348,6 +380,10 @@ def montar(roteiro_path: Path) -> Path:
     pasta = roteiro_path.resolve().parent
     r = json.loads(roteiro_path.read_text())
     idt = carregar_identidade(r.get("identidade", IDENTIDADE_PADRAO))
+    tenso = r.get("tom") == "tenso"
+    if tenso:
+        idt["sons"] = {**idt.get("sons", {}), **SONS_TENSOS}
+    humores = HUMORES_TENSOS if tenso else HUMORES
     dest_cfg, capg_cfg = idt["destaque"], idt["capitulo_grande"]
     L = {**LAYOUT_PADRAO, **r.get("layout", {})}
 
@@ -365,6 +401,7 @@ def montar(roteiro_path: Path) -> Path:
     zonas: list[tuple[float, float, tuple[int, int, int, int]]] = []
     abafar: list[list[float]] = []
     insertos_som: list[dict] = []
+    divididas: list[tuple[float, float, int]] = []
 
     for k, e in enumerate(eventos):
         tipo, t0 = e["tipo"], float(e["inicio"])
@@ -467,6 +504,76 @@ def montar(roteiro_path: Path) -> Path:
             comp.som("cena_saida", t1 - 0.15)
             for ts, nome in sons_cena:
                 comp.som(nome, ts)
+
+        elif tipo == "dividida":
+            # Vídeo/imagem de prova na metade de cima; a câmera desce para a de baixo.
+            alt = int(e.get("altura", 980))
+            desce = int(e.get("descer", 445))
+            comp.setar("#cam", t0, f"y: {desce}")
+            comp.setar("#cam", t1, "y: 0")
+            ini_m = float(e.get("inicio_midia", 0))
+            comp.html.append(
+                f'<div id="{ev}" class="div-topo" style="height:{alt}px;opacity:0">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div>'
+            )
+            comp.setar(f"#{ev}", 0, "opacity: 0")
+            comp.tween(
+                f"#{ev}",
+                t0,
+                "opacity: 0, y: -60",
+                "opacity: 1, y: 0",
+                0.3,
+                "power3.out",
+            )
+            comp.js.append(
+                f'tl.to("#{ev}", {{opacity: 0, duration: 0.2, ease: "power2.in"}}, {t1 - 0.2:.3f});'
+            )
+            zonas.append((t0, t1, (0, 0, W, alt + 20)))
+            divididas.append((t0, t1, alt))
+            comp.som("dividida", t0)
+            if e.get("som") and eh_video(e["midia"]):
+                insertos_som.append(
+                    {
+                        "arquivo": str((pasta / e["midia"]).resolve()),
+                        "t": round(t0, 3),
+                        "inicio_midia": ini_m,
+                        "dur": round(t1 - t0, 3),
+                        "ganho_db": float(e.get("ganho_db", 0)),
+                    }
+                )
+
+        elif tipo == "broll":
+            # Vídeo de prova cobrindo a câmera: tela cheia ou cartão sobre fundo preto.
+            ini_m = float(e.get("inicio_midia", 0))
+            cartao = e.get("estilo", "cheia") == "cartao"
+            classe = "broll-cartao" if cartao else "broll-cheia"
+            comp.html.append(
+                f'<div id="{ev}" class="broll" style="opacity:0"><div class="{classe}">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div></div>'
+            )
+            comp.setar(f"#{ev}", 0, "opacity: 0")
+            comp.tween(
+                f"#{ev}",
+                t0,
+                'opacity: 0, scale: 1.06, filter: "blur(14px)"',
+                'opacity: 1, scale: 1, filter: "blur(0px)"',
+                0.3,
+                "power3.out",
+            )
+            comp.js.append(
+                f'tl.to("#{ev}", {{opacity: 0, duration: 0.22, ease: "power2.in"}}, {t1 - 0.22:.3f});'
+            )
+            zonas.append((t0, t1, (0, 0, W, H)))
+            comp.som("broll", t0)
+            comp.som("broll_saida", t1 - 0.15)
+            if e.get("som") and eh_video(e["midia"]):
+                insertos_som.append(
+                    {
+                        "arquivo": str((pasta / e["midia"]).resolve()),
+                        "t": round(t0, 3),
+                        "inicio_midia": ini_m,
+                        "dur": round(t1 - t0, 3),
+                        "ganho_db": float(e.get("ganho_db", 0)),
+                    }
+                )
 
         elif tipo == "lista":
             itens = e["itens"]
@@ -643,6 +750,8 @@ def montar(roteiro_path: Path) -> Path:
                 continue
             t1 = min([t1] + [a for a, _ in janelas_sem_legenda if t0 < a < t1])
             voz = " voz" if any(a <= meio <= z for a, z in vozes) else ""
+            na_divisao = next((alt for a, z, alt in divididas if a <= meio <= z), None)
+            pos = f"top:{na_divisao - 120}px" if na_divisao else ""
             if not karaoke:
                 comp.clip(
                     f"leg{i}",
@@ -650,6 +759,7 @@ def montar(roteiro_path: Path) -> Path:
                     t0,
                     min(t1, dur),
                     esc(" ".join(w["text"] for w in b)),
+                    pos,
                 )
                 continue
             # Palavra falada acende em amarelo e cresce; as outras ficam na cor base.
@@ -664,6 +774,7 @@ def montar(roteiro_path: Path) -> Path:
                 t0,
                 min(t1, dur),
                 f'<span id="leg{i}-in">{spans}</span>',
+                pos,
             )
             comp.tween(
                 f"#leg{i}-in",
@@ -722,7 +833,7 @@ def montar(roteiro_path: Path) -> Path:
     <meta name="viewport" content="width={W}, height={H}" />
     <script src="assets/gsap.min.js"></script>
     <style>
-{font_faces}{css_identidade(idt, L)}{cenas.css(idt)}{css_legenda}
+{font_faces}{css_identidade(idt, L)}{cenas.css(idt)}{css_legenda}{CSS_PROVA}
     </style>
   </head>
   <body>
@@ -752,10 +863,10 @@ def montar(roteiro_path: Path) -> Path:
     trilha = r.get("trilha", {"auto": True})
     if trilha.get("auto", True) and not musica:
         caps = [e for e in eventos if e["tipo"] == "capitulo"]
-        inicios = [(0.0, r.get("humor_inicial", HUMORES[0]))]
+        inicios = [(0.0, r.get("humor_inicial", humores[0]))]
         for n, c in enumerate(caps):
             inicios.append(
-                (float(c["inicio"]), c.get("humor", HUMORES[(n + 1) % len(HUMORES)]))
+                (float(c["inicio"]), c.get("humor", humores[(n + 1) % len(humores)]))
             )
         fim_fala = min([e["inicio"] for e in eventos if e["tipo"] == "final"] + [dur])
         secoes = [

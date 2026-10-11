@@ -84,6 +84,24 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 
 Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), peça uma chave gratuita do Pexels.
 
+## Vídeos de prova e tom tenso (2ª referência do usuário)
+
+Na segunda referência, o criador **prova o que fala com vídeos**: tira a própria imagem da tela e deixa só a voz, divide a tela, e às vezes cala para o clipe tocar com o próprio som. O som é **tenso**: *riser* antes das revelações, "boom" grave nos impactos e trilha sombria e pulsante.
+
+| Evento | O que faz | Campos |
+| --- | --- | --- |
+| `dividida` | Clipe/imagem na metade de cima; a câmera desce e você fica na de baixo; a legenda vai para a emenda | `midia`, `altura` (980), `descer` (445), `som`, `inicio_midia` |
+| `broll` | Clipe cobrindo a câmera: `"estilo": "cheia"` (tela cheia) ou `"cartao"` (cartão sobre fundo preto) | `midia`, `estilo`, `som`, `inicio_midia`, `ganho_db` |
+
+- **Tom tenso, para vídeos sérios** (o usuário escolhe vídeo a vídeo): `"tom": "tenso"` no roteiro. Os sons passam a ser:
+  - `riser` + `boom` nas entradas de clipe;
+  - `hit_tenso` nos títulos e zooms;
+  - `boom` nos capítulos e na tela final;
+  - `coracao` no P&B.
+  A trilha usa os humores `tensa` e `tensa_pulso`. Sem `"tom"`, fica a Sálvia suave.
+- **Clipes com som próprio:** use `"som": true` e abra espaço na fala na etapa do Video Use (trecho com `"manter": true`).
+- **Origem dos clipes:** o usuário manda os clipes de terceiros (notícias, entrevistas). Não baixe por conta própria. Clipes genéricos vêm do Pexels, com a chave do usuário.
+
 ## Layout: não cobrir o rosto
 
 As posições padrão servem para um rosto no terço superior. Antes de montar, olhe 3 quadros do vídeo e, se o rosto ocupar o meio do quadro, desça os textos para a altura do peito:
