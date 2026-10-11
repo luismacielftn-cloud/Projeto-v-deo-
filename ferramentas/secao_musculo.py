@@ -1,5 +1,10 @@
 """Ilustração animada de sarcopenia: coxa em corte, jovem × idosa.
 
+Padrão: fotos realistas da coxa em corte (geradas no Canva, em
+modelos/estilo-referencia/assets/sarcopenia/); a da direita vira, no meio do
+clipe, a coxa com o músculo tomado de gordura. O usuário pediu "mais próximo do
+real". Com --desenho, usa a versão desenhada abaixo.
+
 Desenha dois cortes transversais de coxa (pele, gordura, músculo, osso). O da
 esquerda fica jovem; o da direita "envelhece" no meio do clipe: o músculo
 encolhe, a gordura engrossa e aparecem manchas de gordura dentro do músculo.
@@ -68,6 +73,52 @@ def corte(d: ImageDraw.ImageDraw, cx: float, cy: float, r: float, idade: float, 
     d.ellipse([cx - 17, cy - 13, cx + 17, cy + 21], fill=MEDULA)
 
 
+FOTOS = FONTES / "sarcopenia"
+
+
+def carregar_fotos(diam: int) -> tuple[Image.Image, Image.Image, Image.Image]:
+    """Coxa saudável e com sarcopenia (fotos realistas geradas no Canva, 200 px),
+    ampliadas com lanczos e um leve realce, mais a máscara redonda."""
+    from PIL import ImageFilter
+
+    def abre(nome: str) -> Image.Image:
+        im = Image.open(FOTOS / nome).convert("RGB").resize((diam, diam), Image.LANCZOS)
+        return im.filter(ImageFilter.UnsharpMask(radius=2, percent=70, threshold=2))
+
+    yy, xx = np.mgrid[0:diam, 0:diam]
+    r = np.hypot(xx - diam / 2, yy - diam / 2) / (diam / 2)
+    masc = Image.fromarray((np.clip((1.0 - r) / 0.04, 0, 1) * 255).astype(np.uint8), "L")
+    return abre("coxa_saudavel.jpg"), abre("coxa_sarcopenia.jpg"), masc
+
+
+def quadro_foto(w: int, h: int, t: float, a: argparse.Namespace, fotos, f) -> Image.Image:
+    jovem, velho, masc = fotos
+    diam = jovem.size[0]
+    im = Image.new("RGB", (w, h), "#000000")
+    d = ImageDraw.Draw(im)
+    entra = suave(t / 0.3)
+    idade = suave((t - a.muda) / 0.9)
+    zoom = 1.0 + 0.04 * t / max(a.dur, 0.1)  # leve aproximação, para não ficar parado
+    dz = int(diam * zoom)
+    cy = int(h * 0.5)
+    for cx, mistura, rot, cor in (
+        (int(w * 0.265), 0.0, a.esquerda, TEXTO),
+        (int(w * 0.735), idade, a.direita, DOURADO),
+    ):
+        foto = Image.blend(jovem, velho, mistura) if mistura > 0 else jovem
+        foto = foto.resize((dz, dz), Image.LANCZOS)
+        im.paste(foto, (cx - dz // 2, cy - dz // 2), masc.resize((dz, dz)))
+        tw = d.textlength(rot, font=f["rot"])
+        d.text((cx - tw / 2, cy + dz / 2 + 22), rot, font=f["rot"], fill=cor)
+    tw = d.textlength(a.titulo, font=f["tit"])
+    d.text((w / 2 - tw / 2, h * 0.07), a.titulo, font=f["tit"], fill=DOURADO)
+    tw = d.textlength(a.sub, font=f["sub"])
+    d.text((w / 2 - tw / 2, h * 0.07 + 70), a.sub, font=f["sub"], fill=TEXTO)
+    if entra < 1:
+        im = Image.blend(Image.new("RGB", (w, h), "#000000"), im, entra)
+    return im
+
+
 def quadro(w: int, h: int, t: float, a: argparse.Namespace, pts, f) -> Image.Image:
     im = Image.new("RGB", (w, h), "#0B100D")
     d = ImageDraw.Draw(im)
@@ -114,6 +165,7 @@ def main() -> None:
     ap.add_argument("--direita", default="70 anos")
     ap.add_argument("--titulo", default="sarcopenia")
     ap.add_argument("--sub", default="perda de músculo com a idade")
+    ap.add_argument("--desenho", action="store_true", help="usa o desenho simples em vez das fotos realistas")
     a = ap.parse_args()
     w, h, fps = a.largura, a.altura, 30
     f = {
@@ -126,8 +178,10 @@ def main() -> None:
     cmd = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{w}x{h}",
            "-r", str(fps), "-i", "-", "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p", str(a.output)]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
+    fotos = None if a.desenho else carregar_fotos(int(min(w * 0.45, h * 0.5)))
     for i in range(int(round(a.dur * fps))):
-        p.stdin.write(quadro(w, h, i / fps, a, pts, f).tobytes())
+        q = quadro(w, h, i / fps, a, pts, f) if a.desenho else quadro_foto(w, h, i / fps, a, fotos, f)
+        p.stdin.write(q.tobytes())
     p.stdin.close()
     p.wait()
     print(f"ilustração: {a.output} ({a.dur:.2f}s, {w}x{h})")

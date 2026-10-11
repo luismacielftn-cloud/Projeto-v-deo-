@@ -23,7 +23,8 @@ ffmpeg -v error -y -ss 14 -t 6.4 -i "$T/cadeira.mp4" -vf "scale=1080:-2,crop=108
 # escadaria (cartão)
 baixa 152203 escada
 ffmpeg -v error -y -ss 1 -t 3.4 -i "$T/escada.mp4" -vf "scale=-2:800,crop=840:800:(iw-840)*0.5:0" "${X[@]}" "$A/escada.mp4"
-# "sarcopenia" (cartão): ilustração da coxa em corte, músculo encolhendo com a idade.
+# "sarcopenia" (cartão): coxa em corte realista (fotos em modelos/estilo-referencia/assets/sarcopenia/),
+# a de 70 anos vira músculo tomado de gordura.
 # (O clipe de banco de músculos fortes foi recusado: precisa mostrar PERDA de músculo.)
 python3 "$RAIZ/ferramentas/secao_musculo.py" -o "$A/sarcopenia_ilustra.mp4" --dur 2.2 --muda 0.5 >/dev/null
 # músculos das pernas em raio-X (dividida)
