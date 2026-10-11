@@ -9,3 +9,4 @@
 - Cores vivas: "5 minutos de celular" (coral) e "proteger" (verde-lima).
 **Log:** Whisper ouviu "check e meio" = "checa e-mail"; transcript corrigido só no texto.
 **Pendente:** retorno do usuário sobre volume da trilha e dos efeitos; corrigir a PIXABAY_API_KEY.
+**Entrega:** final.mp4 e entrega/primeira-hora-serio.mp4 (27 MB), 91,6 s, -14,0 LUFS, pico -1,4 dBTP; trilha+efeitos ~10–14 dB abaixo da voz. Render do HyperFrames: 6,5 min.
