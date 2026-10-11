@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Rebaixa do Pixabay e prepara os clipes do vídeo "força das pernas (60 segundos)":
+# Rebaixa do Pixabay (e um do Mixkit) e prepara os clipes do vídeo "força das pernas (60 segundos)":
 # trecho, recorte no tamanho do formato e filtro no estilo @elias.maman.
 #   tela dividida 1080×980 (desfoque) · cartão 840×800 (tv) · tela cheia 1080×1920 (lente)
 # Uso: bash retomar/forca-pernas/preparar_clipes.sh videos/v2/edit/hf/assets
@@ -30,9 +30,12 @@ python3 "$RAIZ/ferramentas/secao_musculo.py" -o "$A/sarcopenia_ilustra.mp4" --du
 # músculos das pernas em raio-X (dividida)
 baixa 57691 pernas_raiox
 ffmpeg -v error -y -ss 9.5 -t 3.3 -i "$T/pernas_raiox.mp4" -vf "scale=-2:980,crop=1080:980:(iw-1080)*0.5:0" "${X[@]}" "$A/pernas_raiox.mp4"
-# aula de idosos com as cadeiras atrás (tela cheia)
-baixa 32937 aula
-ffmpeg -v error -y -ss 2 -t 4.2 -i "$T/aula.mp4" -vf "scale=-2:1920,crop=1080:1920:(iw-1080)*0.55:0" "${X[@]}" "$A/aula.mp4"
+# agachamento em casa (dividida) — "esse movimento simples… para treinar a força da perna".
+# A aula de idosos com os braços para cima (Pixabay 32937) foi recusada: a fala é sentar e levantar.
+# Nem Pixabay nem Mixkit têm pessoa madura sentando/levantando da cadeira; este é o mais próximo
+# (Mixkit 21273, licença gratuita do Mixkit). Trecho 8,3–14,2 s: desce, segura, sobe; 1,4× mais rápido.
+curl -sSL -A "Mozilla/5.0" -o "$T/agachamento.mp4" "https://assets.mixkit.co/videos/21273/21273-720.mp4"
+ffmpeg -v error -y -ss 8.3 -t 5.9 -i "$T/agachamento.mp4" -vf "setpts=PTS/1.4,scale=-2:980:flags=lanczos,crop=1080:980:(iw-1080)*0.6:0" "${X[@]}" -t 4.25 "$A/agachamento.mp4"
 # senhora no sofá (cartão) — "o que você faz várias vezes por dia"
 baixa 298667 sofa
 ffmpeg -v error -y -ss 2 -t 3.8 -i "$T/sofa.mp4" -vf "scale=-2:800,crop=840:800:(iw-840)*0.32:0" "${X[@]}" "$A/sofa.mp4"
@@ -47,8 +50,8 @@ baixa 302441 halteres
 ffmpeg -v error -y -ss 2 -t 3.4 -i "$T/halteres.mp4" -vf "crop=1300:2160:(iw-1300)/2:0,scale=1080:-2,pad=1080:1920:0:(oh-ih)/2:black" "${X[@]}" "$A/halteres.mp4"
 
 filtro desfoque "$A/gancho.mp4" -o "$A/gancho_fx.mp4" --forca 1.2 --brilho 1.5
-for c in cadeira pernas_raiox casal; do filtro desfoque "$A/$c.mp4" -o "$A/${c}_fx.mp4" --forca 1.2; done
+for c in cadeira pernas_raiox casal agachamento; do filtro desfoque "$A/$c.mp4" -o "$A/${c}_fx.mp4" --forca 1.2; done
 for c in pernas escada sofa joelho; do filtro tv "$A/$c.mp4" -o "$A/${c}_fx.mp4"; done
 filtro tv "$A/sarcopenia_ilustra.mp4" -o "$A/sarcopenia_ilustra_fx.mp4" --brilho 1.2
-for c in aula halteres; do filtro lente "$A/$c.mp4" -o "$A/${c}_fx.mp4"; done
+for c in halteres; do filtro lente "$A/$c.mp4" -o "$A/${c}_fx.mp4"; done
 echo "clipes prontos em $A"
