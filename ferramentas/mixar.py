@@ -6,7 +6,7 @@ Lê o mix.json gerado pelo montar.py e:
   - coloca cada efeito sonoro com o ponto de impacto no instante do evento;
   - põe a trilha (gerada ou do usuário) com "ducking": ela abaixa sozinha
     por baixo da fala e sobe nas pausas e na tela final;
-  - normaliza em dois passes para -14 LUFS e pico real de -1 dBTP.
+  - normaliza em dois passes para -14 LUFS e pico real de -1,5 dBTP (folga para o AAC).
 
 Uso (normalmente chamado pelo finalizar.py):
     python3 ferramentas/mixar.py --voz <edit>/cortado.mp4 --mix <edit>/hf/mix.json -o <edit>/mix.wav
@@ -134,8 +134,9 @@ def eq_trilha(x: np.ndarray) -> np.ndarray:
 
 
 def loudnorm(
-    entrada: Path, saida: Path, alvo: float = -14.0, pico: float = -1.0
+    entrada: Path, saida: Path, alvo: float = -14.0, pico: float = -1.5
 ) -> dict:
+    """Dois passes. Pico de -1,5 dBTP deixa folga para o AAC, que sobe o pico ~0,5 dB."""
     filtro = f"loudnorm=I={alvo}:TP={pico}:LRA=11"
     p1 = subprocess.run(
         [

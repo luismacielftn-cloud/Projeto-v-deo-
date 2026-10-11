@@ -14,11 +14,9 @@ videos/**/*.png
 videos/**/*.jpg
 videos/**/*.jpeg
 
-# Saídas intermediárias de edição
-videos/*/edit/clips_graded/
-videos/*/edit/verify/
-videos/*/edit/downloads/
-videos/*/edit/hf/assets/
+# Vídeos do usuário e todo o trabalho de edição (transcrições, EDL,
+# composições, renders): ficam só na sessão, o resultado vai pelo chat.
+videos/
 
 # Python / Node
 __pycache__/

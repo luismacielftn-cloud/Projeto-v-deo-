@@ -81,6 +81,33 @@ HUMORES = {
         "brilho": 3200,
     },
 }
+# Humores sombrios para vídeos sérios ("tom": "tenso" no roteiro): menor,
+# grave, pouca melodia, pulso no baixo.
+HUMORES["tensa"] = {
+    "bpm": 70,
+    "acordes": [
+        [38, 45, 50, 53],
+        [34, 41, 46, 50, 53],
+        [36, 43, 48, 51],
+        [33, 45, 49, 52],
+    ],
+    "arpejo": [0, None, None, None, 2, None, None, None],
+    "passo": 0.5,
+    "bumbo": [0],
+    "chocalho": False,
+    "palma": [],
+    "brilho": 900,
+}
+HUMORES["tensa_pulso"] = {
+    "bpm": 84,
+    "acordes": [[38, 45, 50, 53], [39, 46, 51, 55], [38, 45, 50, 53], [36, 43, 48, 51]],
+    "arpejo": [None, None, 3, None, None, None, 2, None],
+    "passo": 0.5,
+    "bumbo": [0, 1.5, 2],
+    "chocalho": True,
+    "palma": [],
+    "brilho": 1100,
+}
 TEMPOS_POR_ACORDE = 8  # dois compassos de 4/4
 
 

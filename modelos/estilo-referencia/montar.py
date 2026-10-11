@@ -26,6 +26,9 @@ import sys
 from pathlib import Path
 
 AQUI = Path(__file__).resolve().parent
+sys.path.insert(0, str(AQUI))
+import cenas
+
 W, H = 1080, 1920
 
 # família -> [(arquivo, peso, estilo)]
@@ -49,9 +52,40 @@ FONTES = {
     ],
 }
 IDENTIDADE_PADRAO = "salvia"  # identidade escolhida pelo usuário
-HUMORES = ["calma", "leve", "inspira"]  # trilha automática: um humor por seção
+HUMORES = ["calma", "leve", "inspira"]
+# "tom": "tenso" no roteiro: vídeos sérios (sons de cinema e trilha sombria).
+HUMORES_TENSOS = ["tensa", "tensa_pulso", "tensa"]
+SONS_TENSOS = {
+    "titulo": ["hit_tenso"],
+    "titulo_vivo": ["boom"],
+    "capitulo": ["boom"],
+    "zoom": ["hit_tenso"],
+    "janela": ["whoosh"],
+    "inserto": ["riser", "boom"],
+    "broll": ["riser", "boom"],
+    "broll_saida": ["whoosh"],
+    "dividida": ["whoosh", "hit_tenso"],
+    "transicao": ["riser"],
+    "cena": ["whoosh", "hit_tenso"],
+    "cena_saida": ["whoosh"],
+    "cena_item": ["tick"],
+    "lista": [],
+    "lista_item": ["tick"],
+    "pb": ["coracao"],
+    "final": ["boom"],
+}  # trilha automática: um humor por seção
 # Eventos que já mostram texto: a legenda some enquanto estão ativos.
-TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final"}
+TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista"}
+# Posição vertical (px) dos blocos de texto. O roteiro pode sobrescrever em "layout"
+# para não cobrir o rosto (ex.: rosto ocupando o meio do quadro -> textos na altura do peito).
+LAYOUT_PADRAO = {
+    "legenda_y": 1090,
+    "titulo_y": 1020,
+    "capitulo_y": 250,
+    "cta_y": 1150,
+    "lista_y": 1020,
+    "fim_ig_y": 640,
+}
 POSICOES_MARCA = [(40, 1130), (860, 300), (860, 1160), (40, 380), (40, 1650)]
 TAM_MARCA = (260, 90)
 POSICOES_JANELA = {
@@ -65,6 +99,17 @@ ICONE_IG = (
     '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/>'
     '<circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>'
 )
+
+
+CSS_PROVA = f"""
+.div-topo {{ position: absolute; left: 0; top: 0; width: {W}px; overflow: hidden; background: #000;
+  box-shadow: 0 10px 40px rgba(0,0,0,.6); }}
+.div-topo img, .div-topo video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
+.broll {{ position: absolute; inset: 0; background: #000; }}
+.broll-cheia {{ position: absolute; inset: 0; }}
+.broll-cartao {{ position: absolute; left: 90px; top: 360px; width: 900px; height: 900px; border-radius: 26px; overflow: hidden; }}
+.broll img, .broll video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
+"""
 
 
 def esc(t: str) -> str:
@@ -136,7 +181,7 @@ def fonte_css(f: dict) -> str:
     return "; ".join(partes)
 
 
-def css_identidade(idt: dict) -> str:
+def css_identidade(idt: dict, L: dict) -> str:
     c = idt["cores"]
     leg, peq, dest, num = idt["legenda"], idt["pequeno"], idt["destaque"], idt["numero"]
     capg = idt["capitulo_grande"]
@@ -149,7 +194,7 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
 #root {{ position: relative; width: {W}px; height: {H}px; overflow: hidden; font-family: "Inter", sans-serif; }}
 #cam {{ position: absolute; inset: 0; transform-origin: 50% 35%; }}
 #a-roll {{ position: absolute; inset: 0; width: {W}px; height: {H}px; object-fit: cover; }}
-.leg {{ position: absolute; left: 60px; width: 960px; top: 1090px; text-align: center; line-height: 1.2;
+.leg {{ position: absolute; left: 60px; width: 960px; top: {L["legenda_y"]}px; text-align: center; line-height: 1.2;
   {fonte_css(leg)}; font-size: {leg["tam"]}px; color: {c["texto"]}; text-shadow: 0 2px 8px rgba(0,0,0,.65); }}
 .leg.voz {{ color: {c["voz"]}; {voz_it} }}
 .marca {{ position: absolute; width: 260px; color: {c["texto"]}; opacity: {idt.get("marca", {}).get("opacidade", 1)}; }}
@@ -158,9 +203,15 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
   letter-spacing: .08em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }}
 .peq {{ {fonte_css(peq)}; font-size: {peq["tam"]}px; line-height: 1.15; color: {c["texto"]}; text-shadow: {sombra}; }}
 .big {{ {fonte_css(dest)}; color: {c["destaque"]}; line-height: 1; display: block; text-shadow: 0 4px 22px rgba(0,0,0,.4); }}
-.tit {{ position: absolute; left: 70px; width: 940px; top: 1020px; }}
+.tit {{ position: absolute; left: 70px; width: 940px; top: {L["titulo_y"]}px; }}
+.lista {{ position: absolute; left: 70px; width: 940px; top: {L["lista_y"]}px; }}
+.lista .item {{ display: flex; align-items: baseline; gap: 24px; margin-top: 16px; }}
+.lista .ico {{ font-family: "{dest["familia"]}"; font-weight: 500; color: {c["destaque"]}; font-size: 62px;
+  width: 56px; text-align: center; line-height: 1; text-shadow: {sombra}; }}
+.lista .txt {{ font-family: "Inter"; font-weight: 500; font-size: 54px; line-height: 1.1; color: {c["texto"]};
+  text-shadow: {sombra}; }}
 .tit .peq.dir, .cta .dep {{ text-align: right; }}
-.cap {{ position: absolute; left: 70px; top: 250px; }}
+.cap {{ position: absolute; left: 70px; top: {L["capitulo_y"]}px; }}
 .cap .num {{ font-family: "{num["familia"]}"; font-weight: {num["peso"]}; font-size: {num["tam"]}px; line-height: .8;
   font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1;
   color: {c["numero"]}; text-shadow: {sombra}; }}
@@ -176,10 +227,10 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
 .veu {{ position: absolute; top: 0; left: 0; width: {W}px; height: {H}px; mix-blend-mode: screen;
   background: linear-gradient(100deg, rgba(0,0,0,0) 25%, {c["veu"]} 50%, rgba(0,0,0,0) 75%); }}
 .fim-escuro {{ position: absolute; inset: 0; background: #000; }}
-.fim-ig {{ position: absolute; left: 0; width: {W}px; top: 640px; text-align: center; color: {c["texto"]}; }}
+.fim-ig {{ position: absolute; left: 0; width: {W}px; top: {L["fim_ig_y"]}px; text-align: center; color: {c["texto"]}; }}
 .fim-ig svg {{ width: 130px; height: 130px; display: inline-block; }}
 .fim-ig span {{ display: block; margin-top: 18px; font-family: "Inter"; font-weight: 600; font-size: 36px; letter-spacing: .12em; }}
-.cta {{ position: absolute; left: 70px; width: 940px; top: 1150px; }}
+.cta {{ position: absolute; left: 70px; width: 940px; top: {L["cta_y"]}px; }}
 """
 
 
@@ -329,7 +380,12 @@ def montar(roteiro_path: Path) -> Path:
     pasta = roteiro_path.resolve().parent
     r = json.loads(roteiro_path.read_text())
     idt = carregar_identidade(r.get("identidade", IDENTIDADE_PADRAO))
+    tenso = r.get("tom") == "tenso"
+    if tenso:
+        idt["sons"] = {**idt.get("sons", {}), **SONS_TENSOS}
+    humores = HUMORES_TENSOS if tenso else HUMORES
     dest_cfg, capg_cfg = idt["destaque"], idt["capitulo_grande"]
+    L = {**LAYOUT_PADRAO, **r.get("layout", {})}
 
     video = r["video"]
     dur = float(r.get("duracao") or duracao_midia(pasta / video))
@@ -345,6 +401,7 @@ def montar(roteiro_path: Path) -> Path:
     zonas: list[tuple[float, float, tuple[int, int, int, int]]] = []
     abafar: list[list[float]] = []
     insertos_som: list[dict] = []
+    divididas: list[tuple[float, float, int]] = []
 
     for k, e in enumerate(eventos):
         tipo, t0 = e["tipo"], float(e["inicio"])
@@ -390,7 +447,7 @@ def montar(roteiro_path: Path) -> Path:
                     f'<div class="peq dir" id="{ev}-d">{esc(e["depois"])}</div>'
                 )
             comp.clip(ev, "tit", t0, t1, f'<div id="{ev}-in">{"".join(partes)}</div>')
-            zonas.append((t0, t1, (0, 1000, W, 1440)))
+            zonas.append((t0, t1, (0, L["titulo_y"] - 130, W, L["titulo_y"] + 420)))
             if e.get("antes"):
                 comp.entra_texto(f"#{ev}-a", t0)
             comp.entra_destaque(f"#{ev}-b", t0 + 0.15)
@@ -398,6 +455,8 @@ def montar(roteiro_path: Path) -> Path:
                 comp.entra_texto(f"#{ev}-d", t0 + 0.4)
             comp.sai(f"#{ev}-in", t1)
             comp.som("titulo", t0 + 0.15)
+            if e.get("vivo"):
+                comp.som("titulo_vivo", t0 + 0.15)
 
         elif tipo == "capitulo":
             num = idt["numero"]["formato"].replace("{n}", str(int(e["numero"])))
@@ -410,16 +469,138 @@ def montar(roteiro_path: Path) -> Path:
                 f'<div class="grande" id="{ev}-g" style="font-size:{tam}px">{esc(grande)}</div></div></div>'
             )
             comp.clip(ev, "cap", t0, t1, conteudo)
-            zonas.append((t0, t1, (0, 200, W, 440)))
+            zonas.append((t0, t1, (0, L["capitulo_y"] - 110, W, L["capitulo_y"] + 190)))
             comp.entra_destaque(f"#{ev}-n", t0)
             comp.entra_texto(f"#{ev}-p", t0 + 0.12)
             comp.entra_destaque(f"#{ev}-g", t0 + 0.2)
             comp.sai(f"#{ev}-in", t1)
             comp.som("capitulo", t0)
 
+        elif tipo == "cena":
+            corpo, js_cena, sons_cena = cenas.construir(e["modelo"], ev, e, t0, t1, idt)
+            comp.clip(
+                ev,
+                "cena",
+                t0,
+                t1,
+                f'<div class="cena-in" id="{ev}-in">{corpo}</div>',
+                "position:absolute;inset:0",
+            )
+            # entra e sai como um corte rápido com desfoque ("whip"), com whoosh
+            comp.tween(
+                f"#{ev}-in",
+                t0,
+                'opacity: 0, scale: 1.08, filter: "blur(16px)"',
+                'opacity: 1, scale: 1, filter: "blur(0px)"',
+                0.35,
+                "power3.out",
+            )
+            comp.js.append(
+                f'tl.to("#{ev}-in", {{opacity: 0, scale: 0.97, filter: "blur(12px)", duration: 0.28, ease: "power2.in"}}, {t1 - 0.28:.3f});'
+            )
+            comp.js.extend(js_cena)
+            zonas.append((t0, t1, (0, 0, W, L["legenda_y"] - 70)))
+            comp.som("cena", t0)
+            comp.som("cena_saida", t1 - 0.15)
+            for ts, nome in sons_cena:
+                comp.som(nome, ts)
+
+        elif tipo == "dividida":
+            # Vídeo/imagem de prova na metade de cima; a câmera desce para a de baixo.
+            alt = int(e.get("altura", 980))
+            desce = int(e.get("descer", 445))
+            comp.setar("#cam", t0, f"y: {desce}")
+            comp.setar("#cam", t1, "y: 0")
+            ini_m = float(e.get("inicio_midia", 0))
+            comp.html.append(
+                f'<div id="{ev}" class="div-topo" style="height:{alt}px;opacity:0">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div>'
+            )
+            comp.setar(f"#{ev}", 0, "opacity: 0")
+            comp.tween(
+                f"#{ev}",
+                t0,
+                "opacity: 0, y: -60",
+                "opacity: 1, y: 0",
+                0.3,
+                "power3.out",
+            )
+            comp.js.append(
+                f'tl.to("#{ev}", {{opacity: 0, duration: 0.2, ease: "power2.in"}}, {t1 - 0.2:.3f});'
+            )
+            zonas.append((t0, t1, (0, 0, W, alt + 20)))
+            divididas.append((t0, t1, alt))
+            comp.som("dividida", t0)
+            if e.get("som") and eh_video(e["midia"]):
+                insertos_som.append(
+                    {
+                        "arquivo": str((pasta / e["midia"]).resolve()),
+                        "t": round(t0, 3),
+                        "inicio_midia": ini_m,
+                        "dur": round(t1 - t0, 3),
+                        "ganho_db": float(e.get("ganho_db", 0)),
+                    }
+                )
+
+        elif tipo == "broll":
+            # Vídeo de prova cobrindo a câmera: tela cheia ou cartão sobre fundo preto.
+            ini_m = float(e.get("inicio_midia", 0))
+            cartao = e.get("estilo", "cheia") == "cartao"
+            classe = "broll-cartao" if cartao else "broll-cheia"
+            comp.html.append(
+                f'<div id="{ev}" class="broll" style="opacity:0"><div class="{classe}">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div></div>'
+            )
+            comp.setar(f"#{ev}", 0, "opacity: 0")
+            comp.tween(
+                f"#{ev}",
+                t0,
+                'opacity: 0, scale: 1.06, filter: "blur(14px)"',
+                'opacity: 1, scale: 1, filter: "blur(0px)"',
+                0.3,
+                "power3.out",
+            )
+            comp.js.append(
+                f'tl.to("#{ev}", {{opacity: 0, duration: 0.22, ease: "power2.in"}}, {t1 - 0.22:.3f});'
+            )
+            zonas.append((t0, t1, (0, 0, W, H)))
+            comp.som("broll", t0)
+            comp.som("broll_saida", t1 - 0.15)
+            if e.get("som") and eh_video(e["midia"]):
+                insertos_som.append(
+                    {
+                        "arquivo": str((pasta / e["midia"]).resolve()),
+                        "t": round(t0, 3),
+                        "inicio_midia": ini_m,
+                        "dur": round(t1 - t0, 3),
+                        "ganho_db": float(e.get("ganho_db", 0)),
+                    }
+                )
+
+        elif tipo == "lista":
+            itens = e["itens"]
+            partes = []
+            if e.get("titulo"):
+                partes.append(f'<div class="peq" id="{ev}-h">{esc(e["titulo"])}</div>')
+            for i, it in enumerate(itens):
+                partes.append(
+                    f'<div class="item" id="{ev}-i{i}"><span class="ico" style="{cor_viva(idt, it)}">'
+                    f'{esc(it.get("icone", "·"))}</span><span class="txt">{esc(it["texto"])}</span></div>'
+                )
+            comp.clip(ev, "lista", t0, t1, f'<div id="{ev}-in">{"".join(partes)}</div>')
+            altura = 80 * bool(e.get("titulo")) + 90 * len(itens) + 60
+            zonas.append((t0, t1, (0, L["lista_y"] - 130, W, L["lista_y"] + altura)))
+            if e.get("titulo"):
+                comp.entra_texto(f"#{ev}-h", t0)
+                comp.som("lista", t0)
+            for i, it in enumerate(itens):
+                ti = float(it.get("t", t0 + 0.3 + 0.6 * i))
+                comp.entra_destaque(f"#{ev}-i{i}", ti)
+                comp.som("lista_item", ti)
+            comp.sai(f"#{ev}-in", t1)
+
         elif tipo in ("janela", "inserto"):
             if tipo == "janela":
                 lado, margem, topo = POSICOES_JANELA[e.get("posicao", "topo-direita")]
+                topo = int(e.get("topo", topo))
                 larg = int(W * float(e.get("largura", 0.42)))
                 alt = int(larg * float(e.get("proporcao", 1.15)))
                 x0 = (
@@ -542,6 +723,16 @@ def montar(roteiro_path: Path) -> Path:
 
     # --- Legenda -----------------------------------------------------------
     leg = r.get("legenda", {})
+    karaoke = leg.get("estilo") == "destaque"
+    cor_ativa = leg.get("cor", "#FFD43B")
+    base_cor = idt["cores"]["texto"]
+    css_legenda = ""
+    if karaoke:
+        css_legenda = f"""
+.leg.k {{ font-family: "Inter"; font-style: normal; font-weight: 900; font-size: {int(leg.get("tam", 66))}px; letter-spacing: -0.01em;
+  line-height: 1.12; text-transform: none; text-shadow: 0 0 4px #000, 0 0 4px #000, 0 4px 16px rgba(0,0,0,.85); }}
+.leg.k .w {{ display: inline-block; margin: 0 .17em; transform-origin: 50% 75%; }}
+"""
     if leg.get("ativa", True) and r.get("transcricao"):
         palavras = [
             w
@@ -559,25 +750,59 @@ def montar(roteiro_path: Path) -> Path:
                 continue
             t1 = min([t1] + [a for a, _ in janelas_sem_legenda if t0 < a < t1])
             voz = " voz" if any(a <= meio <= z for a, z in vozes) else ""
+            na_divisao = next((alt for a, z, alt in divididas if a <= meio <= z), None)
+            pos = f"top:{na_divisao - 120}px" if na_divisao else ""
+            if not karaoke:
+                comp.clip(
+                    f"leg{i}",
+                    f"leg{voz}",
+                    t0,
+                    min(t1, dur),
+                    esc(" ".join(w["text"] for w in b)),
+                    pos,
+                )
+                continue
+            # Palavra falada acende em amarelo e cresce; as outras ficam na cor base.
+            cor_base = idt["cores"]["voz"] if voz else base_cor
+            spans = " ".join(
+                f'<span class="w" id="leg{i}-w{k}">{esc(w["text"])}</span>'
+                for k, w in enumerate(b)
+            )
             comp.clip(
                 f"leg{i}",
-                f"leg{voz}",
+                f"leg k{voz}",
                 t0,
                 min(t1, dur),
-                esc(" ".join(w["text"] for w in b)),
+                f'<span id="leg{i}-in">{spans}</span>',
+                pos,
             )
+            comp.tween(
+                f"#leg{i}-in",
+                t0,
+                "opacity: 0, y: 12, scale: 0.94",
+                "opacity: 1, y: 0, scale: 1",
+                0.14,
+                "power2.out",
+            )
+            for k, w in enumerate(b):
+                fim_w = b[k + 1]["start"] if k + 1 < len(b) else min(t1, dur)
+                comp.setar(
+                    f"#leg{i}-w{k}", w["start"], f'color: "{cor_ativa}", scale: 1.12'
+                )
+                comp.setar(f"#leg{i}-w{k}", fim_w, f'color: "{cor_base}", scale: 1')
 
     # --- Marca d'água: muda de lugar e desvia dos outros elementos ----------
     marca = r.get("marca", {})
     if marca.get("ativa", True):
         passo = float(marca.get("intervalo", 6))
+        posicoes = [tuple(p) for p in marca.get("posicoes", POSICOES_MARCA)]
         fim_marca = min([e["inicio"] for e in eventos if e["tipo"] == "final"] + [dur])
         t, j = 0.0, 0
         while t < fim_marca - 0.1:
             t2 = min(t + passo, fim_marca)
             ocupado = [z for a, b, z in zonas if a < t2 and b > t]
-            for n in range(len(POSICOES_MARCA)):
-                left, top = POSICOES_MARCA[(j + n) % len(POSICOES_MARCA)]
+            for n in range(len(posicoes)):
+                left, top = posicoes[(j + n) % len(posicoes)]
                 rx = (left, top, left + TAM_MARCA[0], top + TAM_MARCA[1])
                 if not any(
                     rx[0] < z[2] and rx[2] > z[0] and rx[1] < z[3] and rx[3] > z[1]
@@ -608,7 +833,7 @@ def montar(roteiro_path: Path) -> Path:
     <meta name="viewport" content="width={W}, height={H}" />
     <script src="assets/gsap.min.js"></script>
     <style>
-{font_faces}{css_identidade(idt)}
+{font_faces}{css_identidade(idt, L)}{cenas.css(idt)}{css_legenda}{CSS_PROVA}
     </style>
   </head>
   <body>
@@ -638,10 +863,10 @@ def montar(roteiro_path: Path) -> Path:
     trilha = r.get("trilha", {"auto": True})
     if trilha.get("auto", True) and not musica:
         caps = [e for e in eventos if e["tipo"] == "capitulo"]
-        inicios = [(0.0, r.get("humor_inicial", HUMORES[0]))]
+        inicios = [(0.0, r.get("humor_inicial", humores[0]))]
         for n, c in enumerate(caps):
             inicios.append(
-                (float(c["inicio"]), c.get("humor", HUMORES[(n + 1) % len(HUMORES)]))
+                (float(c["inicio"]), c.get("humor", humores[(n + 1) % len(humores)]))
             )
         fim_fala = min([e["inicio"] for e in eventos if e["tipo"] == "final"] + [dur])
         secoes = [
