@@ -23,9 +23,9 @@ ffmpeg -v error -y -ss 14 -t 6.4 -i "$T/cadeira.mp4" -vf "scale=1080:-2,crop=108
 # escadaria (cartão)
 baixa 152203 escada
 ffmpeg -v error -y -ss 1 -t 3.4 -i "$T/escada.mp4" -vf "scale=-2:800,crop=840:800:(iw-840)*0.5:0" "${X[@]}" "$A/escada.mp4"
-# músculos em raio-X, ombro acendendo em vermelho (cartão) — "sarcopenia"
-baixa 118021 sarcopenia
-ffmpeg -v error -y -ss 8 -t 2.0 -i "$T/sarcopenia.mp4" -vf "scale=-2:800,crop=840:800:(iw-840)*0.3:0" "${X[@]}" "$A/sarcopenia.mp4"
+# "sarcopenia" (cartão): ilustração da coxa em corte, músculo encolhendo com a idade.
+# (O clipe de banco de músculos fortes foi recusado: precisa mostrar PERDA de músculo.)
+python3 "$RAIZ/ferramentas/secao_musculo.py" -o "$A/sarcopenia_ilustra.mp4" --dur 2.2 --muda 0.5 >/dev/null
 # músculos das pernas em raio-X (dividida)
 baixa 57691 pernas_raiox
 ffmpeg -v error -y -ss 9.5 -t 3.3 -i "$T/pernas_raiox.mp4" -vf "scale=-2:980,crop=1080:980:(iw-1080)*0.5:0" "${X[@]}" "$A/pernas_raiox.mp4"
@@ -47,6 +47,7 @@ ffmpeg -v error -y -ss 2 -t 3.4 -i "$T/halteres.mp4" -vf "crop=1300:2160:(iw-130
 
 filtro desfoque "$A/gancho.mp4" -o "$A/gancho_fx.mp4" --forca 1.2 --brilho 1.5
 for c in cadeira pernas_raiox casal; do filtro desfoque "$A/$c.mp4" -o "$A/${c}_fx.mp4" --forca 1.2; done
-for c in pernas escada sarcopenia sofa joelho; do filtro tv "$A/$c.mp4" -o "$A/${c}_fx.mp4"; done
+for c in pernas escada sofa joelho; do filtro tv "$A/$c.mp4" -o "$A/${c}_fx.mp4"; done
+filtro tv "$A/sarcopenia_ilustra.mp4" -o "$A/sarcopenia_ilustra_fx.mp4" --brilho 1.2
 for c in aula halteres; do filtro lente "$A/$c.mp4" -o "$A/${c}_fx.mp4"; done
 echo "clipes prontos em $A"
