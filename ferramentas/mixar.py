@@ -1,7 +1,8 @@
 """Mixagem final: voz do Video Use + efeitos + insertos com som + trilha.
 
 Lê o mix.json gerado pelo montar.py e:
-  - abafa a voz nos apartes em P&B (passa-baixa suave, como um pensamento);
+  - abafa a voz nos apartes em P&B (passa-baixa suave, como um pensamento) ou
+    a deixa com som de rádio/celular (só a faixa média);
   - toca o som próprio dos insertos marcados com "som": true;
   - coloca cada efeito sonoro com o ponto de impacto no instante do evento;
   - põe a trilha (gerada ou do usuário) com "ducking": ela abaixa sozinha
@@ -98,6 +99,32 @@ def abafar(voz: np.ndarray, trechos: list[list[float]]) -> np.ndarray:
         i0, i1 = int(t0 * SR), min(len(voz), int(t1 * SR))
         if i1 > i0:
             mistura[i0:i1] = rampa(i1 - i0, int(0.04 * SR))
+    return voz * (1 - mistura[:, None]) + filtrada * mistura[:, None]
+
+
+def radio(voz: np.ndarray, trechos: list[list[float]]) -> np.ndarray:
+    """Som de rádio/celular: só a faixa média (400–3000 Hz) e um leve drive.
+
+    Calibrada no vídeo sério do usuário (o que ele chama de "voz de rádio"):
+    ~20 dB a menos de graves e ~8 dB a menos de agudos que o trecho normal.
+    Aplicado à voz e à trilha juntas (como no vídeo de referência, tudo soa
+    "pelo rádio"); o nível (RMS) é igualado ao original para não cair o volume.
+    """
+    if not trechos:
+        return voz
+    sos = signal.butter(4, [400, 3000], btype="band", fs=SR, output="sos")
+    filtrada = signal.sosfilt(sos, voz, axis=0)
+    pico = float(np.max(np.abs(filtrada))) or 1.0
+    filtrada = np.tanh(0.8 * filtrada / pico) * pico / np.tanh(0.8)
+    mistura = np.zeros(len(voz))
+    for t0, t1 in trechos:
+        i0, i1 = int(t0 * SR), min(len(voz), int(t1 * SR))
+        if i1 > i0:
+            mistura[i0:i1] = rampa(i1 - i0, int(0.03 * SR))
+    sel = mistura > 0.5
+    if np.any(sel):
+        ganho = np.sqrt(np.mean(voz[sel] ** 2) / (np.mean(filtrada[sel] ** 2) + 1e-12))
+        filtrada = filtrada * ganho
     return voz * (1 - mistura[:, None]) + filtrada * mistura[:, None]
 
 
@@ -218,7 +245,7 @@ def mixar(voz_path: Path, mix_path: Path, saida: Path) -> dict:
     else:
         trilha = np.zeros_like(voz)
 
-    total = voz + efeitos + trilha
+    total = radio(voz + trilha, mix.get("radio", [])) + efeitos
     with tempfile.TemporaryDirectory() as tmp:
         bruto = Path(tmp) / "bruto.wav"
         gravar_wav(bruto, total / max(1.0, float(np.max(np.abs(total)))))
@@ -226,6 +253,7 @@ def mixar(voz_path: Path, mix_path: Path, saida: Path) -> dict:
     return {
         "efeitos": len(mix.get("sons", [])),
         "abafados": len(mix.get("abafar", [])),
+        "radio": len(mix.get("radio", [])),
         "insertos": len(mix.get("insertos", [])),
         "trilha": "usuário"
         if mix.get("musica")

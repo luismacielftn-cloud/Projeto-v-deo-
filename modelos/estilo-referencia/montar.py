@@ -51,7 +51,7 @@ FONTES = {
         ("CormorantGaramond-Italic.ttf", "300 700", "italic"),
     ],
 }
-IDENTIDADE_PADRAO = "salvia"  # identidade escolhida pelo usuário
+IDENTIDADE_PADRAO = "salvia-forte"  # identidade escolhida pelo usuário (Inter Black, dourado)
 HUMORES = ["calma", "leve", "inspira"]
 # "tom": "tenso" no roteiro: vídeos sérios (sons de cinema e trilha sombria).
 HUMORES_TENSOS = ["tensa", "tensa_pulso", "tensa"]
@@ -101,13 +101,30 @@ ICONE_IG = (
 )
 
 
+
+def icone_ig_colorido(gid: str) -> str:
+    """Ícone do Instagram com o gradiente da marca (amarelo → laranja → rosa → roxo)."""
+    return (
+        f'<svg viewBox="0 0 24 24" fill="none" stroke="url(#{gid})" stroke-width="1.8">'
+        f'<defs><linearGradient id="{gid}" x1="0" y1="1" x2="1" y2="0">'
+        '<stop offset="0" stop-color="#FEDA75"/><stop offset=".3" stop-color="#FA7E1E"/>'
+        '<stop offset=".6" stop-color="#D62976"/><stop offset=".85" stop-color="#962FBF"/>'
+        '<stop offset="1" stop-color="#4F5BD5"/></linearGradient></defs>'
+        '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/>'
+        f'<circle cx="17.3" cy="6.7" r="1.1" fill="url(#{gid})" stroke="none"/></svg>'
+    )
+
+
 CSS_PROVA = f"""
 .div-topo {{ position: absolute; left: 0; top: 0; width: {W}px; overflow: hidden; background: #000;
-  box-shadow: 0 10px 40px rgba(0,0,0,.6); }}
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 190px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 190px), transparent); }}
 .div-topo img, .div-topo video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
 .broll {{ position: absolute; inset: 0; background: #000; }}
 .broll-cheia {{ position: absolute; inset: 0; }}
-.broll-cartao {{ position: absolute; left: 90px; top: 360px; width: 900px; height: 900px; border-radius: 26px; overflow: hidden; }}
+.broll-cartao {{ position: absolute; left: 120px; top: 460px; width: 840px; height: 800px; border-radius: 24px; overflow: hidden; }}
+.broll-cartao::after {{ content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 38px 16px rgba(0,0,0,.85); }}
 .broll img, .broll video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
 """
 
@@ -198,15 +215,18 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
   {fonte_css(leg)}; font-size: {leg["tam"]}px; color: {c["texto"]}; text-shadow: 0 2px 8px rgba(0,0,0,.65); }}
 .leg.voz {{ color: {c["voz"]}; {voz_it} }}
 .marca {{ position: absolute; width: 260px; color: {c["texto"]}; opacity: {idt.get("marca", {}).get("opacidade", 1)}; }}
-.marca svg {{ width: 44px; height: 44px; display: block; }}
-.marca span {{ display: block; margin-top: 6px; font-family: "Inter"; font-weight: 600; font-size: 21px;
-  letter-spacing: .08em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }}
+.marca .ig {{ position: relative; width: 50px; height: 50px; }}
+.marca .ig span {{ position: absolute; inset: 0; }}
+.marca .ig svg {{ width: 50px; height: 50px; display: block; filter: drop-shadow(0 1px 4px rgba(0,0,0,.5)); }}
+.marca .ig-c {{ opacity: 0; }}
+.marca .arroba {{ display: block; margin-top: 8px; font-family: "Inter"; font-weight: 700; font-size: 22px;
+  letter-spacing: .06em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }}
 .peq {{ {fonte_css(peq)}; font-size: {peq["tam"]}px; line-height: 1.15; color: {c["texto"]}; text-shadow: {sombra}; }}
 .big {{ {fonte_css(dest)}; color: {c["destaque"]}; line-height: 1; display: block; text-shadow: 0 4px 22px rgba(0,0,0,.4); }}
 .tit {{ position: absolute; left: 70px; width: 940px; top: {L["titulo_y"]}px; }}
 .lista {{ position: absolute; left: 70px; width: 940px; top: {L["lista_y"]}px; }}
 .lista .item {{ display: flex; align-items: baseline; gap: 24px; margin-top: 16px; }}
-.lista .ico {{ font-family: "{dest["familia"]}"; font-weight: 500; color: {c["destaque"]}; font-size: 62px;
+.lista .ico {{ font-family: "{dest["familia"]}", "Inter"; font-weight: 500; color: {c["destaque"]}; font-size: 62px;
   width: 56px; text-align: center; line-height: 1; text-shadow: {sombra}; }}
 .lista .txt {{ font-family: "Inter"; font-weight: 500; font-size: 54px; line-height: 1.1; color: {c["texto"]};
   text-shadow: {sombra}; }}
@@ -400,6 +420,7 @@ def montar(roteiro_path: Path) -> Path:
     ]
     zonas: list[tuple[float, float, tuple[int, int, int, int]]] = []
     abafar: list[list[float]] = []
+    radio: list[list[float]] = []
     insertos_som: list[dict] = []
     divididas: list[tuple[float, float, int]] = []
 
@@ -427,7 +448,15 @@ def montar(roteiro_path: Path) -> Path:
         elif tipo == "pb":
             comp.setar("#cam", t0, 'filter: "grayscale(1) contrast(1.08)"')
             comp.setar("#cam", t1, 'filter: "none"')
-            if e.get("voz_abafada", True):
+            # "voz": "radio" (rádio/celular: só a faixa média, como no vídeo sério),
+            # "abafada" (corte suave de agudos) ou "normal". Padrão: "voz_pb" do roteiro
+            # ou "radio", que é o que o usuário pede.
+            voz = e.get("voz", r.get("voz_pb", "radio"))
+            if e.get("voz_abafada") is False:
+                voz = "normal"
+            if voz == "radio":
+                radio.append([round(t0, 3), round(t1, 3)])
+            elif voz != "normal":
                 abafar.append([round(t0, 3), round(t1, 3)])
             comp.som("pb", t0)
 
@@ -499,7 +528,8 @@ def montar(roteiro_path: Path) -> Path:
                 f'tl.to("#{ev}-in", {{opacity: 0, scale: 0.97, filter: "blur(12px)", duration: 0.28, ease: "power2.in"}}, {t1 - 0.28:.3f});'
             )
             comp.js.extend(js_cena)
-            zonas.append((t0, t1, (0, 0, W, L["legenda_y"] - 70)))
+            # o @ pode ficar nos cantos da cena; só o miolo (conteúdo) é reservado
+            zonas.append((t0, t1, (60, 270, W - 60, L["legenda_y"] - 70)))
             comp.som("cena", t0)
             comp.som("cena_saida", t1 - 0.15)
             for ts, nome in sons_cena:
@@ -527,9 +557,10 @@ def montar(roteiro_path: Path) -> Path:
             comp.js.append(
                 f'tl.to("#{ev}", {{opacity: 0, duration: 0.2, ease: "power2.in"}}, {t1 - 0.2:.3f});'
             )
-            zonas.append((t0, t1, (0, 0, W, alt + 20)))
+            # clipe de banco não esconde o @ (como em @elias.maman, ele fica por cima)
             divididas.append((t0, t1, alt))
             comp.som("dividida", t0)
+            comp.som("dividida_saida", t1 - 0.1)
             if e.get("som") and eh_video(e["midia"]):
                 insertos_som.append(
                     {
@@ -546,8 +577,13 @@ def montar(roteiro_path: Path) -> Path:
             ini_m = float(e.get("inicio_midia", 0))
             cartao = e.get("estilo", "cheia") == "cartao"
             classe = "broll-cartao" if cartao else "broll-cheia"
+            # cartão: "largura", "altura" e "topo" (px) mudam o tamanho; centralizado
+            estilo_c = ""
+            if cartao and any(k in e for k in ("largura", "altura", "topo")):
+                lg, al = int(e.get("largura", 840)), int(e.get("altura", 800))
+                estilo_c = f' style="left:{(W - lg) // 2}px;width:{lg}px;height:{al}px;top:{int(e.get("topo", 460))}px"'
             comp.html.append(
-                f'<div id="{ev}" class="broll" style="opacity:0"><div class="{classe}">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div></div>'
+                f'<div id="{ev}" class="broll" style="opacity:0"><div class="{classe}"{estilo_c}>{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div></div>'
             )
             comp.setar(f"#{ev}", 0, "opacity: 0")
             comp.tween(
@@ -561,7 +597,8 @@ def montar(roteiro_path: Path) -> Path:
             comp.js.append(
                 f'tl.to("#{ev}", {{opacity: 0, duration: 0.22, ease: "power2.in"}}, {t1 - 0.22:.3f});'
             )
-            zonas.append((t0, t1, (0, 0, W, H)))
+            if cartao:  # só o cartão é reservado; na tela cheia o @ fica por cima
+                zonas.append((t0, t1, (100, 440, W - 100, 1280)))
             comp.som("broll", t0)
             comp.som("broll_saida", t1 - 0.15)
             if e.get("som") and eh_video(e["midia"]):
@@ -797,25 +834,39 @@ def montar(roteiro_path: Path) -> Path:
         passo = float(marca.get("intervalo", 6))
         posicoes = [tuple(p) for p in marca.get("posicoes", POSICOES_MARCA)]
         fim_marca = min([e["inicio"] for e in eventos if e["tipo"] == "final"] + [dur])
-        t, j = 0.0, 0
+        t, j, ultima = 0.0, 0, None
         while t < fim_marca - 0.1:
             t2 = min(t + passo, fim_marca)
             ocupado = [z for a, b, z in zonas if a < t2 and b > t]
-            for n in range(len(posicoes)):
-                left, top = posicoes[(j + n) % len(posicoes)]
-                rx = (left, top, left + TAM_MARCA[0], top + TAM_MARCA[1])
-                if not any(
+
+            def livre(pos: tuple[int, int]) -> bool:
+                rx = (pos[0], pos[1], pos[0] + TAM_MARCA[0], pos[1] + TAM_MARCA[1])
+                return not any(
                     rx[0] < z[2] and rx[2] > z[0] and rx[1] < z[3] and rx[3] > z[1]
                     for z in ocupado
-                ):
+                )
+
+            ordem = [posicoes[(j + n) % len(posicoes)] for n in range(len(posicoes))]
+            # varia: não repete a posição anterior se houver outra livre
+            ordem = [p_ for p_ in ordem if p_ != ultima] + [p_ for p_ in ordem if p_ == ultima]
+            for left, top in ordem:
+                if livre((left, top)):
+                    ultima = (left, top)
                     comp.clip(
                         f"marca{j}",
                         "marca",
                         t,
                         t2,
-                        f"{ICONE_IG}<span>{esc(arroba)}</span>",
+                        f'<div class="ig"><span class="ig-b">{ICONE_IG}</span>'
+                        f'<span class="ig-c">{icone_ig_colorido(f"igg{j}")}</span></div>'
+                        f'<span class="arroba" id="marca{j}-a">{esc(arroba)}</span>',
                         f"left:{left}px;top:{top}px",
                     )
+                    if marca.get("animada", True):
+                        # como em @elias.maman: primeiro o ícone, depois o @, depois a cor
+                        comp.tween(f"#marca{j} .ig", t, "opacity: 0, scale: 0.6", "opacity: 1, scale: 1", 0.35, "back.out(2)")
+                        comp.tween(f"#marca{j}-a", t + 0.55, "opacity: 0, x: -12", "opacity: 1, x: 0", 0.4, "power2.out")
+                        comp.tween(f"#marca{j} .ig-c", t + 1.25, "opacity: 0", "opacity: 1", 0.5, "power1.inOut")
                     break
             t += passo
             j += 1
@@ -859,10 +910,16 @@ def montar(roteiro_path: Path) -> Path:
         for m in r.get("musica", [])
     ]
     # Trilha automática: uma seção por capítulo (troca de música na virada,
-    # como na referência) e fim na tela final.
+    # como na referência) e fim na tela final. Em vídeos sem lista numerada,
+    # uma transição com "humor" também abre uma seção nova.
     trilha = r.get("trilha", {"auto": True})
     if trilha.get("auto", True) and not musica:
-        caps = [e for e in eventos if e["tipo"] == "capitulo"]
+        caps = [
+            e
+            for e in eventos
+            if e["tipo"] == "capitulo"
+            or (e["tipo"] in ("transicao", "clarao") and e.get("humor"))
+        ]
         inicios = [(0.0, r.get("humor_inicial", humores[0]))]
         for n, c in enumerate(caps):
             inicios.append(
@@ -891,6 +948,7 @@ def montar(roteiro_path: Path) -> Path:
         "identidade": idt["nome"],
         "sons": sorted(comp.sons, key=lambda s: s["t"]),
         "abafar": abafar,
+        "radio": radio,
         "insertos": insertos_som,
         "musica": musica,
         "trilha": trilha,

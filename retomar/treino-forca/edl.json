@@ -1,0 +1,125 @@
+{
+ "version": 1,
+ "sources": {
+  "fonte": "/home/user/Projeto-v-deo-/videos/novo/fonte.mp4"
+ },
+ "ranges": [
+  {
+   "source": "fonte",
+   "start": 0.0,
+   "end": 7.86
+  },
+  {
+   "source": "fonte",
+   "start": 8.051,
+   "end": 11.593
+  },
+  {
+   "source": "fonte",
+   "start": 11.907,
+   "end": 16.411
+  },
+  {
+   "source": "fonte",
+   "start": 16.754,
+   "end": 17.657
+  },
+  {
+   "source": "fonte",
+   "start": 17.883,
+   "end": 20.508
+  },
+  {
+   "source": "fonte",
+   "start": 20.766,
+   "end": 21.52
+  },
+  {
+   "source": "fonte",
+   "start": 21.646,
+   "end": 22.462
+  },
+  {
+   "source": "fonte",
+   "start": 22.62,
+   "end": 23.14
+  },
+  {
+   "source": "fonte",
+   "start": 23.38,
+   "end": 25.16
+  },
+  {
+   "source": "fonte",
+   "start": 25.26,
+   "end": 26.691
+  },
+  {
+   "source": "fonte",
+   "start": 26.82,
+   "end": 27.709
+  },
+  {
+   "source": "fonte",
+   "start": 27.88,
+   "end": 30.916
+  },
+  {
+   "source": "fonte",
+   "start": 31.069,
+   "end": 32.456
+  },
+  {
+   "source": "fonte",
+   "start": 32.726,
+   "end": 35.64
+  },
+  {
+   "source": "fonte",
+   "start": 35.86,
+   "end": 37.742
+  },
+  {
+   "source": "fonte",
+   "start": 38.031,
+   "end": 39.72
+  },
+  {
+   "source": "fonte",
+   "start": 39.906,
+   "end": 40.685
+  },
+  {
+   "source": "fonte",
+   "start": 41.106,
+   "end": 42.898
+  },
+  {
+   "source": "fonte",
+   "start": 43.275,
+   "end": 44.46
+  },
+  {
+   "source": "fonte",
+   "start": 44.67,
+   "end": 45.688
+  },
+  {
+   "source": "fonte",
+   "start": 45.94,
+   "end": 49.626
+  },
+  {
+   "source": "fonte",
+   "start": 49.94,
+   "end": 51.033
+  },
+  {
+   "source": "fonte",
+   "start": 51.228,
+   "end": 57.0
+  }
+ ],
+ "grade": "none",
+ "total_duration_s": 51.857
+}

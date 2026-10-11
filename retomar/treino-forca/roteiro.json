@@ -1,0 +1,278 @@
+{
+ "identidade": "salvia-forte",
+ "video": "assets/cortado.mp4",
+ "transcricao": "transcript.json",
+ "arroba": "@luismacciel",
+ "humor_inicial": "calma",
+ "legenda": {
+  "ativa": true,
+  "max_palavras": 3,
+  "estilo": "destaque",
+  "cor": "#F2C94C",
+  "tam": 66
+ },
+ "layout": {
+  "legenda_y": 1400,
+  "titulo_y": 1340,
+  "capitulo_y": 1380,
+  "cta_y": 1360,
+  "lista_y": 1330,
+  "fim_ig_y": 560
+ },
+ "marca": {
+  "ativa": true,
+  "intervalo": 4,
+  "posicoes": [
+   [
+    850,
+    300
+   ],
+   [
+    40,
+    600
+   ],
+   [
+    850,
+    140
+   ],
+   [
+    850,
+    1110
+   ],
+   [
+    40,
+    140
+   ],
+   [
+    850,
+    520
+   ]
+  ]
+ },
+ "vozes": [
+  {
+   "inicio": 10.72,
+   "fim": 12.98
+  }
+ ],
+ "eventos": [
+  {
+   "tipo": "dividida",
+   "inicio": 0.0,
+   "fim": 2.4,
+   "midia": "assets/gancho_fx.mp4"
+  },
+  {
+   "tipo": "broll",
+   "inicio": 2.44,
+   "fim": 4.18,
+   "midia": "assets/senhora_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 4.24,
+   "fim": 8.64,
+   "titulo": "não é",
+   "itens": [
+    {
+     "icone": "×",
+     "texto": "caminhada",
+     "t": 5.3
+    },
+    {
+     "icone": "×",
+     "texto": "hidroginástica",
+     "t": 6.34
+    },
+    {
+     "icone": "×",
+     "texto": "alongamento",
+     "t": 7.3
+    }
+   ]
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 7.94,
+   "fim": 8.66,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 8.72,
+   "fim": 10.68,
+   "midia": "assets/academia_fx.mp4"
+  },
+  {
+   "tipo": "pb",
+   "inicio": 10.72,
+   "fim": 12.98
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 13.12,
+   "fim": 15.84,
+   "estilo": "seco",
+   "escala": 1.18,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 15.86,
+   "humor": "tensa"
+  },
+  {
+   "tipo": "cena",
+   "modelo": "queda",
+   "inicio": 16.95,
+   "fim": 21.78,
+   "titulo": "depois dos 40, todo ano",
+   "t_marco": 17.36,
+   "linhas": [
+    {
+     "rotulo": "músculo",
+     "t": 18.6,
+     "t_fim": 19.9
+    },
+    {
+     "rotulo": "densidade óssea",
+     "t": 20.45,
+     "t_fim": 21.45,
+     "tam": 50
+    }
+   ]
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 21.84,
+   "fim": 23.56,
+   "escala": 1.12,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 23.6,
+   "fim": 26.12,
+   "midia": "assets/esqueleto_fx.mp4"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 26.18,
+   "fim": 27.24,
+   "estilo": "seco",
+   "escala": 1.22,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "broll",
+   "inicio": 27.28,
+   "fim": 30.5,
+   "midia": "assets/mala_cartao_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 30.52,
+   "fim": 33.4,
+   "midia": "assets/gelo_fx.mp4"
+  },
+  {
+   "tipo": "broll",
+   "inicio": 33.42,
+   "fim": 35.24,
+   "midia": "assets/joelho_fx.mp4",
+   "estilo": "cheia"
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 35.26,
+   "humor": "inspira"
+  },
+  {
+   "tipo": "broll",
+   "inicio": 35.44,
+   "fim": 38.62,
+   "midia": "assets/treino_fx.mp4",
+   "estilo": "cheia"
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 36.19,
+   "fim": 38.0,
+   "antes": "esse exercício é o",
+   "destaque": "treino de força",
+   "vivo": 1
+  },
+  {
+   "tipo": "pb",
+   "inicio": 38.68,
+   "fim": 40.98
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 41.17,
+   "fim": 42.55,
+   "antes": "é sobre",
+   "destaque": "autonomia",
+   "vivo": 2
+  },
+  {
+   "tipo": "cena",
+   "modelo": "numero",
+   "inicio": 42.6,
+   "fim": 44.3,
+   "titulo": "daqui a",
+   "grande": "20",
+   "unidade": "anos",
+   "texto": "você vai conseguir…",
+   "t": 43.2
+  },
+  {
+   "tipo": "lista",
+   "inicio": 44.32,
+   "fim": 46.84,
+   "titulo": "sozinha",
+   "itens": [
+    {
+     "icone": "✓",
+     "texto": "levantar do chão",
+     "t": 44.45
+    },
+    {
+     "icone": "✓",
+     "texto": "subir a escada",
+     "t": 45.8
+    }
+   ]
+  },
+  {
+   "tipo": "broll",
+   "inicio": 46.88,
+   "fim": 48.5,
+   "midia": "assets/avo_cartao_fx.mp4",
+   "estilo": "cartao",
+   "largura": 960,
+   "altura": 620,
+   "topo": 690
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 48.54,
+   "fim": 49.86,
+   "escala": 1.1,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "final",
+   "inicio": 49.9,
+   "cta_antes": "me segue para",
+   "cta_destaque": "mais conteúdo",
+   "cta_depois": "toda semana",
+   "escurecer_em": 2.9
+  }
+ ],
+ "voz_pb": "radio"
+}

@@ -8,6 +8,7 @@ Uso:
     python3 ferramentas/buscar_clipes.py "sunrise window" -o videos/x/edit/hf/assets/sol.mp4
     python3 ferramentas/buscar_clipes.py "phone in bed" --listar        # só mostra as opções
     python3 ferramentas/buscar_clipes.py "phone in bed" --escolha 2 -o …  # baixa a 3ª opção
+    python3 ferramentas/buscar_clipes.py --id 293081 -o …                 # um clipe pelo número
 
 Prefere clipes verticais e com resolução >= 1080 px no lado menor quando há.
 """
@@ -23,19 +24,28 @@ import urllib.request
 from pathlib import Path
 
 API = "https://pixabay.com/api/videos/"
+# O Pixabay (Cloudflare) devolve 403 para o User-Agent padrão do urllib.
+CABECALHO = {"User-Agent": "Mozilla/5.0 (projeto-video; buscar_clipes.py)"}
 
 
-def buscar(termo: str, por_pagina: int = 20) -> list[dict]:
+def abrir(url: str):
+    return urllib.request.urlopen(urllib.request.Request(url, headers=CABECALHO), timeout=60)
+
+
+def buscar(termo: str, por_pagina: int = 20, ident: int | None = None) -> list[dict]:
     chave = os.environ.get("PIXABAY_API_KEY")
     if not chave:
         sys.exit(
             "PIXABAY_API_KEY não está definida nesta sessão. Ela é configurada nas variáveis "
             "de ambiente do ambiente de nuvem e só vale em sessões novas."
         )
-    q = urllib.parse.urlencode(
-        {"key": chave, "q": termo, "per_page": por_pagina, "safesearch": "true"}
-    )
-    with urllib.request.urlopen(f"{API}?{q}", timeout=30) as r:
+    params = {"key": chave, "per_page": por_pagina, "safesearch": "true"}
+    if ident:
+        params["id"] = ident  # um clipe específico (ex.: o que já foi usado num vídeo)
+    else:
+        params["q"] = termo
+    q = urllib.parse.urlencode(params)
+    with abrir(f"{API}?{q}") as r:
         dados = json.load(r)
     opcoes = []
     for h in dados.get("hits", []):
@@ -65,13 +75,16 @@ def buscar(termo: str, por_pagina: int = 20) -> list[dict]:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Busca e baixa clipes do Pixabay")
-    ap.add_argument("termo")
+    ap.add_argument("termo", nargs="?", default="")
+    ap.add_argument("--id", type=int, help="baixa este clipe do Pixabay pelo número (pageURL .../id-N/)")
     ap.add_argument("-o", "--output", type=Path)
     ap.add_argument("--listar", action="store_true")
     ap.add_argument("--escolha", type=int, default=0)
     args = ap.parse_args()
 
-    opcoes = buscar(args.termo)
+    if not args.termo and not args.id:
+        ap.error("informe um termo de busca ou --id")
+    opcoes = buscar(args.termo, ident=args.id)
     if not opcoes:
         sys.exit(f"nada encontrado para: {args.termo}")
     for i, o in enumerate(opcoes[:8]):
@@ -83,7 +96,8 @@ def main() -> None:
         return
     o = opcoes[args.escolha]
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    urllib.request.urlretrieve(o["url"], args.output)
+    with abrir(o["url"]) as r:
+        args.output.write_bytes(r.read())
     print(f"baixado: {args.output}  (Pixabay {o['id']}, {o['pagina']})")
 
 
