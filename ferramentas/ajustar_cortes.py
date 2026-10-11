@@ -9,6 +9,9 @@ Este script mede o silêncio direto no áudio de cada fonte e:
   - borda caindo em silêncio longo → aperta, deixando só uma folga curta
     (assim não sobra "ar morto" no corte)
 
+Trechos com "manter": true no edl.json ficam como estão: use para silêncios
+intencionais, como o respiro da tela final ou o espaço de um inserto com som.
+
 O limiar de silêncio é adaptativo: piso de ruído da fonte + 10 dB.
 
 Uso:
@@ -130,6 +133,11 @@ def main() -> None:
         sils, dur, _ = cache[src]
 
         ini0, fim0 = r["start"], r["end"]
+        if r.get(
+            "manter"
+        ):  # silêncio intencional (tela final, inserto com som): não mexe
+            print(f"  {ini0:7.2f}-{fim0:7.2f}   mantido  {r.get('quote', '')[:40]}")
+            continue
         ini, fim = ajustar_inicio(ini0, sils), ajustar_fim(fim0, sils, dur)
         if fim <= ini:
             ini, fim = ini0, fim0

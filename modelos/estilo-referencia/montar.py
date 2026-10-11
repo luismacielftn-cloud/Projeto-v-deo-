@@ -48,6 +48,8 @@ FONTES = {
         ("CormorantGaramond-Italic.ttf", "300 700", "italic"),
     ],
 }
+IDENTIDADE_PADRAO = "salvia"  # identidade escolhida pelo usuário
+HUMORES = ["calma", "leve", "inspira"]  # trilha automática: um humor por seção
 # Eventos que já mostram texto: a legenda some enquanto estão ativos.
 TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final"}
 POSICOES_MARCA = [(40, 1130), (860, 300), (860, 1160), (40, 380), (40, 1650)]
@@ -99,6 +101,16 @@ def caixa(texto: str, modo: str) -> str:
 def fonte_ajustada(texto: str, maximo: int, largura: int, fator: float) -> int:
     """Tamanho que faz o texto caber numa linha (fator = largura média do caractere em em)."""
     return max(48, min(maximo, int(largura / (fator * max(len(texto), 1)))))
+
+
+def cor_viva(idt: dict, e: dict) -> str:
+    """Estilo inline para um momento de destaque com cor viva ("vivo": true, 1 ou 2)."""
+    nivel = e.get("vivo")
+    vivos = idt["cores"].get("vivos", [])
+    if not nivel or not vivos:
+        return ""
+    i = 0 if nivel is True else max(0, min(int(nivel) - 1, len(vivos) - 1))
+    return f"color:{vivos[i]};"
 
 
 def carregar_identidade(nome: str) -> dict:
@@ -316,7 +328,7 @@ def blocos_legenda(palavras: list[dict], max_p: int) -> list[list[dict]]:
 def montar(roteiro_path: Path) -> Path:
     pasta = roteiro_path.resolve().parent
     r = json.loads(roteiro_path.read_text())
-    idt = carregar_identidade(r.get("identidade", "referencia"))
+    idt = carregar_identidade(r.get("identidade", IDENTIDADE_PADRAO))
     dest_cfg, capg_cfg = idt["destaque"], idt["capitulo_grande"]
 
     video = r["video"]
@@ -371,7 +383,7 @@ def montar(roteiro_path: Path) -> Path:
             if e.get("antes"):
                 partes.append(f'<div class="peq" id="{ev}-a">{esc(e["antes"])}</div>')
             partes.append(
-                f'<span class="big" id="{ev}-b" style="font-size:{tam}px">{esc(dest)}</span>'
+                f'<span class="big" id="{ev}-b" style="font-size:{tam}px;{cor_viva(idt, e)}">{esc(dest)}</span>'
             )
             if e.get("depois"):
                 partes.append(
@@ -393,7 +405,7 @@ def montar(roteiro_path: Path) -> Path:
             tam = fonte_ajustada(grande, 100, 700, capg_cfg["largura_char"])
             conteudo = (
                 f'<div id="{ev}-in" style="display:flex;align-items:flex-end;gap:20px">'
-                f'<div class="num" id="{ev}-n">{esc(num)}</div>'
+                f'<div class="num" id="{ev}-n" style="{cor_viva(idt, e)}">{esc(num)}</div>'
                 f'<div><div class="peq" id="{ev}-p">{esc(e.get("pequeno", ""))}</div>'
                 f'<div class="grande" id="{ev}-g" style="font-size:{tam}px">{esc(grande)}</div></div></div>'
             )
@@ -495,7 +507,7 @@ def montar(roteiro_path: Path) -> Path:
             )
             cta = (
                 f'<div class="cta" id="{ev}-cta"><div class="peq" id="{ev}-p">{esc(e.get("cta_antes", "toque no"))}</div>'
-                f'<span class="big" id="{ev}-b" style="font-size:{tam}px">{esc(dest)}</span>'
+                f'<span class="big" id="{ev}-b" style="font-size:{tam}px;{cor_viva(idt, e)}">{esc(dest)}</span>'
                 f'<div class="peq dep" id="{ev}-d">{esc(e.get("cta_depois", ""))}</div></div>'
             )
             escurece = float(e.get("escurecer_em", 1.2))
@@ -621,6 +633,34 @@ def montar(roteiro_path: Path) -> Path:
         {**m, "arquivo": str((pasta / m["arquivo"]).resolve())}
         for m in r.get("musica", [])
     ]
+    # Trilha automática: uma seção por capítulo (troca de música na virada,
+    # como na referência) e fim na tela final.
+    trilha = r.get("trilha", {"auto": True})
+    if trilha.get("auto", True) and not musica:
+        caps = [e for e in eventos if e["tipo"] == "capitulo"]
+        inicios = [(0.0, r.get("humor_inicial", HUMORES[0]))]
+        for n, c in enumerate(caps):
+            inicios.append(
+                (float(c["inicio"]), c.get("humor", HUMORES[(n + 1) % len(HUMORES)]))
+            )
+        fim_fala = min([e["inicio"] for e in eventos if e["tipo"] == "final"] + [dur])
+        secoes = [
+            {
+                "inicio": round(a, 3),
+                "fim": round(inicios[i + 1][0] if i + 1 < len(inicios) else dur, 3),
+                "humor": h,
+            }
+            for i, (a, h) in enumerate(inicios)
+        ]
+        trilha = {
+            "auto": True,
+            "secoes": secoes,
+            "final": round(fim_fala, 3),
+            "volume_db": float(trilha.get("volume_db", 0)),
+            "semente": int(trilha.get("semente", 7)),
+        }
+    else:
+        trilha = {"auto": False}
     mix = {
         "duracao": round(dur, 3),
         "identidade": idt["nome"],
@@ -628,6 +668,7 @@ def montar(roteiro_path: Path) -> Path:
         "abafar": abafar,
         "insertos": insertos_som,
         "musica": musica,
+        "trilha": trilha,
         "efeitos_volume_db": float(r.get("efeitos_volume_db", 0)),
     }
     (pasta / "mix.json").write_text(

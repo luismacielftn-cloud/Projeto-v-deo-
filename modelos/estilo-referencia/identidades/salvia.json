@@ -1,15 +1,86 @@
 {
   "nome": "Sálvia",
-  "descricao": "Natural e serena: verde-sálvia, off-white e serifa suave (Fraunces). Bem-estar, alimentação, rotina saudável.",
-  "cores": {"texto": "#F5F2EA", "destaque": "#B5CBA8", "voz": "#E3D3AE", "numero": "#B5CBA8", "veu": "rgba(225,236,214,.55)"},
-  "legenda": {"familia": "Inter", "peso": 500, "italico": false, "tam": 42},
-  "pequeno": {"familia": "Inter", "peso": 400, "tam": 30, "caixa": "alta", "tracking": "0.2em"},
-  "destaque": {"familia": "Fraunces", "peso": 400, "italico": true, "caixa": "normal", "tracking": "-0.01em", "tam_max": 150, "largura_char": 0.5},
-  "numero": {"familia": "Fraunces", "peso": 300, "formato": "0{n}", "tam": 130},
-  "capitulo_grande": {"familia": "Fraunces", "peso": 400, "italico": false, "caixa": "normal", "largura_char": 0.52},
-  "movimento": {"ease": "expo.out", "dur": 0.8, "pop": false, "zoom": "suave"},
+  "descricao": "Natural e serena: verde-sálvia, off-white e serifa suave (Fraunces). Para momentos de destaque, cores vivas: coral (vivo 1) e verde-lima (vivo 2).",
+  "cores": {
+    "texto": "#F5F2EA",
+    "destaque": "#B5CBA8",
+    "voz": "#E3D3AE",
+    "numero": "#B5CBA8",
+    "veu": "rgba(225,236,214,.55)",
+    "vivos": [
+      "#FF8A5B",
+      "#D4F25E"
+    ]
+  },
+  "legenda": {
+    "familia": "Inter",
+    "peso": 500,
+    "italico": false,
+    "tam": 42
+  },
+  "pequeno": {
+    "familia": "Inter",
+    "peso": 400,
+    "tam": 30,
+    "caixa": "alta",
+    "tracking": "0.2em"
+  },
+  "destaque": {
+    "familia": "Fraunces",
+    "peso": 400,
+    "italico": true,
+    "caixa": "normal",
+    "tracking": "-0.01em",
+    "tam_max": 150,
+    "largura_char": 0.5
+  },
+  "numero": {
+    "familia": "Fraunces",
+    "peso": 300,
+    "formato": "0{n}",
+    "tam": 130
+  },
+  "capitulo_grande": {
+    "familia": "Fraunces",
+    "peso": 400,
+    "italico": false,
+    "caixa": "normal",
+    "largura_char": 0.52
+  },
+  "movimento": {
+    "ease": "expo.out",
+    "dur": 0.8,
+    "pop": false,
+    "zoom": "suave"
+  },
   "transicao": "veu",
-  "janela": {"raio": 26, "borda": "1px solid rgba(245,242,234,.45)"},
-  "marca": {"opacidade": 0.8},
-  "sons": {"titulo": ["whoosh_suave"], "capitulo": ["respiro", "tick"], "janela": ["pop_suave"], "inserto": ["whoosh_suave"], "transicao": ["respiro"], "zoom": [], "pb": [], "final": ["sino"]}
+  "janela": {
+    "raio": 26,
+    "borda": "1px solid rgba(245,242,234,.45)"
+  },
+  "marca": {
+    "opacidade": 0.8
+  },
+  "sons": {
+    "titulo": [
+      "whoosh_suave"
+    ],
+    "capitulo": [
+      "tick"
+    ],
+    "janela": [
+      "pop_suave"
+    ],
+    "inserto": [
+      "whoosh_suave"
+    ],
+    "transicao": [
+      "respiro"
+    ],
+    "zoom": [],
+    "pb": [],
+    "final": [
+      "sino"
+    ]
+  }
 }

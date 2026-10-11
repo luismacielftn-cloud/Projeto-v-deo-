@@ -10,19 +10,13 @@ O fluxo tem duas etapas fixas:
 
 Depois, `ferramentas/finalizar.py` junta tudo.
 
-**Estilo padrão: `modelos/estilo-referencia/`.** Todo vídeo sai nesse estilo, a não ser que o usuário peça outro. Leia o `GUIA.md` antes de planejar a edição. O estilo veio de um vídeo de referência que o usuário mandou como modelo (`videos/video1/fonte.mp4`, quando ainda existir na sessão).
+**Modelo padrão: `modelos/estilo-referencia/`.** Todo vídeo sai nesse modelo, a não ser que o usuário peça outro. Leia o `GUIA.md` antes de planejar a edição.
 
-O estilo inclui:
-- legenda pequena em itálico;
-- palavra-chave laranja gigante;
-- capítulos numerados;
-- janelas flutuantes;
-- inserto com fundo preto e branco;
-- apartes em preto e branco;
-- zoom de ênfase;
-- clarão laranja;
-- marca d'água que muda de lugar;
-- tela final "tocar NO LINK".
+- **Estrutura e ritmo:** vêm de um vídeo de referência que o usuário mandou. A arquitetura é gancho → promessa → lista numerada → objeção → chamada final, com zero silêncio e algo novo na tela a cada 4–6 s.
+- **Aparência:** é a identidade própria do usuário, **Sálvia**: verde-sálvia, off-white e Fraunces itálico, com animações suaves. Em 1 a 3 momentos fortes por vídeo entram cores vivas (`"vivo": 1` coral, `"vivo": 2` verde-lima).
+- **Som:** trilha gerada sem direitos autorais, que troca a cada capítulo e abaixa sob a fala; efeitos sonoros sintetizados; voz abafada nos apartes em P&B; vídeos de gatilho com o próprio som.
+
+**Usuário:** @luismacciel. Tema: emagrecimento, saúde e longevidade. Estilo: elegante e minimalista.
 
 ## O que já está no repositório
 
@@ -32,8 +26,9 @@ O estilo inclui:
 | `.claude/skills/hyperframes*`, `talking-head-recut`, `motion-graphics` | Skills do HyperFrames (heygen-com/hyperframes @ 64c47cf, Apache-2.0). Comece por `hyperframes/SKILL.md`. Para animar em cima de vídeo de pessoa falando, use `talking-head-recut`. |
 | `ferramentas/transcrever.py` | Transcrição local e gratuita (faster-whisper), no mesmo formato JSON do ElevenLabs Scribe. |
 | `ferramentas/ajustar_cortes.py` | Encosta as bordas do `edl.json` no silêncio real do áudio. |
-| `modelos/estilo-referencia/` | Estilo padrão: `GUIA.md` (receita), `montar.py` (gera a composição HyperFrames a partir de um `roteiro.json`), `exemplo-roteiro.json`, fontes e GSAP. |
-| `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio do Video Use e queima a legenda (opcional). |
+| `modelos/estilo-referencia/` | Modelo padrão: `GUIA.md` (receita), `montar.py` (gera `index.html` + `mix.json` a partir de um `roteiro.json`), `identidades/` (Sálvia é a padrão), `exemplo-roteiro.json`, fontes e GSAP. |
+| `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio. Com `--mix`, usa a mixagem completa do `mixar.py`. Queima legenda só fora do modelo. |
+| `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados e trilhas geradas. Tudo sem direitos autorais. |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |
 | `ferramentas/licencas/` | Licenças das ferramentas copiadas. |
 
@@ -64,16 +59,17 @@ Siga `.claude/skills/video-use/SKILL.md` (Hard Rules inclusas). Para este projet
 4. **Renderizar sem legenda e sem overlays:** `helpers/render.py videos/x/edit/edl.json -o videos/x/edit/cortado.mp4`.
 5. **Conferir:** transcreva o `cortado.mp4` e confirme que nenhuma palavra foi comida. Se a transcrição mudar um número ou uma palavra no ponto de corte, é sinal de corte cedo demais.
 
+Silêncios **intencionais** levam `"manter": true` no `edl.json`, para o `ajustar_cortes.py` não apertá-los. São eles:
+- ~1,5–2,5 s depois da última fala, para a tela final respirar;
+- o espaço para um vídeo de gatilho tocar com o próprio som.
+
 Antes de executar, mostre ao usuário um plano curto e espere o OK (regra 11 do Video Use). O plano diz:
 - o que será cortado e a duração estimada;
 - quais animações entram, em que momentos;
 - o formato de saída (o padrão é vertical 1080×1920);
 - se vai ter legenda.
 
-No primeiro vídeo, pergunte também:
-- o @ do usuário;
-- se há prints ou vídeos citados para as janelas;
-- se há música.
+Pergunte também se há prints, fotos ou vídeos de gatilho para as janelas e insertos. O @ já é conhecido (@luismacciel). A trilha é gerada automaticamente, a não ser que o usuário mande músicas.
 
 Um único OK vale para as duas etapas.
 
@@ -81,7 +77,12 @@ Um único OK vale para as duas etapas.
 
 1. Transcreva o vídeo cortado para sincronizar as animações:
    `python3 ferramentas/transcrever.py videos/x/edit/cortado.mp4 --edit-dir videos/x/edit/hf --flat videos/x/edit/hf/transcript.json`
-2. **Com o estilo padrão:** copie `cortado.mp4` e as mídias citadas para `hf/assets/` e escreva `hf/roteiro.json` com os eventos (veja `modelos/estilo-referencia/GUIA.md` e `exemplo-roteiro.json`). Depois rode `python3 modelos/estilo-referencia/montar.py videos/x/edit/hf/roteiro.json`. A legenda e a marca d'água já saem na composição. Pule para o passo 4.
+2. **Com o modelo padrão:**
+   - Corrija os erros do Whisper no `transcript.json`: só o `text`, sem mexer nos tempos.
+   - Copie `cortado.mp4` e as mídias citadas para `hf/assets/`.
+   - Escreva `hf/roteiro.json` com os eventos (veja `modelos/estilo-referencia/GUIA.md` e `exemplo-roteiro.json`).
+   - Rode `python3 modelos/estilo-referencia/montar.py videos/x/edit/hf/roteiro.json`. Ele gera `index.html` e `mix.json`. A legenda e a marca d'água já saem na composição.
+   - Pule para o passo 4.
 3. **Fora do estilo padrão** (o usuário pediu algo diferente), monte `videos/x/edit/hf/index.html` à mão, seguindo `talking-head-recut` e `hyperframes-core`:
    - `<video id="a-roll" class="clip" src="assets/cortado.mp4" data-has-audio="true">` cobrindo **toda** a duração.
    - Os cards (títulos, números, gráficos, citações, listas, ícones) são elementos `.clip` com `data-start`/`data-duration`, animados com GSAP.
@@ -97,10 +98,12 @@ Um único OK vale para as duas etapas.
 
 ```bash
 python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
-  --audio videos/x/edit/cortado.mp4 -o videos/x/edit/final.mp4
+  --audio videos/x/edit/cortado.mp4 --mix videos/x/edit/hf/mix.json -o videos/x/edit/final.mp4
 ```
 
-- No estilo padrão, a legenda já está na composição. **Não** use `--legenda-edl` (ficaria duplicada). Use-o só fora do estilo padrão.
+- No modelo padrão, a legenda já está na composição. **Não** use `--legenda-edl` (ficaria duplicada). Use-o só fora do modelo.
+- O `--mix` faz a mixagem completa (efeitos, trilha com ducking, voz abafada, insertos com som) em -14 LUFS.
+- Você não consegue ouvir. Meça os níveis e peça o retorno do usuário sobre o volume da trilha e dos efeitos: `"trilha": {"volume_db": ...}` e `"efeitos_volume_db"` no roteiro.
 
 - O HyperFrames remasteriza o áudio (+3 dB, comprimido). O `finalizar.py` devolve o áudio do Video Use (-14 LUFS), que é o correto.
 - **Autoavaliação antes de mostrar** (passo 7 do Video Use):

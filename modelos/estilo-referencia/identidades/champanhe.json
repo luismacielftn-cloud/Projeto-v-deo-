@@ -1,16 +1,83 @@
 {
   "nome": "Champanhe",
   "descricao": "Premium e atemporal: preto e branco com dourado-champanhe e serifa clássica (Cormorant Garamond). Longevidade, alta performance, autoridade.",
-  "cores": {"texto": "#FFFFFF", "destaque": "#D9BE8C", "voz": "#D9BE8C", "numero": "#D9BE8C", "veu": "rgba(240,222,186,.5)"},
-  "legenda": {"familia": "Inter", "peso": 500, "italico": false, "tam": 42},
+  "cores": {
+    "texto": "#FFFFFF",
+    "destaque": "#D9BE8C",
+    "voz": "#D9BE8C",
+    "numero": "#D9BE8C",
+    "veu": "rgba(240,222,186,.5)"
+  },
+  "legenda": {
+    "familia": "Inter",
+    "peso": 500,
+    "italico": false,
+    "tam": 42
+  },
   "voz_italico": true,
-  "pequeno": {"familia": "Inter", "peso": 300, "tam": 30, "caixa": "alta", "tracking": "0.28em"},
-  "destaque": {"familia": "Cormorant Garamond", "peso": 500, "italico": true, "caixa": "normal", "tracking": "0", "tam_max": 170, "largura_char": 0.44},
-  "numero": {"familia": "Cormorant Garamond", "peso": 400, "formato": "0{n}", "tam": 150},
-  "capitulo_grande": {"familia": "Cormorant Garamond", "peso": 500, "italico": false, "caixa": "normal", "largura_char": 0.46},
-  "movimento": {"ease": "expo.out", "dur": 0.9, "pop": false, "zoom": "suave"},
+  "pequeno": {
+    "familia": "Inter",
+    "peso": 300,
+    "tam": 30,
+    "caixa": "alta",
+    "tracking": "0.28em"
+  },
+  "destaque": {
+    "familia": "Cormorant Garamond",
+    "peso": 500,
+    "italico": true,
+    "caixa": "normal",
+    "tracking": "0",
+    "tam_max": 170,
+    "largura_char": 0.44
+  },
+  "numero": {
+    "familia": "Cormorant Garamond",
+    "peso": 400,
+    "formato": "0{n}",
+    "tam": 150
+  },
+  "capitulo_grande": {
+    "familia": "Cormorant Garamond",
+    "peso": 500,
+    "italico": false,
+    "caixa": "normal",
+    "largura_char": 0.46
+  },
+  "movimento": {
+    "ease": "expo.out",
+    "dur": 0.9,
+    "pop": false,
+    "zoom": "suave"
+  },
   "transicao": "veu",
-  "janela": {"raio": 4, "borda": "1px solid rgba(217,190,140,.7)"},
-  "marca": {"opacidade": 0.75},
-  "sons": {"titulo": ["whoosh_suave"], "capitulo": ["respiro"], "janela": ["tick"], "inserto": ["whoosh_suave"], "transicao": ["respiro"], "zoom": [], "pb": [], "final": ["sino"]}
+  "janela": {
+    "raio": 4,
+    "borda": "1px solid rgba(217,190,140,.7)"
+  },
+  "marca": {
+    "opacidade": 0.75
+  },
+  "sons": {
+    "titulo": [
+      "whoosh_suave"
+    ],
+    "capitulo": [
+      "tick"
+    ],
+    "janela": [
+      "tick"
+    ],
+    "inserto": [
+      "whoosh_suave"
+    ],
+    "transicao": [
+      "respiro"
+    ],
+    "zoom": [],
+    "pb": [],
+    "final": [
+      "sino"
+    ]
+  }
 }

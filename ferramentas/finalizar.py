@@ -9,8 +9,13 @@ Legendas, se pedidas, entram por último, por cima das animações (regra 1 do
 Video Use). O .srt é gerado com o próprio build_master_srt do Video Use, a
 partir do edl.json e das transcrições das fontes.
 
+Com --mix (mix.json do modelo), o áudio final é a mixagem completa do
+ferramentas/mixar.py: voz + efeitos sonoros + insertos com som + trilha com
+ducking, normalizada em -14 LUFS.
+
 Uso:
     python3 ferramentas/finalizar.py --video <render_hf.mp4> --audio <edit>/cortado.mp4 -o <edit>/final.mp4
+    python3 ferramentas/finalizar.py ... --mix <edit>/hf/mix.json
     python3 ferramentas/finalizar.py ... --legenda-edl <edit>/edl.json
     python3 ferramentas/finalizar.py ... --srt <arquivo.srt>
 """
@@ -21,6 +26,7 @@ import argparse
 import json
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 HELPERS = Path(__file__).resolve().parent.parent / ".claude/skills/video-use/helpers"
@@ -76,6 +82,9 @@ def main() -> None:
     )
     leg.add_argument("--srt", type=Path, help="usa este .srt pronto")
     ap.add_argument("--estilo", default=ESTILO_PADRAO, help="force_style do libass")
+    ap.add_argument(
+        "--mix", type=Path, help="mix.json do modelo: mixa efeitos e trilha"
+    )
     args = ap.parse_args()
 
     dv, da = duracao(args.video), duracao(args.audio)
@@ -89,6 +98,17 @@ def main() -> None:
     if args.legenda_edl:
         srt = gerar_srt(args.legenda_edl, args.legenda_edl.parent / "master.srt")
 
+    tmp = tempfile.TemporaryDirectory()
+    fonte_audio = args.audio
+    if args.mix:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from mixar import mixar
+
+        fonte_audio = Path(tmp.name) / "mix.wav"
+        info = mixar(args.audio, args.mix, fonte_audio)
+        print(f"mixagem: {info}")
+    audio_codec = ["-c:a", "aac", "-b:a", "192k"] if args.mix else ["-c:a", "copy"]
+
     cmd = [
         "ffmpeg",
         "-y",
@@ -97,7 +117,7 @@ def main() -> None:
         "-i",
         str(args.video),
         "-i",
-        str(args.audio),
+        str(fonte_audio),
         "-map",
         "0:v:0",
         "-map",
@@ -122,15 +142,15 @@ def main() -> None:
             "18",
             "-pix_fmt",
             "yuv420p",
-            "-c:a",
-            "copy",
+            *audio_codec,
             "-movflags",
             "+faststart",
         ]
     else:
-        cmd += ["-c", "copy", "-movflags", "+faststart"]
+        cmd += ["-c:v", "copy", *audio_codec, "-movflags", "+faststart"]
     cmd.append(str(args.output))
     subprocess.run(cmd, check=True)
+    tmp.cleanup()
 
     print(
         f"final: {args.output} ({duracao(args.output):.2f}s"

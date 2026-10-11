@@ -4,6 +4,7 @@ librosa
 matplotlib
 pillow
 numpy
+scipy
 # Transcrição local (ferramentas/transcrever.py)
 faster-whisper
 # huggingface-hub (dependência do faster-whisper) exige click novo
