@@ -11,6 +11,8 @@ Modelos (campo "modelo" do evento "cena"):
     pico          gráfico de linha com pico e queda         {titulo, t_pico, rotulo_pico, t_queda, rotulo_queda}
     sol           nascer do sol + lista de hábitos          {titulo, itens:[{texto, t}]}
     frase         frase grande, palavra por palavra         {palavras:[{texto, t, destaque?}]}
+    queda         linhas retas até uma idade e depois caindo {titulo, idades, t_marco, rotulo_marco,
+                  (perda com a idade: músculo, osso, …)       linhas:[{rotulo, t, t_fim, cor?}]}
 
 construir() devolve (html, js, sons): o HTML do conteúdo, as linhas de GSAP e
 as deixas de som [(t, tipo)] — "cena_item" para cada elemento que entra.
@@ -308,6 +310,78 @@ def construir(
                 )
             )
         html_.append(f'<div class="cena-frase">{"".join(partes)}</div>')
+
+    elif modelo == "queda":
+        # Gráfico por idade: cada linha fica reta até a idade do marco e cai
+        # (desenhada entre "t" e "t_fim"). Até 3 linhas.
+        idades = [str(i) for i in e.get("idades", [30, 40, 50, 60, 70])]
+        marco = int(e.get("marco", 1))  # índice da idade onde começa a queda
+        xs = [60 + i * (780 / (len(idades) - 1)) for i in range(len(idades))]
+        xm = xs[marco]
+        eixo = 640
+        tm = float(e.get("t_marco", t0 + 0.4))
+        cores_linha = [c["destaque"], c.get("voz", c["texto"]), vivos[0]]
+        svg = [
+            '<svg class="cena-svg" viewBox="0 0 900 700">',
+            f'<line x1="0" y1="{eixo}" x2="900" y2="{eixo}" stroke="rgba(245,242,234,.25)" stroke-width="2"/>',
+            f'<line id="{ev}-m" x1="{xm:.0f}" y1="40" x2="{xm:.0f}" y2="{eixo}" stroke="rgba(245,242,234,.55)"'
+            ' stroke-width="3" stroke-dasharray="10 12"/>',
+        ]
+        rotulos = []
+        for i, ln in enumerate(e["linhas"][:3]):
+            y0 = 140 + 95 * i
+            y1 = y0 + 280 + 20 * i
+            reta = f"M 60 {y0} L {xm:.0f} {y0}"
+            curva = f"M {xm:.0f} {y0} C {xm + 160:.0f} {y0 + 10} {xm + 330:.0f} {y1 - 120} 840 {y1}"
+            cor = ln.get("cor") or cores_linha[i]
+            svg.append(
+                f'<path id="{ev}-r{i}" d="{reta}" fill="none" stroke="{cor}" stroke-width="10" stroke-linecap="round"'
+                f' stroke-dasharray="{xm:.0f}" stroke-dashoffset="{xm:.0f}"/>'
+                f'<path id="{ev}-q{i}" d="{curva}" fill="none" stroke="{cor}" stroke-width="10" stroke-linecap="round"'
+                ' stroke-dasharray="900" stroke-dashoffset="900"/>'
+            )
+            ti = float(ln.get("t", tm + 0.6 + 0.9 * i))
+            tf = float(ln.get("t_fim", ti + 1.2))
+            js.append(
+                f'tl.fromTo("#{ev}-r{i}", {{strokeDashoffset: {xm:.0f}}}, {{strokeDashoffset: 0, duration: {max(0.3, tm - t0 - 0.2):.2f}, ease: "none"}}, {t0 + 0.15:.3f});'
+            )
+            js.append(
+                f'tl.fromTo("#{ev}-q{i}", {{strokeDashoffset: 900}}, {{strokeDashoffset: 0, duration: {max(0.6, tf - ti):.2f}, ease: "power1.in"}}, {ti:.3f});'
+            )
+            # rótulo: a 1ª linha leva acima da curva; as outras, abaixo do fim da linha
+            if i == 0:
+                pos = f"left:{90 + xm + 300:.0f}px;top:{420 + y0 - 150:.0f}px"
+            else:
+                pos = f"right:80px;text-align:right;top:{420 + y1 + 30:.0f}px"
+            rotulos.append(
+                f'<div class="cena-rotulo" id="{ev}-l{i}" style="{pos};color:{cor};font-size:{int(ln.get("tam", 60))}px">'
+                f"{esc(ln['rotulo'])}</div>"
+            )
+            js.append(
+                _entra(f"#{ev}-l{i}", ti + 0.1, "opacity: 0, y: 18", "opacity: 1, y: 0", 0.5)
+            )
+            sons.append((ti, "cena_item"))
+        for i, (x, idade) in enumerate(zip(xs, idades)):
+            peso = 600 if i == marco else 400
+            rotulos.append(
+                f'<div style="position:absolute;left:{90 + x - 60:.0f}px;width:120px;top:{420 + eixo + 24}px;text-align:center;'
+                f'font-family:Inter;font-weight:{peso};font-size:34px;color:{c["texto"]};opacity:.75">{esc(idade)}</div>'
+            )
+        if e.get("rotulo_marco"):
+            rotulos.append(
+                f'<div class="cena-rotulo" id="{ev}-lm" style="left:{90 + xm - 200:.0f}px;width:400px;top:{420 + eixo + 80}px;'
+                f'text-align:center;color:{c["texto"]};font-size:52px">{esc(e["rotulo_marco"])}</div>'
+            )
+        svg.append("</svg>")
+        html_.append("".join(svg) + "".join(rotulos))
+        js.append(
+            _entra(f"#{ev}-m", tm - 0.1, "opacity: 0", "opacity: 1", 0.4, "power2.out")
+        )
+        if e.get("rotulo_marco"):
+            js.append(
+                _entra(f"#{ev}-lm", tm, "opacity: 0, y: 16", "opacity: 1, y: 0", 0.5)
+            )
+        sons.append((tm, "cena_item"))
 
     else:
         raise ValueError(f"modelo de cena desconhecido: {modelo}")

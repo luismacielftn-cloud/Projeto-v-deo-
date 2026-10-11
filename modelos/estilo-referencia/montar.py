@@ -206,7 +206,7 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
 .tit {{ position: absolute; left: 70px; width: 940px; top: {L["titulo_y"]}px; }}
 .lista {{ position: absolute; left: 70px; width: 940px; top: {L["lista_y"]}px; }}
 .lista .item {{ display: flex; align-items: baseline; gap: 24px; margin-top: 16px; }}
-.lista .ico {{ font-family: "{dest["familia"]}"; font-weight: 500; color: {c["destaque"]}; font-size: 62px;
+.lista .ico {{ font-family: "{dest["familia"]}", "Inter"; font-weight: 500; color: {c["destaque"]}; font-size: 62px;
   width: 56px; text-align: center; line-height: 1; text-shadow: {sombra}; }}
 .lista .txt {{ font-family: "Inter"; font-weight: 500; font-size: 54px; line-height: 1.1; color: {c["texto"]};
   text-shadow: {sombra}; }}
@@ -859,10 +859,16 @@ def montar(roteiro_path: Path) -> Path:
         for m in r.get("musica", [])
     ]
     # Trilha automática: uma seção por capítulo (troca de música na virada,
-    # como na referência) e fim na tela final.
+    # como na referência) e fim na tela final. Em vídeos sem lista numerada,
+    # uma transição com "humor" também abre uma seção nova.
     trilha = r.get("trilha", {"auto": True})
     if trilha.get("auto", True) and not musica:
-        caps = [e for e in eventos if e["tipo"] == "capitulo"]
+        caps = [
+            e
+            for e in eventos
+            if e["tipo"] == "capitulo"
+            or (e["tipo"] in ("transicao", "clarao") and e.get("humor"))
+        ]
         inicios = [(0.0, r.get("humor_inicial", humores[0]))]
         for n, c in enumerate(caps):
             inicios.append(

@@ -81,8 +81,9 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 | `pico` | Gráfico com pico e queda | `t_pico`, `rotulo_pico`, `t_queda`, `rotulo_queda` |
 | `sol` | Nascer do sol + lista de hábitos bons | `itens: [{texto, t}]` |
 | `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque}]` |
+| `queda` | Perda com a idade: linhas retas até um marco e caindo depois ("depois dos 40 perde músculo e osso") | `idades` ([30,40,50,60,70]), `marco` (índice, 1 = 40), `t_marco`, `linhas: [{rotulo, t, t_fim, tam}]` (até 3) |
 
-Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), peça uma chave gratuita do Pexels.
+Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), use `ferramentas/buscar_clipes.py` (Pixabay).
 
 ## Vídeos de prova e tom tenso (2ª referência do usuário)
 
@@ -100,7 +101,7 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
   - `coracao` no P&B.
   A trilha usa os humores `tensa` e `tensa_pulso`. Sem `"tom"`, fica a Sálvia suave.
 - **Clipes com som próprio:** use `"som": true` e abra espaço na fala na etapa do Video Use (trecho com `"manter": true`).
-- **Origem dos clipes:** o usuário manda os clipes de terceiros (notícias, entrevistas). Não baixe por conta própria. Clipes genéricos vêm do Pexels, com a chave do usuário.
+- **Origem dos clipes:** o usuário manda os clipes de terceiros (notícias, entrevistas). Não baixe por conta própria. Clipes genéricos vêm do Pixabay (`buscar_clipes.py`, com a `PIXABAY_API_KEY` do usuário). Busque termos simples em inglês ("skeleton", "knee", "luggage"): frases longas dão resultados fracos. Prefira pessoas maduras para o público 45+ e recorte cada clipe antes (trecho, enquadramento, câmera lenta) com ffmpeg para `hf/assets/`.
 
 ## Layout: não cobrir o rosto
 
@@ -124,7 +125,7 @@ Na referência, o som tem quatro camadas: trilha que troca a cada capítulo, efe
 | Camada | Como funciona | Onde ajustar |
 | --- | --- | --- |
 | Efeitos | Sintetizados em `ferramentas/efeitos.py`, sem direitos autorais: `whoosh_suave` (título), `tick` (capítulo), `respiro` (transição), `pop_suave` (janela), `sino` (final), entre outros. O ponto de impacto cai no instante do evento. | `sons` na identidade; volume em `GANHO_DB` ou `"efeitos_volume_db"` no roteiro |
-| Trilha | Gerada em `ferramentas/trilha.py`, sem direitos autorais. Uma seção por capítulo, com os humores `calma` → `leve` → `inspira`; cai e troca na virada e termina num acorde aberto na tela final. Ducking: fica ~20 dB abaixo da voz enquanto há fala e sobe nas pausas. | `"humor"` no `capitulo`, `"humor_inicial"`, `"trilha": {"volume_db": -3}` no roteiro |
+| Trilha | Gerada em `ferramentas/trilha.py`, sem direitos autorais. Uma seção por capítulo, com os humores `calma` → `leve` → `inspira`; cai e troca na virada e termina num acorde aberto na tela final. Ducking: fica ~20 dB abaixo da voz enquanto há fala e sobe nas pausas. | `"humor"` no `capitulo` (ou numa `transicao`, em vídeos sem lista numerada), `"humor_inicial"`, `"trilha": {"volume_db": -3}` no roteiro |
 | Música do usuário | Se o usuário mandar faixas: `"musica": [{"arquivo": "assets/x.mp3", "inicio": 0, "fim": 30, "volume_db": 0}]`. Isso substitui a trilha gerada, com o mesmo ducking. | roteiro |
 | Voz abafada | Corte suave de agudos (~ -5 dB acima de 2,5 kHz) nos trechos `pb` | `"voz_abafada"` no `pb` |
 | Inserto com som | `janela`/`inserto` com `"som": true`. O áudio do clipe entra no nível da voz (`"ganho_db"` ajusta). Abra espaço na fala na etapa do Video Use: um trecho de silêncio com `"manter": true` no `edl.json`. | evento |
@@ -147,5 +148,5 @@ O canvas é 1080×1920. Vídeo horizontal é recortado no centro (`object-fit: c
 
 ## Limitações
 
-- Prints, fotos e vídeos de gatilho vêm do usuário. Não baixe conteúdo de terceiros por conta própria. Para imagens e vídeos de banco, peça uma chave gratuita do Pexels.
+- Prints, fotos e vídeos de gatilho vêm do usuário. Não baixe conteúdo de terceiros por conta própria. Imagens e vídeos de banco vêm do Pixabay.
 - A trilha gerada é simples, de fundo. Se o usuário quiser algo específico, ele manda a música.
