@@ -18,7 +18,7 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 
 **Usuário:** @luismacciel. Tema: emagrecimento, saúde e longevidade. Estilo: elegante e minimalista.
 
-**Gancho visual nos primeiros 3 segundos:** todo vídeo abre com algo forte na tela já no 0 s (clipe de banco, inserto ou animação ligada à primeira frase). Não comece só com o rosto.
+**Gancho visual nos primeiros 3 segundos:** todo vídeo abre com algo forte na tela já no 0 s (clipe de banco, inserto ou animação ligada à primeira frase). Não comece só com o rosto. O gancho precisa causar impacto e curiosidade: prefira uma pessoa numa situação forte (exausta, aflita, no limite), como o homem acabado no chuveiro do exemplo do usuário. Paisagem bonita (nascer do sol etc.) não serve de gancho.
 
 ## O que já está no repositório
 
