@@ -26,6 +26,7 @@ No `roteiro.json`, use `"identidade": "<nome>"`. **O padrão é `salvia`.**
 | `oceano` | Azul-gelo, branco e Inter minimalista; suave |
 | `champanhe` | Preto e branco com dourado e Cormorant Garamond itálico; suave |
 | `referencia` | Cópia da referência: laranja, Inter Black, quique |
+| `salvia-forte` | Sálvia com letra forte: todo texto em Inter Black, palavra-chave em dourado `#F2C94C` (o mesmo da legenda em destaque) e cenas mais escuras. Usada no vídeo sério. |
 
 **Cores vivas** (pedido do usuário: "em alguns momentos"): `"vivo": 1` usa **coral** `#FF8A5B` e `"vivo": 2` usa **verde-lima** `#D4F25E`. Elas valem para `titulo`, `capitulo` (no número) e `final`. Use em 1 a 3 momentos fortes por vídeo, como um número que choca, a resposta principal ou o hábito mais importante. Nunca use em todos.
 
@@ -69,6 +70,7 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 
 - **Legenda em destaque:** grande (Inter Black 66 px), e a palavra falada acende em **amarelo** `#FFD43B` e cresce. No roteiro: `"legenda": {"estilo": "destaque", "cor": "#FFD43B", "tam": 66}`.
 - **Cenas em tela cheia cobrindo a câmera:** ele não precisa aparecer o tempo todo. Mire em ~30–35% do vídeo coberto por cenas animadas ligadas ao conteúdo.
+- **Nada de texto fino e espaçado** (pedido no vídeo sério): ele não gostou do título da Sálvia (caixa alta espaçada + Fraunces itálico). O texto na tela deve seguir a legenda em destaque: Inter Black, palavra marcando em **dourado `#F2C94C`**. Use `"identidade": "salvia-forte"` e não use eventos `titulo`; a ênfase vem de zoom seco e cenas.
 - **Mais gatilhos visuais com whoosh:** zooms secos (`"estilo": "seco"`) a cada poucos segundos, whoosh na entrada e saída das cenas e nos títulos, impacto nos títulos `vivo`.
 
 ## Cenas em tela cheia (`"tipo": "cena"`, código em `cenas.py`)
@@ -80,9 +82,10 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 | `notificacoes` | Celular recebendo notificações e vibrando | `itens: [{titulo, sub, t}]` |
 | `pico` | Gráfico com pico e queda | `t_pico`, `rotulo_pico`, `t_queda`, `rotulo_queda` |
 | `sol` | Nascer do sol + lista de hábitos bons | `itens: [{texto, t}]` |
-| `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque}]` |
+| `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque, quebra}]` (`destaque`: `true`/1 coral, 2 verde-lima; `quebra`: pula linha depois) |
+| `rede` | Rede de neurônios que se desenha e acende (cérebro, neurociência) | `t` (onda de luz), `rotulo` |
 
-Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), peça uma chave gratuita do Pexels.
+Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), use `ferramentas/buscar_clipes.py` (Pixabay). Se a chave for recusada ("Invalid or missing API key"), troque os clipes por cenas e avise o usuário.
 
 ## Vídeos de prova e tom tenso (2ª referência do usuário)
 
