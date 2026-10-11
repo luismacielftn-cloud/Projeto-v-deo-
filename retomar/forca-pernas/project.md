@@ -11,3 +11,9 @@
 **Layout:** rosto alto → tela dividida com `"descer": 820` (com 445 a legenda da emenda cai no cabelo).
 **Código novo:** cena `numero` aceita `tam` ("10–15%" não cabia em 300 px); cena `queda` aceita `marco` por linha (força cai aos 40, massa muscular aos 60).
 **Vivos:** "25–40%" (coral, título), "reversíveis" (verde-lima, título), "exercício de força" (coral, na frase).
+
+## Rodada 2 — 2026-10-11
+
+**Retorno do usuário:** a imagem em "é o que os estudos sobre sarcopenia mostram" (raio-X de corpo musculoso) não condiz; precisa mostrar perda de músculo.
+**Feito:** `ferramentas/secao_musculo.py`: ilustração animada da coxa em corte, 30 × 70 anos; o corte de 70 anos envelhece em 0,5–1,4 s (músculo encolhe, gordura engrossa e entra no músculo), caindo no "sarcopenia" (35,6 s). Cartão com `tv --brilho 1.2`, 34,62–36,7 s. Script de clipes atualizado.
+**Medidas v2:** -14,0 LUFS, pico -1,2 dBTP, 102,6 s, 27,1 MB.

@@ -36,6 +36,7 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 | `modelos/estilo-referencia/` | Modelo padrão: `GUIA.md` (receita), `montar.py` (gera `index.html` + `mix.json` a partir de um `roteiro.json`), `identidades/` (Sálvia forte é a padrão), `exemplo-roteiro.json`, fontes e GSAP. |
 | `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio. Com `--mix`, usa a mixagem completa do `mixar.py`. Queima legenda só fora do modelo. |
 | `ferramentas/filtro_clipe.py` | Filtros dos clipes de banco no estilo de @elias.maman: `tv` (cartão), `desfoque` (dividida) e `lente` (cheia). `--brilho 1.5` clareia clipe escuro. Rode no clipe já recortado e use o `_fx.mp4` no roteiro. |
+| `ferramentas/secao_musculo.py` | Ilustração animada da coxa em corte (30 × 70 anos, músculo encolhendo e gordura entrando) para falar de **sarcopenia / perda de músculo**. Vai no cartão com `filtro_clipe.py tv --brilho 1.2`. |
 | `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados e trilhas geradas. Tudo sem direitos autorais. |
 | `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes. |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |
@@ -104,7 +105,7 @@ Um único OK vale para as duas etapas.
 5. Use `HYPERFRAMES_NO_TELEMETRY=1`. Nunca rode `hyperframes feedback`: ele publica num canal público.
 6. **Vídeos de apoio (B-roll), receita do exemplo:**
    - **Buscar:** `python3 ferramentas/buscar_clipes.py "<termo em inglês>" --listar` (Pixabay, licença livre, precisa de `PIXABAY_API_KEY`). Termos **curtos e simples** ("skeleton", "knee", "luggage", "senior gym"); frases longas trazem lixo. `--id N` baixa um clipe pelo número.
-   - **Escolher olhando:** baixe as miniaturas (o JSON da API tem `thumbnail`) e monte uma folha de contato com ffmpeg; depois veja 4 quadros do candidato. O público é 45+: prefira pessoas maduras, evite modelo fitness jovem. Ilustrações (anatomia, desenho) também funcionam. Um clipe por frase forte: o que a pessoa **diz** naquele segundo.
+   - **Escolher olhando:** baixe as miniaturas (o JSON da API tem `thumbnail`) e monte uma folha de contato com ffmpeg; depois veja 4 quadros do candidato. O público é 45+: prefira pessoas maduras, evite modelo fitness jovem. Ilustrações (anatomia, desenho) também funcionam. Um clipe por frase forte: o que a pessoa **diz** naquele segundo. A imagem não pode contradizer a fala: para **perda de músculo/sarcopenia, nunca corpo musculoso** (o usuário recusou); use `ferramentas/secao_musculo.py`.
    - **Preparar no tamanho do formato** (ffmpeg `scale`+`crop`, trecho com `-ss/-t`, `-an`): tela dividida 1080×980, cartão 840×800 (largo: 960×620 com `largura/altura/topo` no evento), tela cheia 1080×1920. Centralize o assunto no recorte; se ele sai do quadro, use câmera lenta (`setpts=PTS/0.7`) e um `crop` que anda (exemplo do esqueleto em `retomar/treino-forca/preparar_clipes.sh`).
    - **Filtrar:** `ferramentas/filtro_clipe.py` → `desfoque --forca 1.2` (dividida), `tv` (cartão), `lente` (tela cheia); `--brilho 1.5–1.8` em clipe escuro. Use o `_fx.mp4` no roteiro.
    - Alterne os formatos e não repita o mesmo duas vezes seguidas. Mire em ~35–40% do vídeo coberto por clipes e cenas.
@@ -142,6 +143,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **Pixabay 403:** precisa de User-Agent de navegador (já está no `buscar_clipes.py`).
 - **ffmpeg com imagem em `-loop 1` sem `-t`** gera arquivo infinito; **`blend=multiply` em YUV** deixa a imagem verde (use `gbrp`).
 - **Comando interrompido pelo usuário pode ter rodado pela metade:** confira data e tamanho dos arquivos (`ls -la`) antes de renderizar de novo.
+- **Imagem que contradiz a fala:** um raio-X de corpo musculoso em "sarcopenia" foi recusado. Confira se o clipe mostra o mesmo sentido da frase (perda ≠ força).
 - **Corte de 1–8 centésimos** dá "pulo" na imagem sem ganhar tempo: junte trechos separados por menos de 0,1 s no `edl.json`.
 
 ## Memória entre sessões
