@@ -234,9 +234,11 @@ def _tic_metal(n: int) -> np.ndarray:
 
 
 def corte_ref(saida: bool = False) -> tuple[np.ndarray, float]:
-    """Transição da 3ª referência (@elias.maman): tic metálico ~80 ms antes do
-    corte + swoosh suave subindo depois dele (tom 4,4→6,2 kHz e ruído varrendo
-    para cima). Na saída, só o tic e um sopro curto descendo. Âncora = o corte."""
+    """Transição da 3ª referência (@elias.maman): swoosh suave subindo a partir
+    do corte (tom 4,4→6,2 kHz e ruído varrendo para cima). O usuário pediu para
+    tirar o tic metálico agudo que vinha ~80 ms antes ("o sino") e deixar só o
+    swoosh. A saída (tic + sopro descendo) ficou fora da Sálvia forte: "muita
+    entrada e saída no vídeo". Âncora = o corte."""
     pre = int(0.08 * SR)
     if saida:
         n = pre + int(0.32 * SR)
@@ -247,9 +249,6 @@ def corte_ref(saida: bool = False) -> tuple[np.ndarray, float]:
         x[pre:] += 0.35 * sopro / (np.max(np.abs(sopro)) + 1e-9) * _env(m, 0.03, 0.18, 3)
         return _norm(_estereo(x, 0.2, -0.2)), pre / SR
     m = int(0.7 * SR)
-    n = pre + m
-    x = np.zeros(n)
-    x[: int(0.12 * SR)] += _tic_metal(int(0.12 * SR))
     t = np.arange(m) / SR
     f = 4400 * (6200 / 4400) ** (t / 0.6)
     fase = 2 * np.pi * np.cumsum(f) / SR
@@ -257,8 +256,8 @@ def corte_ref(saida: bool = False) -> tuple[np.ndarray, float]:
     env = np.sin(np.pi * np.clip(t / 0.62, 0, 1)) ** 1.5
     ruido = _varredura(_ruido(m, 22), 900, 2500, 6000, 2.0)
     ruido = ruido / (np.max(np.abs(ruido)) + 1e-9)
-    x[pre:] += (0.13 * tom + 0.34 * ruido) * env
-    return _norm(_estereo(x, -0.3, 0.3)), pre / SR
+    x = (0.13 * tom + 0.34 * ruido) * env
+    return _norm(_estereo(x, -0.3, 0.3)), 0.0
 
 
 EFEITOS = {
@@ -292,7 +291,7 @@ GANHO_DB = {
     "boom": -12,
     "hit_tenso": -15,
     "coracao": -14,
-    "corte_ref": -14,
+    "corte_ref": -32,  # só o swoosh, no mesmo nível em que ele tocava junto do tic (antes -14 com o tic)
     "corte_ref_saida": -19,
 }
 

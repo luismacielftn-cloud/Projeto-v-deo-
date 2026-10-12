@@ -23,3 +23,6 @@
 
 **Retorno do usuário (3):** no "esse movimento simples… para treinar a força da perna" (65,25 s) estava a aula de idosos com os braços para cima: "sem sentido"; o ideal seria alguém sentando e levantando, fazendo exercício.
 **Feito:** busca funda no Pixabay (1.682 clipes) e no Mixkit: não há pessoa madura sentando/levantando da cadeira como exercício (o senhor do Mixkit 12866 levanta com dor nas costas, de pijama: contradiz). O Pexels tem, mas bloqueia o acesso daqui. O usuário escolheu "o mais parecido": homem agachando em casa (Mixkit 21273, 720p), trecho que desce, segura e sobe, 1,4× mais rápido, na tela dividida com `desfoque` (o cartão seguinte é o sofá). Entregue como `forca-das-pernas-v4.mp4`.
+
+**Retorno do usuário (4):** gostou do som de entrada das imagens, mas não do de saída ("muita entrada e saída no vídeo todo"); pediu também para tirar a batida aguda antes da entrada ("o sino") e deixar só o swoosh.
+**Feito:** `corte_ref` sem o tic metálico, só o swoosh (ganho -32 dB = mesmo nível de antes); `cena_saida`, `dividida_saida` e `broll_saida` vazios na Sálvia forte. Só o som mudou (mesmo `com_animacoes.mp4`). A cópia de entrega passou a copiar o áudio: recomprimir criava um pico de +2,6 dB. Entregue como `forca-das-pernas-v5.mp4` (-14 LUFS, pico -1,4 dB).

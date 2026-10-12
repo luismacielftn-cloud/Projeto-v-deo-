@@ -65,7 +65,7 @@ def copia_de_entrega(origem: Path, destino: Path, limite_mib: float = 28.0) -> N
     é mínima. A resolução é mantida.
     """
     dur = duracao(origem)
-    audio_k = 160
+    audio_k = 200  # o áudio é copiado do final (AAC 192k): recomprimir em AAC criou pico de +2,6 dB
     video_k = max(800, int(limite_mib * 8 * 1024 / dur - audio_k - 40))
     destino.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
@@ -92,9 +92,7 @@ def copia_de_entrega(origem: Path, destino: Path, limite_mib: float = 28.0) -> N
                 "-pix_fmt",
                 "yuv420p",
                 "-c:a",
-                "aac",
-                "-b:a",
-                f"{audio_k}k",
+                "copy",
             ]
             + ["-movflags", "+faststart", str(destino)],
             check=True,
