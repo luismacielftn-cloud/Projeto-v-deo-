@@ -262,11 +262,11 @@
    ]
   },
   {
-   "tipo": "broll",
+   "tipo": "dividida",
    "inicio": 65.25,
    "fim": 69.45,
-   "midia": "assets/aula_fx.mp4",
-   "estilo": "cheia"
+   "midia": "assets/agachamento_fx.mp4",
+   "descer": 820
   },
   {
    "tipo": "broll",

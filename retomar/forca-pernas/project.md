@@ -20,3 +20,6 @@
 
 **Retorno do usuário (2):** mandou um post de @rafaelladellasanta (coxa crua em corte, "sem/com treinamento de força") e pediu a imagem "mais próxima do real".
 **Feito:** duas fotos realistas geradas no Canva do usuário (coxa saudável e coxa com sarcopenia), guardadas em `modelos/estilo-referencia/assets/sarcopenia/`. O Canva só deixa baixar a prévia de 200 px; o `secao_musculo.py` amplia com lanczos + realce, recorta em círculo e mistura a de 70 anos de saudável → sarcopenia em 0,5–1,4 s. O filtro `tv` esconde a ampliação. Entregue como `forca-das-pernas-v3.mp4`.
+
+**Retorno do usuário (3):** no "esse movimento simples… para treinar a força da perna" (65,25 s) estava a aula de idosos com os braços para cima: "sem sentido"; o ideal seria alguém sentando e levantando, fazendo exercício.
+**Feito:** busca funda no Pixabay (1.682 clipes) e no Mixkit: não há pessoa madura sentando/levantando da cadeira como exercício (o senhor do Mixkit 12866 levanta com dor nas costas, de pijama: contradiz). O Pexels tem, mas bloqueia o acesso daqui. O usuário escolheu "o mais parecido": homem agachando em casa (Mixkit 21273, 720p), trecho que desce, segura e sobe, 1,4× mais rápido, na tela dividida com `desfoque` (o cartão seguinte é o sofá). Entregue como `forca-das-pernas-v4.mp4`.

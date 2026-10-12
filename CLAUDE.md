@@ -109,6 +109,7 @@ Um único OK vale para as duas etapas.
    - **Preparar no tamanho do formato** (ffmpeg `scale`+`crop`, trecho com `-ss/-t`, `-an`): tela dividida 1080×980, cartão 840×800 (largo: 960×620 com `largura/altura/topo` no evento), tela cheia 1080×1920. Centralize o assunto no recorte; se ele sai do quadro, use câmera lenta (`setpts=PTS/0.7`) e um `crop` que anda (exemplo do esqueleto em `retomar/treino-forca/preparar_clipes.sh`).
    - **Filtrar:** `ferramentas/filtro_clipe.py` → `desfoque --forca 1.2` (dividida), `tv` (cartão), `lente` (tela cheia); `--brilho 1.5–1.8` em clipe escuro. Use o `_fx.mp4` no roteiro.
    - Alterne os formatos e não repita o mesmo duas vezes seguidas. Mire em ~35–40% do vídeo coberto por clipes e cenas.
+   - **Se o Pixabay não tiver:** o Mixkit (licença gratuita, sem crédito) também funciona daqui. Busque em `https://mixkit.co/free-stock-video/<termo>/` (os nomes dos clipes estão nos links `/free-stock-video/<nome>-<id>/`) e baixe `https://assets.mixkit.co/videos/<id>/<id>-720.mp4` (o 1080 dá 403). Pexels, Vecteezy e Coverr bloqueiam ou não servem. Se nenhum tiver, diga ao usuário e ofereça: ele manda o clipe, ou o mais parecido.
    - Clipes de terceiros (notícias, famosos) só entram se o usuário mandar o arquivo ou o link. Não busque esse tipo de material por conta própria.
 
 ## Finalizar e entregar
@@ -144,6 +145,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **ffmpeg com imagem em `-loop 1` sem `-t`** gera arquivo infinito; **`blend=multiply` em YUV** deixa a imagem verde (use `gbrp`).
 - **Comando interrompido pelo usuário pode ter rodado pela metade:** confira data e tamanho dos arquivos (`ls -la`) antes de renderizar de novo.
 - **Imagem que contradiz a fala:** um raio-X de corpo musculoso em "sarcopenia" foi recusado. Confira se o clipe mostra o mesmo sentido da frase (perda ≠ força).
+- **Clipe que não mostra o movimento falado:** no "esse movimento simples" (sentar e levantar da cadeira) uma aula de idosos com os braços para cima foi recusada como "sem sentido". Quando a fala descreve um exercício, o clipe mostra **esse** exercício.
 - **Ilustração de anatomia com cara de desenho:** o usuário prefere imagem realista (carne, textura de verdade), como os posts de corte de coxa "sem/com treino de força". Desenho chapado só se não houver foto.
 - **Corte de 1–8 centésimos** dá "pulo" na imagem sem ganhar tempo: junte trechos separados por menos de 0,1 s no `edl.json`.
 

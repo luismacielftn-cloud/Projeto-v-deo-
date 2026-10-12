@@ -8,7 +8,7 @@ O vídeo em si não fica no git: se precisar refazer, peça o link do Drive ao u
 | `edl.json` | Cortes (20 trechos, 103,4 s → 100,8 s). Aponta para `videos/v2/fonte.mp4`. |
 | `transcript.json` | Transcrição do vídeo cortado, corrigida. |
 | `roteiro.json` | Roteiro entregue. |
-| `preparar_clipes.sh` | Rebaixa os 11 clipes do Pixabay e aplica recorte e filtro. |
+| `preparar_clipes.sh` | Rebaixa os clipes (10 do Pixabay, 1 do Mixkit), gera a coxa em corte e aplica recorte e filtro. |
 | `project.md` | Diário: o que foi medido e decidido. |
 
 ## Refazer
@@ -43,7 +43,7 @@ O vídeo em si não fica no git: se precisar refazer, peça o link do Drive ao u
 | 50,7–52,2 | "isso não é coisa de idade que você tem que aceitar" | P&B + voz de rádio |
 | 57–58,7 | "uma das coisas mais reversíveis" | Título **reversíveis** (verde-lima) |
 | 58,7–65 | "faz comigo agora…" | Trilha inspira · lista ✓ dos 3 passos |
-| 65–78 | "exercício mais usado… vida real… independência" | Tela cheia (aula) · cartão (sofá) · dividida (casal) |
+| 65–78 | "exercício mais usado… vida real… independência" | Dividida: agachamento em casa (Mixkit; a aula com braços para cima foi recusada) · cartão (sofá) · dividida (casal) |
 | 79,6–81,4 | "dor no joelho" | Cartão: joelho |
 | 85,6–90 | "não existe perna forte sem exercício de força… não é sorte, não é genética" | Frase grande (coral) · lista |
 | 90,2–93,4 | "o músculo só mantém a força quando é desafiado" | Tela cheia: esqueleto com halteres |
