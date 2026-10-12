@@ -105,23 +105,17 @@
     "cena": [
       "corte_ref"
     ],
-    "cena_saida": [
-      "corte_ref_saida"
-    ],
+    "cena_saida": [],
     "cena_item": [
       "pop_suave"
     ],
     "dividida": [
       "corte_ref"
     ],
-    "dividida_saida": [
-      "corte_ref_saida"
-    ],
+    "dividida_saida": [],
     "broll": [
       "corte_ref"
     ],
-    "broll_saida": [
-      "corte_ref_saida"
-    ]
+    "broll_saida": []
   }
 }
