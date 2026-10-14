@@ -1,0 +1,224 @@
+{
+ "identidade": "salvia-forte",
+ "video": "assets/cortado.mp4",
+ "transcricao": "transcript.json",
+ "arroba": "@luismacciel",
+ "humor_inicial": "calma",
+ "voz_pb": "radio",
+ "legenda": {
+  "ativa": true,
+  "max_palavras": 3,
+  "estilo": "destaque",
+  "cor": "#F2C94C",
+  "tam": 66
+ },
+ "layout": {
+  "legenda_y": 1400,
+  "titulo_y": 1340,
+  "capitulo_y": 1380,
+  "cta_y": 1360,
+  "lista_y": 1330,
+  "fim_ig_y": 560
+ },
+ "marca": {
+  "ativa": true,
+  "intervalo": 4,
+  "posicoes": [
+   [
+    850,
+    300
+   ],
+   [
+    40,
+    600
+   ],
+   [
+    850,
+    140
+   ],
+   [
+    850,
+    1110
+   ],
+   [
+    40,
+    140
+   ],
+   [
+    850,
+    520
+   ]
+  ]
+ },
+ "eventos": [
+  {
+   "tipo": "dividida",
+   "inicio": 0.0,
+   "fim": 2.2,
+   "midia": "assets/gancho_fx.mp4"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 2.24,
+   "fim": 6.38,
+   "titulo": "não é",
+   "itens": [
+    {
+     "icone": "×",
+     "texto": "agachamento",
+     "t": 2.76
+    },
+    {
+     "icone": "×",
+     "texto": "supino",
+     "t": 3.84
+    },
+    {
+     "icone": "×",
+     "texto": "20 min de esteira",
+     "t": 5.26
+    }
+   ]
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 6.44,
+   "fim": 8.3,
+   "escala": 1.12,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 8.84,
+   "fim": 10.4,
+   "estilo": "seco",
+   "escala": 1.22,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "broll",
+   "inicio": 10.48,
+   "fim": 12.98,
+   "midia": "assets/sofa_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "pb",
+   "inicio": 13.46,
+   "fim": 16.12
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 16.18,
+   "fim": 16.66,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 16.68,
+   "fim": 19.46,
+   "midia": "assets/escritorio_fx.mp4"
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 19.48,
+   "humor": "tensa"
+  },
+  {
+   "tipo": "broll",
+   "inicio": 19.52,
+   "fim": 21.96,
+   "midia": "assets/futebol_fx.mp4",
+   "estilo": "cartao",
+   "largura": 960,
+   "altura": 620,
+   "topo": 690
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 22.0,
+   "fim": 24.32,
+   "midia": "assets/corrida_fx.mp4"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 24.36,
+   "fim": 25.84,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.42
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 25.88,
+   "fim": 28.34,
+   "antes": "é o esforço intenso",
+   "destaque": "sem estar preparado",
+   "vivo": 1
+  },
+  {
+   "tipo": "cena",
+   "modelo": "barras",
+   "inicio": 28.42,
+   "fim": 34.1,
+   "titulo": "condicionamento",
+   "itens": [
+    {
+     "rotulo": "parado",
+     "valor": 22,
+     "seta": "↓",
+     "t": 28.94
+    },
+    {
+     "rotulo": "ativo",
+     "valor": 88,
+     "seta": "↑",
+     "t": 33.12,
+     "vivo": 2
+    }
+   ]
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 34.18,
+   "humor": "inspira"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 34.6,
+   "fim": 38.62,
+   "titulo": "em vez disso",
+   "itens": [
+    {
+     "icone": "×",
+     "texto": "compensar no domingo",
+     "t": 35.18
+    },
+    {
+     "icone": "✓",
+     "texto": "um pouco todo dia",
+     "t": 37.58
+    }
+   ]
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 38.7,
+   "fim": 41.4,
+   "antes": "seu coração precisa de",
+   "destaque": "constância",
+   "depois": "não de compensação",
+   "vivo": 2
+  },
+  {
+   "tipo": "final",
+   "inicio": 41.5,
+   "cta_antes": "salve e manda pro",
+   "cta_destaque": "amigo do domingo",
+   "cta_depois": "",
+   "escurecer_em": 3.3
+  }
+ ]
+}
