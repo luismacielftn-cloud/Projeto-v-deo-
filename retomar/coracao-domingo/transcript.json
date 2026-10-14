@@ -1,0 +1,827 @@
+[
+ {
+  "text": "O",
+  "start": 0.0,
+  "end": 0.16
+ },
+ {
+  "text": "exercício",
+  "start": 0.16,
+  "end": 0.58
+ },
+ {
+  "text": "mais",
+  "start": 0.58,
+  "end": 0.86
+ },
+ {
+  "text": "perigoso",
+  "start": 0.86,
+  "end": 1.4
+ },
+ {
+  "text": "para",
+  "start": 1.4,
+  "end": 1.62
+ },
+ {
+  "text": "o",
+  "start": 1.62,
+  "end": 1.68
+ },
+ {
+  "text": "seu",
+  "start": 1.68,
+  "end": 1.76
+ },
+ {
+  "text": "coração",
+  "start": 1.76,
+  "end": 2.22
+ },
+ {
+  "text": "não",
+  "start": 2.22,
+  "end": 2.52
+ },
+ {
+  "text": "é",
+  "start": 2.52,
+  "end": 2.68
+ },
+ {
+  "text": "o",
+  "start": 2.68,
+  "end": 2.76
+ },
+ {
+  "text": "agachamento,",
+  "start": 2.76,
+  "end": 3.28
+ },
+ {
+  "text": "não",
+  "start": 3.58,
+  "end": 3.66
+ },
+ {
+  "text": "é",
+  "start": 3.66,
+  "end": 3.78
+ },
+ {
+  "text": "o",
+  "start": 3.78,
+  "end": 3.84
+ },
+ {
+  "text": "supino",
+  "start": 3.84,
+  "end": 4.3
+ },
+ {
+  "text": "e",
+  "start": 4.3,
+  "end": 4.46
+ },
+ {
+  "text": "muito",
+  "start": 4.46,
+  "end": 4.66
+ },
+ {
+  "text": "menos",
+  "start": 4.66,
+  "end": 4.94
+ },
+ {
+  "text": "correr",
+  "start": 4.94,
+  "end": 5.26
+ },
+ {
+  "text": "20",
+  "start": 5.26,
+  "end": 5.52
+ },
+ {
+  "text": "minutos",
+  "start": 5.52,
+  "end": 5.78
+ },
+ {
+  "text": "na",
+  "start": 5.78,
+  "end": 5.98
+ },
+ {
+  "text": "esteira.",
+  "start": 5.98,
+  "end": 6.32
+ },
+ {
+  "text": "Na",
+  "start": 6.44,
+  "end": 6.56
+ },
+ {
+  "text": "verdade,",
+  "start": 6.56,
+  "end": 6.88
+ },
+ {
+  "text": "existe",
+  "start": 7.1,
+  "end": 7.34
+ },
+ {
+  "text": "um",
+  "start": 7.34,
+  "end": 7.54
+ },
+ {
+  "text": "tipo",
+  "start": 7.54,
+  "end": 7.68
+ },
+ {
+  "text": "de",
+  "start": 7.68,
+  "end": 7.8
+ },
+ {
+  "text": "exercício",
+  "start": 7.8,
+  "end": 8.32
+ },
+ {
+  "text": "que",
+  "start": 8.32,
+  "end": 8.5
+ },
+ {
+  "text": "pode",
+  "start": 8.5,
+  "end": 8.68
+ },
+ {
+  "text": "ser",
+  "start": 8.68,
+  "end": 8.84
+ },
+ {
+  "text": "muito",
+  "start": 8.84,
+  "end": 9.06
+ },
+ {
+  "text": "mais",
+  "start": 9.06,
+  "end": 9.24
+ },
+ {
+  "text": "preocupante,",
+  "start": 9.24,
+  "end": 9.86
+ },
+ {
+  "text": "principalmente",
+  "start": 9.94,
+  "end": 10.24
+ },
+ {
+  "text": "se",
+  "start": 10.24,
+  "end": 10.5
+ },
+ {
+  "text": "você",
+  "start": 10.5,
+  "end": 10.64
+ },
+ {
+  "text": "passa",
+  "start": 10.64,
+  "end": 10.92
+ },
+ {
+  "text": "a",
+  "start": 10.92,
+  "end": 11.08
+ },
+ {
+  "text": "maior",
+  "start": 11.08,
+  "end": 11.22
+ },
+ {
+  "text": "parte",
+  "start": 11.22,
+  "end": 11.5
+ },
+ {
+  "text": "da",
+  "start": 11.5,
+  "end": 11.66
+ },
+ {
+  "text": "semana",
+  "start": 11.66,
+  "end": 12.04
+ },
+ {
+  "text": "sem",
+  "start": 12.04,
+  "end": 12.24
+ },
+ {
+  "text": "fazer",
+  "start": 12.24,
+  "end": 12.48
+ },
+ {
+  "text": "atividade",
+  "start": 12.48,
+  "end": 12.84
+ },
+ {
+  "text": "física.",
+  "start": 12.84,
+  "end": 13.2
+ },
+ {
+  "text": "Provavelmente",
+  "start": 13.48,
+  "end": 13.92
+ },
+ {
+  "text": "você",
+  "start": 13.92,
+  "end": 14.18
+ },
+ {
+  "text": "faz",
+  "start": 14.18,
+  "end": 14.5
+ },
+ {
+  "text": "isso",
+  "start": 14.5,
+  "end": 14.66
+ },
+ {
+  "text": "achando",
+  "start": 14.66,
+  "end": 14.96
+ },
+ {
+  "text": "que",
+  "start": 14.96,
+  "end": 15.08
+ },
+ {
+  "text": "está",
+  "start": 15.08,
+  "end": 15.22
+ },
+ {
+  "text": "cuidando",
+  "start": 15.22,
+  "end": 15.54
+ },
+ {
+  "text": "da",
+  "start": 15.54,
+  "end": 15.7
+ },
+ {
+  "text": "saúde.",
+  "start": 15.7,
+  "end": 16.04
+ },
+ {
+  "text": "Sabe",
+  "start": 16.2,
+  "end": 16.32
+ },
+ {
+  "text": "o",
+  "start": 16.32,
+  "end": 16.44
+ },
+ {
+  "text": "que",
+  "start": 16.44,
+  "end": 16.52
+ },
+ {
+  "text": "é?",
+  "start": 16.52,
+  "end": 16.6
+ },
+ {
+  "text": "É",
+  "start": 16.7,
+  "end": 16.84
+ },
+ {
+  "text": "aquela",
+  "start": 16.84,
+  "end": 17.0
+ },
+ {
+  "text": "pessoa",
+  "start": 17.0,
+  "end": 17.36
+ },
+ {
+  "text": "que",
+  "start": 17.36,
+  "end": 17.52
+ },
+ {
+  "text": "passa",
+  "start": 17.52,
+  "end": 17.74
+ },
+ {
+  "text": "a",
+  "start": 17.74,
+  "end": 17.94
+ },
+ {
+  "text": "semana",
+  "start": 17.94,
+  "end": 18.08
+ },
+ {
+  "text": "inteira",
+  "start": 18.08,
+  "end": 18.64
+ },
+ {
+  "text": "parada",
+  "start": 18.64,
+  "end": 19.24
+ },
+ {
+  "text": "e",
+  "start": 19.24,
+  "end": 19.52
+ },
+ {
+  "text": "no",
+  "start": 19.52,
+  "end": 19.64
+ },
+ {
+  "text": "domingo",
+  "start": 19.64,
+  "end": 20.1
+ },
+ {
+  "text": "resolve",
+  "start": 20.1,
+  "end": 20.46
+ },
+ {
+  "text": "jogar",
+  "start": 20.46,
+  "end": 20.86
+ },
+ {
+  "text": "uma",
+  "start": 20.86,
+  "end": 21.0
+ },
+ {
+  "text": "partida",
+  "start": 21.0,
+  "end": 21.34
+ },
+ {
+  "text": "de",
+  "start": 21.34,
+  "end": 21.46
+ },
+ {
+  "text": "futebol,",
+  "start": 21.46,
+  "end": 21.92
+ },
+ {
+  "text": "correr",
+  "start": 22.02,
+  "end": 22.3
+ },
+ {
+  "text": "ou",
+  "start": 22.3,
+  "end": 22.52
+ },
+ {
+  "text": "fazer",
+  "start": 22.52,
+  "end": 22.76
+ },
+ {
+  "text": "um",
+  "start": 22.76,
+  "end": 22.88
+ },
+ {
+  "text": "exercício",
+  "start": 22.88,
+  "end": 23.28
+ },
+ {
+  "text": "intenso",
+  "start": 23.28,
+  "end": 23.76
+ },
+ {
+  "text": "de",
+  "start": 23.76,
+  "end": 23.92
+ },
+ {
+  "text": "uma",
+  "start": 23.92,
+  "end": 24.06
+ },
+ {
+  "text": "hora.",
+  "start": 24.06,
+  "end": 24.3
+ },
+ {
+  "text": "O",
+  "start": 24.38,
+  "end": 24.48
+ },
+ {
+  "text": "problema",
+  "start": 24.48,
+  "end": 24.74
+ },
+ {
+  "text": "não",
+  "start": 24.74,
+  "end": 25.16
+ },
+ {
+  "text": "é",
+  "start": 25.16,
+  "end": 25.24
+ },
+ {
+  "text": "o",
+  "start": 25.24,
+  "end": 25.34
+ },
+ {
+  "text": "futebol,",
+  "start": 25.34,
+  "end": 25.8
+ },
+ {
+  "text": "é",
+  "start": 25.88,
+  "end": 25.98
+ },
+ {
+  "text": "o",
+  "start": 25.98,
+  "end": 26.04
+ },
+ {
+  "text": "esforço",
+  "start": 26.04,
+  "end": 26.38
+ },
+ {
+  "text": "intenso",
+  "start": 26.38,
+  "end": 26.94
+ },
+ {
+  "text": "sem",
+  "start": 26.94,
+  "end": 27.16
+ },
+ {
+  "text": "estar",
+  "start": 27.16,
+  "end": 27.4
+ },
+ {
+  "text": "preparado",
+  "start": 27.4,
+  "end": 27.98
+ },
+ {
+  "text": "para",
+  "start": 27.98,
+  "end": 28.18
+ },
+ {
+  "text": "ele.",
+  "start": 28.18,
+  "end": 28.44
+ },
+ {
+  "text": "Se",
+  "start": 28.44,
+  "end": 28.66
+ },
+ {
+  "text": "você",
+  "start": 28.66,
+  "end": 28.8
+ },
+ {
+  "text": "é",
+  "start": 28.8,
+  "end": 28.94
+ },
+ {
+  "text": "sedentário",
+  "start": 28.94,
+  "end": 29.54
+ },
+ {
+  "text": "durante",
+  "start": 29.54,
+  "end": 29.78
+ },
+ {
+  "text": "a",
+  "start": 29.78,
+  "end": 29.96
+ },
+ {
+  "text": "semana,",
+  "start": 29.96,
+  "end": 30.4
+ },
+ {
+  "text": "seu",
+  "start": 30.66,
+  "end": 30.82
+ },
+ {
+  "text": "corpo",
+  "start": 30.82,
+  "end": 31.08
+ },
+ {
+  "text": "não",
+  "start": 31.08,
+  "end": 31.26
+ },
+ {
+  "text": "tem",
+  "start": 31.26,
+  "end": 31.48
+ },
+ {
+  "text": "o",
+  "start": 31.48,
+  "end": 31.74
+ },
+ {
+  "text": "mesmo",
+  "start": 31.74,
+  "end": 31.9
+ },
+ {
+  "text": "condicionamento",
+  "start": 31.9,
+  "end": 32.54
+ },
+ {
+  "text": "de",
+  "start": 32.54,
+  "end": 32.76
+ },
+ {
+  "text": "quem",
+  "start": 32.76,
+  "end": 32.96
+ },
+ {
+  "text": "se",
+  "start": 32.96,
+  "end": 33.12
+ },
+ {
+  "text": "movimenta",
+  "start": 33.12,
+  "end": 33.58
+ },
+ {
+  "text": "regularmente,",
+  "start": 33.58,
+  "end": 34.16
+ },
+ {
+  "text": "então,",
+  "start": 34.2,
+  "end": 34.4
+ },
+ {
+  "text": "em",
+  "start": 34.6,
+  "end": 34.74
+ },
+ {
+  "text": "vez",
+  "start": 34.74,
+  "end": 34.86
+ },
+ {
+  "text": "de",
+  "start": 34.86,
+  "end": 34.96
+ },
+ {
+  "text": "tentar",
+  "start": 34.96,
+  "end": 35.18
+ },
+ {
+  "text": "compensar",
+  "start": 35.18,
+  "end": 35.84
+ },
+ {
+  "text": "tudo",
+  "start": 35.84,
+  "end": 36.04
+ },
+ {
+  "text": "no",
+  "start": 36.04,
+  "end": 36.22
+ },
+ {
+  "text": "domingo,",
+  "start": 36.22,
+  "end": 36.68
+ },
+ {
+  "text": "comece",
+  "start": 36.78,
+  "end": 37.02
+ },
+ {
+  "text": "a",
+  "start": 37.02,
+  "end": 37.12
+ },
+ {
+  "text": "se",
+  "start": 37.12,
+  "end": 37.12
+ },
+ {
+  "text": "movimentar",
+  "start": 37.12,
+  "end": 37.58
+ },
+ {
+  "text": "um",
+  "start": 37.58,
+  "end": 37.66
+ },
+ {
+  "text": "pouco",
+  "start": 37.66,
+  "end": 37.86
+ },
+ {
+  "text": "todos",
+  "start": 37.86,
+  "end": 38.1
+ },
+ {
+  "text": "os",
+  "start": 38.1,
+  "end": 38.36
+ },
+ {
+  "text": "dias,",
+  "start": 38.36,
+  "end": 38.6
+ },
+ {
+  "text": "seu",
+  "start": 38.74,
+  "end": 38.86
+ },
+ {
+  "text": "coração",
+  "start": 38.86,
+  "end": 39.14
+ },
+ {
+  "text": "precisa",
+  "start": 39.14,
+  "end": 39.54
+ },
+ {
+  "text": "de",
+  "start": 39.54,
+  "end": 39.76
+ },
+ {
+  "text": "constância,",
+  "start": 39.76,
+  "end": 40.38
+ },
+ {
+  "text": "não",
+  "start": 40.5,
+  "end": 40.58
+ },
+ {
+  "text": "de",
+  "start": 40.58,
+  "end": 40.74
+ },
+ {
+  "text": "compensação.",
+  "start": 40.74,
+  "end": 41.38
+ },
+ {
+  "text": "Salve",
+  "start": 41.52,
+  "end": 41.76
+ },
+ {
+  "text": "esse",
+  "start": 41.76,
+  "end": 41.86
+ },
+ {
+  "text": "vídeo",
+  "start": 41.86,
+  "end": 42.16
+ },
+ {
+  "text": "e",
+  "start": 42.16,
+  "end": 42.32
+ },
+ {
+  "text": "manda",
+  "start": 42.32,
+  "end": 42.6
+ },
+ {
+  "text": "para",
+  "start": 42.6,
+  "end": 42.72
+ },
+ {
+  "text": "aquele",
+  "start": 42.72,
+  "end": 42.92
+ },
+ {
+  "text": "amigo",
+  "start": 42.92,
+  "end": 43.18
+ },
+ {
+  "text": "que",
+  "start": 43.18,
+  "end": 43.38
+ },
+ {
+  "text": "só",
+  "start": 43.38,
+  "end": 43.56
+ },
+ {
+  "text": "faz",
+  "start": 43.56,
+  "end": 43.78
+ },
+ {
+  "text": "exercício",
+  "start": 43.78,
+  "end": 44.18
+ },
+ {
+  "text": "no",
+  "start": 44.18,
+  "end": 44.28
+ },
+ {
+  "text": "domingo.",
+  "start": 44.28,
+  "end": 44.64
+ }
+]

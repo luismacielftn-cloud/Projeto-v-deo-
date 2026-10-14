@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/v3/fonte.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 0.1,
+      "end": 7.135
+    },
+    {
+      "source": "fonte",
+      "start": 7.387,
+      "end": 10.187
+    },
+    {
+      "source": "fonte",
+      "start": 10.38,
+      "end": 17.136
+    },
+    {
+      "source": "fonte",
+      "start": 17.313,
+      "end": 31.251
+    },
+    {
+      "source": "fonte",
+      "start": 31.5,
+      "end": 35.388
+    },
+    {
+      "source": "fonte",
+      "start": 35.714,
+      "end": 39.82
+    },
+    {
+      "source": "fonte",
+      "start": 40.0,
+      "end": 41.66
+    },
+    {
+      "source": "fonte",
+      "start": 41.873,
+      "end": 46.15
+    }
+  ],
+  "total_duration_s": 44.46
+}
