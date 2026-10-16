@@ -1,0 +1,228 @@
+{
+ "identidade": "salvia-forte",
+ "video": "assets/cortado.mp4",
+ "transcricao": "transcript.json",
+ "arroba": "@luismacciel",
+ "humor_inicial": "calma",
+ "voz_pb": "radio",
+ "legenda": {
+  "ativa": true,
+  "max_palavras": 3,
+  "estilo": "destaque",
+  "cor": "#F2C94C",
+  "tam": 66
+ },
+ "layout": {
+  "legenda_y": 1400,
+  "titulo_y": 1340,
+  "capitulo_y": 1380,
+  "cta_y": 1360,
+  "lista_y": 1330,
+  "fim_ig_y": 520
+ },
+ "marca": {
+  "ativa": true,
+  "intervalo": 4,
+  "posicoes": [
+   [
+    850,
+    300
+   ],
+   [
+    40,
+    600
+   ],
+   [
+    850,
+    140
+   ],
+   [
+    850,
+    1110
+   ],
+   [
+    40,
+    140
+   ],
+   [
+    850,
+    520
+   ]
+  ]
+ },
+ "eventos": [
+  {
+   "tipo": "rotulos",
+   "inicio": 0.0,
+   "fim": 12.85,
+   "itens": [
+    {
+     "texto": "30 anos",
+     "sub": "não treina",
+     "x": 385,
+     "y": 1610,
+     "t": 1.34,
+     "fim": 6.1,
+     "vivo": 1
+    },
+    {
+     "texto": "70 anos",
+     "sub": "não treina",
+     "x": 860,
+     "y": 1610,
+     "t": 4.58,
+     "fim": 6.1,
+     "vivo": 1
+    },
+    {
+     "texto": "30 anos",
+     "sub": "treina",
+     "x": 385,
+     "y": 1610,
+     "t": 7.88,
+     "fim": 12.85,
+     "vivo": 2
+    },
+    {
+     "texto": "70 anos",
+     "sub": "treina",
+     "x": 860,
+     "y": 1610,
+     "t": 11.16,
+     "fim": 12.85,
+     "vivo": 2
+    }
+   ]
+  },
+  {
+   "tipo": "lista",
+   "inicio": 12.94,
+   "fim": 16.1,
+   "titulo": "a diferença",
+   "itens": [
+    {
+     "icone": "×",
+     "texto": "a idade",
+     "t": 13.98
+    },
+    {
+     "icone": "✓",
+     "texto": "o que fez com o tempo",
+     "t": 14.64
+    }
+   ]
+  },
+  {
+   "tipo": "broll",
+   "inicio": 16.14,
+   "fim": 18.18,
+   "midia": "assets/compras_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 18.2,
+   "fim": 20.72,
+   "titulo": "quem treinou",
+   "itens": [
+    {
+     "icone": "✓",
+     "texto": "sobe escada sem pensar",
+     "t": 18.22
+    },
+    {
+     "icone": "✓",
+     "texto": "levanta do chão sem as mãos",
+     "t": 19.32
+    }
+   ]
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 20.74,
+   "humor": "tensa"
+  },
+  {
+   "tipo": "broll",
+   "inicio": 20.76,
+   "fim": 23.5,
+   "midia": "assets/levantar_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "pb",
+   "inicio": 23.58,
+   "fim": 26.4
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 26.5,
+   "humor": "inspira"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 26.66,
+   "fim": 28.92,
+   "titulo": "músculo",
+   "itens": [
+    {
+     "icone": "×",
+     "texto": "estética",
+     "t": 27.32
+    },
+    {
+     "icone": "✓",
+     "texto": "autonomia",
+     "t": 28.12
+    }
+   ]
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 28.98,
+   "fim": 32.1,
+   "antes": "ser dona do seu",
+   "destaque": "próprio corpo",
+   "depois": "daqui a 20, 30 anos",
+   "vivo": 2
+  },
+  {
+   "tipo": "broll",
+   "inicio": 32.2,
+   "fim": 35.5,
+   "midia": "assets/halteres_fx.mp4",
+   "estilo": "cheia"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 35.6,
+   "fim": 36.9,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.3
+  },
+  {
+   "tipo": "broll",
+   "inicio": 36.95,
+   "fim": 38.0,
+   "midia": "assets/foto70_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 38.02,
+   "fim": 40.5,
+   "antes": "essa foto",
+   "destaque": "não é o seu destino",
+   "vivo": 1
+  },
+  {
+   "tipo": "final",
+   "inicio": 40.6,
+   "cta_antes": "comenta aqui",
+   "cta_destaque": "qual das duas?",
+   "cta_depois": "você quer ser",
+   "escurecer_em": 2.5
+  }
+ ]
+}

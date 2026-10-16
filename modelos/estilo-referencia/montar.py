@@ -75,7 +75,7 @@ SONS_TENSOS = {
     "final": ["boom"],
 }  # trilha automática: um humor por seção
 # Eventos que já mostram texto: a legenda some enquanto estão ativos.
-TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista"}
+TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista", "rotulos"}
 # Posição vertical (px) dos blocos de texto. O roteiro pode sobrescrever em "layout"
 # para não cobrir o rosto (ex.: rosto ocupando o meio do quadro -> textos na altura do peito).
 LAYOUT_PADRAO = {
@@ -231,6 +231,9 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
 .lista .txt {{ font-family: "Inter"; font-weight: 500; font-size: 54px; line-height: 1.1; color: {c["texto"]};
   text-shadow: {sombra}; }}
 .tit .peq.dir, .cta .dep {{ text-align: right; }}
+.rot {{ position: absolute; width: 520px; text-align: center; }}
+.rot .a {{ font-family: "Inter"; font-weight: 900; font-size: 54px; line-height: 1.05; color: {c["texto"]}; text-shadow: {sombra}; }}
+.rot .b {{ font-family: "Inter"; font-weight: 900; font-size: 46px; line-height: 1.1; color: {c["destaque"]}; text-shadow: {sombra}; }}
 .cap {{ position: absolute; left: 70px; top: {L["capitulo_y"]}px; }}
 .cap .num {{ font-family: "{num["familia"]}"; font-weight: {num["peso"]}; font-size: {num["tam"]}px; line-height: .8;
   font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1;
@@ -633,6 +636,24 @@ def montar(roteiro_path: Path) -> Path:
                 comp.entra_destaque(f"#{ev}-i{i}", ti)
                 comp.som("lista_item", ti)
             comp.sai(f"#{ev}-in", t1)
+
+        elif tipo == "rotulos":
+            # Etiquetas em cima de imagens que o usuário já pôs no vídeo (ex.: as coxas em corte).
+            # Cada item: {texto, sub, x (centro), y (topo), t, fim, vivo}. A legenda some no evento.
+            ys = []
+            for i, it in enumerate(e["itens"]):
+                ti = float(it.get("t", t0))
+                tf = float(it.get("fim", t1))
+                x, y = int(it["x"]), int(it["y"])
+                ys.append(y)
+                conteudo = f'<div class="a">{esc(it["texto"])}</div>'
+                if it.get("sub"):
+                    conteudo += f'<div class="b" style="{cor_viva(idt, it)}">{esc(it["sub"])}</div>'
+                comp.clip(f"{ev}-r{i}", "rot", ti, tf, f'<div id="{ev}-r{i}-in">{conteudo}</div>',
+                          f"left:{x - 260}px;top:{y}px")
+                comp.entra_destaque(f"#{ev}-r{i}-in", ti)
+                comp.som("lista_item", ti)
+            zonas.append((t0, t1, (0, min(ys) - 40, W, max(ys) + 160)))
 
         elif tipo in ("janela", "inserto"):
             if tipo == "janela":

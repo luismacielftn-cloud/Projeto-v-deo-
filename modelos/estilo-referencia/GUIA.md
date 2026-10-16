@@ -96,6 +96,7 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
 | --- | --- | --- |
 | `dividida` | Clipe/imagem na metade de cima; a câmera desce e você fica na de baixo; a legenda vai para a emenda (se o rosto estiver no alto do quadro, use `"descer": 820` para a legenda não cair no cabelo). A borda de baixo do clipe se dissolve em 190 px (emenda esfumada, como em @elias.maman) | `midia`, `altura` (980), `descer` (445), `som`, `inicio_midia` |
 | `broll` | Clipe cobrindo a câmera: `"estilo": "cheia"` (tela cheia) ou `"cartao"` (**formato menor**: cartão 840×800 de cantos suaves e borda esfumada, centralizado sobre fundo preto, como no vídeo de @elias.maman) | `midia`, `estilo`, `som`, `inicio_midia`, `ganho_db`; no cartão, `largura`, `altura`, `topo` (px). Prepare o clipe já no tamanho do cartão (ffmpeg `scale`+`crop`). |
+| `rotulos` | Etiquetas em cima de imagens que o **usuário já colocou no vídeo** (ex.: as coxas em corte no começo do vídeo 4). Cada etiqueta entra na palavra e sai quando a imagem dele some; a legenda some no trecho para não cobrir as fotos. Meça onde e quando as imagens dele aparecem (quadros a cada 0,2 s) e não cubra nada. | `itens: [{texto, sub, x (centro), y (topo), t, fim, vivo}]` |
 
 - **Tom tenso, para vídeos sérios** (o usuário escolhe vídeo a vídeo): `"tom": "tenso"` no roteiro. Os sons passam a ser:
   - `riser` + `boom` nas entradas de clipe;
