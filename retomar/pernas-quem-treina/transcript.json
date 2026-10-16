@@ -1,0 +1,942 @@
+[
+ {
+  "text": "Essa",
+  "start": 0.0,
+  "end": 0.24
+ },
+ {
+  "text": "aqui",
+  "start": 0.24,
+  "end": 0.42
+ },
+ {
+  "text": "é",
+  "start": 0.42,
+  "end": 0.52
+ },
+ {
+  "text": "a",
+  "start": 0.52,
+  "end": 0.54
+ },
+ {
+  "text": "perna",
+  "start": 0.54,
+  "end": 0.74
+ },
+ {
+  "text": "de",
+  "start": 0.74,
+  "end": 0.86
+ },
+ {
+  "text": "uma",
+  "start": 0.86,
+  "end": 0.94
+ },
+ {
+  "text": "mulher",
+  "start": 0.94,
+  "end": 1.16
+ },
+ {
+  "text": "de",
+  "start": 1.16,
+  "end": 1.34
+ },
+ {
+  "text": "30",
+  "start": 1.34,
+  "end": 1.6
+ },
+ {
+  "text": "anos",
+  "start": 1.6,
+  "end": 1.98
+ },
+ {
+  "text": "que",
+  "start": 1.98,
+  "end": 2.2
+ },
+ {
+  "text": "não",
+  "start": 2.2,
+  "end": 2.34
+ },
+ {
+  "text": "treina,",
+  "start": 2.34,
+  "end": 2.82
+ },
+ {
+  "text": "e",
+  "start": 2.98,
+  "end": 3.0
+ },
+ {
+  "text": "essa",
+  "start": 3.0,
+  "end": 3.18
+ },
+ {
+  "text": "aqui",
+  "start": 3.18,
+  "end": 3.46
+ },
+ {
+  "text": "é",
+  "start": 3.46,
+  "end": 3.66
+ },
+ {
+  "text": "a",
+  "start": 3.66,
+  "end": 3.74
+ },
+ {
+  "text": "perna",
+  "start": 3.74,
+  "end": 3.98
+ },
+ {
+  "text": "de",
+  "start": 3.98,
+  "end": 4.1
+ },
+ {
+  "text": "uma",
+  "start": 4.1,
+  "end": 4.2
+ },
+ {
+  "text": "mulher",
+  "start": 4.2,
+  "end": 4.42
+ },
+ {
+  "text": "de",
+  "start": 4.42,
+  "end": 4.58
+ },
+ {
+  "text": "70",
+  "start": 4.58,
+  "end": 4.82
+ },
+ {
+  "text": "anos",
+  "start": 4.82,
+  "end": 5.34
+ },
+ {
+  "text": "que",
+  "start": 5.34,
+  "end": 5.54
+ },
+ {
+  "text": "não",
+  "start": 5.54,
+  "end": 5.7
+ },
+ {
+  "text": "treina.",
+  "start": 5.7,
+  "end": 6.08
+ },
+ {
+  "text": "Essa",
+  "start": 6.2,
+  "end": 6.38
+ },
+ {
+  "text": "daqui",
+  "start": 6.38,
+  "end": 6.72
+ },
+ {
+  "text": "é",
+  "start": 6.72,
+  "end": 6.98
+ },
+ {
+  "text": "a",
+  "start": 6.98,
+  "end": 7.02
+ },
+ {
+  "text": "perna",
+  "start": 7.02,
+  "end": 7.24
+ },
+ {
+  "text": "de",
+  "start": 7.24,
+  "end": 7.38
+ },
+ {
+  "text": "uma",
+  "start": 7.38,
+  "end": 7.46
+ },
+ {
+  "text": "mulher",
+  "start": 7.46,
+  "end": 7.68
+ },
+ {
+  "text": "de",
+  "start": 7.68,
+  "end": 7.88
+ },
+ {
+  "text": "30",
+  "start": 7.88,
+  "end": 8.14
+ },
+ {
+  "text": "anos",
+  "start": 8.14,
+  "end": 8.48
+ },
+ {
+  "text": "que",
+  "start": 8.48,
+  "end": 8.66
+ },
+ {
+  "text": "treina,",
+  "start": 8.66,
+  "end": 9.1
+ },
+ {
+  "text": "agora",
+  "start": 9.12,
+  "end": 9.36
+ },
+ {
+  "text": "essa",
+  "start": 9.36,
+  "end": 9.74
+ },
+ {
+  "text": "daqui",
+  "start": 9.74,
+  "end": 10.14
+ },
+ {
+  "text": "é",
+  "start": 10.14,
+  "end": 10.34
+ },
+ {
+  "text": "a",
+  "start": 10.34,
+  "end": 10.36
+ },
+ {
+  "text": "perna",
+  "start": 10.36,
+  "end": 10.58
+ },
+ {
+  "text": "de",
+  "start": 10.58,
+  "end": 10.7
+ },
+ {
+  "text": "uma",
+  "start": 10.7,
+  "end": 10.78
+ },
+ {
+  "text": "mulher",
+  "start": 10.78,
+  "end": 11.0
+ },
+ {
+  "text": "de",
+  "start": 11.0,
+  "end": 11.16
+ },
+ {
+  "text": "70",
+  "start": 11.16,
+  "end": 11.54
+ },
+ {
+  "text": "anos",
+  "start": 11.54,
+  "end": 12.1
+ },
+ {
+  "text": "que",
+  "start": 12.1,
+  "end": 12.32
+ },
+ {
+  "text": "treina.",
+  "start": 12.32,
+  "end": 12.74
+ },
+ {
+  "text": "A",
+  "start": 12.94,
+  "end": 13.04
+ },
+ {
+  "text": "diferença",
+  "start": 13.04,
+  "end": 13.3
+ },
+ {
+  "text": "aqui",
+  "start": 13.3,
+  "end": 13.64
+ },
+ {
+  "text": "não",
+  "start": 13.64,
+  "end": 13.8
+ },
+ {
+  "text": "é",
+  "start": 13.8,
+  "end": 13.92
+ },
+ {
+  "text": "a",
+  "start": 13.92,
+  "end": 13.98
+ },
+ {
+  "text": "idade,",
+  "start": 13.98,
+  "end": 14.3
+ },
+ {
+  "text": "é",
+  "start": 14.46,
+  "end": 14.5
+ },
+ {
+  "text": "o",
+  "start": 14.5,
+  "end": 14.56
+ },
+ {
+  "text": "que",
+  "start": 14.56,
+  "end": 14.64
+ },
+ {
+  "text": "cada",
+  "start": 14.64,
+  "end": 14.86
+ },
+ {
+  "text": "um",
+  "start": 14.86,
+  "end": 15.02
+ },
+ {
+  "text": "fez",
+  "start": 15.02,
+  "end": 15.22
+ },
+ {
+  "text": "com",
+  "start": 15.22,
+  "end": 15.42
+ },
+ {
+  "text": "o",
+  "start": 15.42,
+  "end": 15.48
+ },
+ {
+  "text": "tempo",
+  "start": 15.48,
+  "end": 15.66
+ },
+ {
+  "text": "que",
+  "start": 15.66,
+  "end": 15.82
+ },
+ {
+  "text": "teve.",
+  "start": 15.82,
+  "end": 16.04
+ },
+ {
+  "text": "Quem",
+  "start": 16.14,
+  "end": 16.22
+ },
+ {
+  "text": "treinou",
+  "start": 16.22,
+  "end": 16.5
+ },
+ {
+  "text": "em",
+  "start": 16.5,
+  "end": 16.62
+ },
+ {
+  "text": "70",
+  "start": 16.62,
+  "end": 16.86
+ },
+ {
+  "text": "carrega",
+  "start": 16.86,
+  "end": 17.38
+ },
+ {
+  "text": "a",
+  "start": 17.38,
+  "end": 17.48
+ },
+ {
+  "text": "própria",
+  "start": 17.48,
+  "end": 17.62
+ },
+ {
+  "text": "compra,",
+  "start": 17.62,
+  "end": 18.0
+ },
+ {
+  "text": "sobe",
+  "start": 18.22,
+  "end": 18.38
+ },
+ {
+  "text": "escada",
+  "start": 18.38,
+  "end": 18.66
+ },
+ {
+  "text": "sem",
+  "start": 18.66,
+  "end": 18.8
+ },
+ {
+  "text": "pensar,",
+  "start": 18.8,
+  "end": 19.12
+ },
+ {
+  "text": "levanta",
+  "start": 19.32,
+  "end": 19.6
+ },
+ {
+  "text": "do",
+  "start": 19.6,
+  "end": 19.72
+ },
+ {
+  "text": "chão",
+  "start": 19.72,
+  "end": 19.88
+ },
+ {
+  "text": "sem",
+  "start": 19.88,
+  "end": 20.02
+ },
+ {
+  "text": "apoiar",
+  "start": 20.02,
+  "end": 20.34
+ },
+ {
+  "text": "a",
+  "start": 20.34,
+  "end": 20.38
+ },
+ {
+  "text": "mão.",
+  "start": 20.38,
+  "end": 20.58
+ },
+ {
+  "text": "Quem",
+  "start": 20.76,
+  "end": 20.86
+ },
+ {
+  "text": "não",
+  "start": 20.86,
+  "end": 21.02
+ },
+ {
+  "text": "treina",
+  "start": 21.02,
+  "end": 21.3
+ },
+ {
+  "text": "com",
+  "start": 21.3,
+  "end": 21.44
+ },
+ {
+  "text": "30",
+  "start": 21.44,
+  "end": 21.7
+ },
+ {
+  "text": "ou",
+  "start": 21.7,
+  "end": 21.94
+ },
+ {
+  "text": "com",
+  "start": 21.94,
+  "end": 22.06
+ },
+ {
+  "text": "70,",
+  "start": 22.06,
+  "end": 22.44
+ },
+ {
+  "text": "perde",
+  "start": 22.7,
+  "end": 22.94
+ },
+ {
+  "text": "isso",
+  "start": 22.94,
+  "end": 23.12
+ },
+ {
+  "text": "aos",
+  "start": 23.12,
+  "end": 23.22
+ },
+ {
+  "text": "poucos",
+  "start": 23.22,
+  "end": 23.58
+ },
+ {
+  "text": "e",
+  "start": 23.58,
+  "end": 23.72
+ },
+ {
+  "text": "geralmente",
+  "start": 23.72,
+  "end": 24.1
+ },
+ {
+  "text": "só",
+  "start": 24.1,
+  "end": 24.22
+ },
+ {
+  "text": "percebe",
+  "start": 24.22,
+  "end": 24.6
+ },
+ {
+  "text": "quando",
+  "start": 24.6,
+  "end": 24.74
+ },
+ {
+  "text": "já",
+  "start": 24.74,
+  "end": 24.92
+ },
+ {
+  "text": "está",
+  "start": 24.92,
+  "end": 25.1
+ },
+ {
+  "text": "muito",
+  "start": 25.1,
+  "end": 25.42
+ },
+ {
+  "text": "difícil",
+  "start": 25.42,
+  "end": 25.78
+ },
+ {
+  "text": "de",
+  "start": 25.78,
+  "end": 25.94
+ },
+ {
+  "text": "se",
+  "start": 25.94,
+  "end": 26.14
+ },
+ {
+  "text": "reverter.",
+  "start": 26.14,
+  "end": 26.4
+ },
+ {
+  "text": "Músculo",
+  "start": 26.66,
+  "end": 26.92
+ },
+ {
+  "text": "não",
+  "start": 26.92,
+  "end": 27.02
+ },
+ {
+  "text": "é",
+  "start": 27.02,
+  "end": 27.14
+ },
+ {
+  "text": "sobre",
+  "start": 27.14,
+  "end": 27.32
+ },
+ {
+  "text": "estética,",
+  "start": 27.32,
+  "end": 27.76
+ },
+ {
+  "text": "é",
+  "start": 27.96,
+  "end": 27.96
+ },
+ {
+  "text": "sobre",
+  "start": 27.96,
+  "end": 28.12
+ },
+ {
+  "text": "autonomia,",
+  "start": 28.12,
+  "end": 28.68
+ },
+ {
+  "text": "é",
+  "start": 28.98,
+  "end": 29.0
+ },
+ {
+  "text": "sobre",
+  "start": 29.0,
+  "end": 29.24
+ },
+ {
+  "text": "ser",
+  "start": 29.24,
+  "end": 29.46
+ },
+ {
+  "text": "dona",
+  "start": 29.46,
+  "end": 29.76
+ },
+ {
+  "text": "do",
+  "start": 29.76,
+  "end": 29.96
+ },
+ {
+  "text": "seu",
+  "start": 29.96,
+  "end": 30.1
+ },
+ {
+  "text": "próprio",
+  "start": 30.1,
+  "end": 30.38
+ },
+ {
+  "text": "corpo",
+  "start": 30.38,
+  "end": 30.76
+ },
+ {
+  "text": "daqui",
+  "start": 30.76,
+  "end": 31.0
+ },
+ {
+  "text": "a",
+  "start": 31.0,
+  "end": 31.14
+ },
+ {
+  "text": "20",
+  "start": 31.14,
+  "end": 31.4
+ },
+ {
+  "text": "e",
+  "start": 31.4,
+  "end": 31.54
+ },
+ {
+  "text": "30",
+  "start": 31.54,
+  "end": 31.78
+ },
+ {
+  "text": "anos.",
+  "start": 31.78,
+  "end": 32.14
+ },
+ {
+  "text": "Manda",
+  "start": 32.28,
+  "end": 32.48
+ },
+ {
+  "text": "esse",
+  "start": 32.48,
+  "end": 32.64
+ },
+ {
+  "text": "vídeo",
+  "start": 32.64,
+  "end": 32.86
+ },
+ {
+  "text": "para",
+  "start": 32.86,
+  "end": 33.0
+ },
+ {
+  "text": "alguém",
+  "start": 33.0,
+  "end": 33.16
+ },
+ {
+  "text": "que",
+  "start": 33.16,
+  "end": 33.3
+ },
+ {
+  "text": "ainda",
+  "start": 33.3,
+  "end": 33.46
+ },
+ {
+  "text": "acha",
+  "start": 33.46,
+  "end": 33.8
+ },
+ {
+  "text": "que",
+  "start": 33.8,
+  "end": 33.96
+ },
+ {
+  "text": "treino",
+  "start": 33.96,
+  "end": 34.22
+ },
+ {
+  "text": "de",
+  "start": 34.22,
+  "end": 34.34
+ },
+ {
+  "text": "força",
+  "start": 34.34,
+  "end": 34.64
+ },
+ {
+  "text": "é",
+  "start": 34.64,
+  "end": 34.94
+ },
+ {
+  "text": "coisa",
+  "start": 34.94,
+  "end": 35.14
+ },
+ {
+  "text": "de",
+  "start": 35.14,
+  "end": 35.3
+ },
+ {
+  "text": "gente",
+  "start": 35.3,
+  "end": 35.44
+ },
+ {
+  "text": "nova.",
+  "start": 35.44,
+  "end": 35.72
+ },
+ {
+  "text": "Então",
+  "start": 35.86,
+  "end": 36.06
+ },
+ {
+  "text": "entenda",
+  "start": 36.06,
+  "end": 36.34
+ },
+ {
+  "text": "uma",
+  "start": 36.34,
+  "end": 36.5
+ },
+ {
+  "text": "coisa,",
+  "start": 36.5,
+  "end": 36.76
+ },
+ {
+  "text": "essa",
+  "start": 36.98,
+  "end": 37.16
+ },
+ {
+  "text": "foto",
+  "start": 37.16,
+  "end": 37.56
+ },
+ {
+  "text": "não",
+  "start": 37.56,
+  "end": 37.78
+ },
+ {
+  "text": "é",
+  "start": 37.78,
+  "end": 37.9
+ },
+ {
+  "text": "o",
+  "start": 37.9,
+  "end": 38.0
+ },
+ {
+  "text": "seu",
+  "start": 38.0,
+  "end": 38.08
+ },
+ {
+  "text": "destino,",
+  "start": 38.08,
+  "end": 38.54
+ },
+ {
+  "text": "é",
+  "start": 38.66,
+  "end": 38.74
+ },
+ {
+  "text": "só",
+  "start": 38.74,
+  "end": 38.86
+ },
+ {
+  "text": "o",
+  "start": 38.86,
+  "end": 38.96
+ },
+ {
+  "text": "que",
+  "start": 38.96,
+  "end": 39.0
+ },
+ {
+  "text": "acontece",
+  "start": 39.0,
+  "end": 39.36
+ },
+ {
+  "text": "quando",
+  "start": 39.36,
+  "end": 39.6
+ },
+ {
+  "text": "ninguém",
+  "start": 39.6,
+  "end": 39.9
+ },
+ {
+  "text": "avisa",
+  "start": 39.9,
+  "end": 40.32
+ },
+ {
+  "text": "a tempo.",
+  "start": 40.32,
+  "end": 40.56
+ },
+ {
+  "text": "Comenta",
+  "start": 40.68,
+  "end": 40.94
+ },
+ {
+  "text": "aqui",
+  "start": 40.94,
+  "end": 41.16
+ },
+ {
+  "text": "qual",
+  "start": 41.16,
+  "end": 41.32
+ },
+ {
+  "text": "das",
+  "start": 41.32,
+  "end": 41.5
+ },
+ {
+  "text": "duas",
+  "start": 41.5,
+  "end": 41.76
+ },
+ {
+  "text": "você",
+  "start": 41.76,
+  "end": 42.02
+ },
+ {
+  "text": "quer",
+  "start": 42.02,
+  "end": 42.2
+ },
+ {
+  "text": "ser",
+  "start": 42.2,
+  "end": 42.36
+ },
+ {
+  "text": "daqui",
+  "start": 42.36,
+  "end": 42.56
+ },
+ {
+  "text": "a",
+  "start": 42.56,
+  "end": 42.74
+ },
+ {
+  "text": "15",
+  "start": 42.74,
+  "end": 42.94
+ },
+ {
+  "text": "anos.",
+  "start": 42.94,
+  "end": 43.26
+ }
+]

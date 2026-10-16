@@ -38,7 +38,7 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 | `ferramentas/filtro_clipe.py` | Filtros dos clipes de banco no estilo de @elias.maman: `tv` (cartão), `desfoque` (dividida) e `lente` (cheia). `--brilho 1.5` clareia clipe escuro. Rode no clipe já recortado e use o `_fx.mp4` no roteiro. |
 | `ferramentas/secao_musculo.py` | Ilustração animada da coxa em corte (30 × 70 anos) para falar de **sarcopenia / perda de músculo**. Padrão: **fotos realistas** de carne em corte (`modelos/estilo-referencia/assets/sarcopenia/`, geradas no Canva); a de 70 anos vira músculo tomado de gordura. O usuário pediu "mais próximo do real"; `--desenho` é a versão antiga desenhada. Vai no cartão com `filtro_clipe.py tv --brilho 1.2`. |
 | `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados e trilhas geradas. Tudo sem direitos autorais. |
-| `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes; `retomar/coracao-domingo/` é o terceiro, gravado no carro, com todos os clipes do Mixkit. |
+| `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes; `retomar/coracao-domingo/` é o terceiro, gravado no carro, com todos os clipes do Mixkit; `retomar/pernas-quem-treina/` é o quarto, que já vinha com as imagens do usuário (etiquetas `rotulos`). |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |
 | `ferramentas/licencas/` | Licenças das ferramentas copiadas. |
 
@@ -146,6 +146,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **Pixabay 403:** precisa de User-Agent de navegador (já está no `buscar_clipes.py`).
 - **ffmpeg com imagem em `-loop 1` sem `-t`** gera arquivo infinito; **`blend=multiply` em YUV** deixa a imagem verde (use `gbrp`).
 - **Comando interrompido pelo usuário pode ter rodado pela metade:** confira data e tamanho dos arquivos (`ls -la`) antes de renderizar de novo.
+- **Vídeo que já vem com imagens do usuário:** preserve-as (não cubra com clipe, cena nem legenda). Use o evento `rotulos` para etiquetar e reaproveite a imagem dele num cartão quando ele falar dela ("essa foto"). Exemplo: `retomar/pernas-quem-treina/`.
 - **Imagem que contradiz a fala:** um raio-X de corpo musculoso em "sarcopenia" foi recusado. Confira se o clipe mostra o mesmo sentido da frase (perda ≠ força).
 - **Clipe que não mostra o movimento falado:** no "esse movimento simples" (sentar e levantar da cadeira) uma aula de idosos com os braços para cima foi recusada como "sem sentido". Quando a fala descreve um exercício, o clipe mostra **esse** exercício.
 - **Ilustração de anatomia com cara de desenho:** o usuário prefere imagem realista (carne, textura de verdade), como os posts de corte de coxa "sem/com treino de força". Desenho chapado só se não houver foto.

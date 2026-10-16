@@ -75,7 +75,7 @@ SONS_TENSOS = {
     "final": ["boom"],
 }  # trilha automática: um humor por seção
 # Eventos que já mostram texto: a legenda some enquanto estão ativos.
-TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista"}
+TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista", "rotulos"}
 # Posição vertical (px) dos blocos de texto. O roteiro pode sobrescrever em "layout"
 # para não cobrir o rosto (ex.: rosto ocupando o meio do quadro -> textos na altura do peito).
 LAYOUT_PADRAO = {
@@ -231,6 +231,9 @@ html, body {{ width: {W}px; height: {H}px; overflow: hidden; background: #000; }
 .lista .txt {{ font-family: "Inter"; font-weight: 500; font-size: 54px; line-height: 1.1; color: {c["texto"]};
   text-shadow: {sombra}; }}
 .tit .peq.dir, .cta .dep {{ text-align: right; }}
+.rot {{ position: absolute; width: 520px; text-align: center; }}
+.rot .a {{ font-family: "Inter"; font-weight: 900; font-size: 54px; line-height: 1.05; color: {c["texto"]}; text-shadow: {sombra}; }}
+.rot .b {{ font-family: "Inter"; font-weight: 900; font-size: 46px; line-height: 1.1; color: {c["destaque"]}; text-shadow: {sombra}; }}
 .cap {{ position: absolute; left: 70px; top: {L["capitulo_y"]}px; }}
 .cap .num {{ font-family: "{num["familia"]}"; font-weight: {num["peso"]}; font-size: {num["tam"]}px; line-height: .8;
   font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1;
@@ -634,6 +637,24 @@ def montar(roteiro_path: Path) -> Path:
                 comp.som("lista_item", ti)
             comp.sai(f"#{ev}-in", t1)
 
+        elif tipo == "rotulos":
+            # Etiquetas em cima de imagens que o usuário já pôs no vídeo (ex.: as coxas em corte).
+            # Cada item: {texto, sub, x (centro), y (topo), t, fim, vivo}. A legenda some no evento.
+            ys = []
+            for i, it in enumerate(e["itens"]):
+                ti = float(it.get("t", t0))
+                tf = float(it.get("fim", t1))
+                x, y = int(it["x"]), int(it["y"])
+                ys.append(y)
+                conteudo = f'<div class="a">{esc(it["texto"])}</div>'
+                if it.get("sub"):
+                    conteudo += f'<div class="b" style="{cor_viva(idt, it)}">{esc(it["sub"])}</div>'
+                comp.clip(f"{ev}-r{i}", "rot", ti, tf, f'<div id="{ev}-r{i}-in">{conteudo}</div>',
+                          f"left:{x - 260}px;top:{y}px")
+                comp.entra_destaque(f"#{ev}-r{i}-in", ti)
+                comp.som("lista_item", ti)
+            zonas.append((t0, t1, (0, min(ys) - 40, W, max(ys) + 160)))
+
         elif tipo in ("janela", "inserto"):
             if tipo == "janela":
                 lado, margem, topo = POSICOES_JANELA[e.get("posicao", "topo-direita")]
@@ -723,13 +744,17 @@ def montar(roteiro_path: Path) -> Path:
             tam = fonte_ajustada(
                 dest, dest_cfg["tam_max"], 940, dest_cfg["largura_char"]
             )
+            # cta_y / ig_y mudam a posição só neste final; "escurecer": false não escurece
+            # (para quando o usuário pôs imagens próprias no fim do vídeo).
+            pos_cta = f' style="top:{int(e["cta_y"])}px"' if "cta_y" in e else ""
+            pos_ig = f' style="top:{int(e["ig_y"])}px"' if "ig_y" in e else ""
             cta = (
-                f'<div class="cta" id="{ev}-cta"><div class="peq" id="{ev}-p">{esc(e.get("cta_antes", "toque no"))}</div>'
+                f'<div class="cta" id="{ev}-cta"{pos_cta}><div class="peq" id="{ev}-p">{esc(e.get("cta_antes", "toque no"))}</div>'
                 f'<span class="big" id="{ev}-b" style="font-size:{tam}px;{cor_viva(idt, e)}">{esc(dest)}</span>'
                 f'<div class="peq dep" id="{ev}-d">{esc(e.get("cta_depois", ""))}</div></div>'
             )
             escurece = float(e.get("escurecer_em", 1.2))
-            ig = f'<div class="fim-ig" id="{ev}-ig">{ICONE_IG}<span>{esc(arroba)}</span></div>'
+            ig = f'<div class="fim-ig" id="{ev}-ig"{pos_ig}>{ICONE_IG}<span>{esc(arroba)}</span></div>'
             comp.clip(
                 ev,
                 "fim",
@@ -743,14 +768,15 @@ def montar(roteiro_path: Path) -> Path:
             comp.entra_texto(f"#{ev}-p", t0)
             comp.entra_destaque(f"#{ev}-b", t0 + 0.12)
             comp.entra_texto(f"#{ev}-d", t0 + 0.4)
-            comp.tween(
-                f"#{ev}-esc",
-                t0 + escurece,
-                "opacity: 0",
-                "opacity: 0.7",
-                0.6,
-                "power2.out",
-            )
+            if e.get("escurecer", True):
+                comp.tween(
+                    f"#{ev}-esc",
+                    t0 + escurece,
+                    "opacity: 0",
+                    "opacity: 0.7",
+                    0.6,
+                    "power2.out",
+                )
             comp.entra_destaque(f"#{ev}-ig", t0 + escurece + 0.2)
             janelas_sem_legenda.append((t0, dur))
             comp.som("final", t0 + 0.12)
