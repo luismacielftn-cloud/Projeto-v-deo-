@@ -141,6 +141,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **"Voz abafada" suave não se percebe.** O usuário quer a voz de rádio forte (padrão do `pb`).
 - **Transições mudas:** confirme no `mix.json` que toda entrada de clipe/cena tem `corte_ref`.
 - **Transição com som demais:** o tic metálico agudo antes da entrada ("sino") e o `corte_ref_saida` na volta para a câmera foram recusados ("muita entrada e saída no vídeo todo"). Não religue.
+- **Sino na tela final:** recusado ("tire esse sino" no "comenta aqui…"). O `final` da Sálvia forte não tem som; não religue.
 - **Pico estourado na cópia de entrega:** recomprimir o áudio AAC criou pico de +2,6 dB. O `--entrega` copia o áudio do final; meça o `ebur128` no arquivo enviado, não só no `final.mp4`.
 - **@ sumido:** confira no `index.html` quantos `marca` existem; ele precisa aparecer o tempo todo.
 - **Pixabay 403:** precisa de User-Agent de navegador (já está no `buscar_clipes.py`).
