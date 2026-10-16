@@ -744,13 +744,17 @@ def montar(roteiro_path: Path) -> Path:
             tam = fonte_ajustada(
                 dest, dest_cfg["tam_max"], 940, dest_cfg["largura_char"]
             )
+            # cta_y / ig_y mudam a posição só neste final; "escurecer": false não escurece
+            # (para quando o usuário pôs imagens próprias no fim do vídeo).
+            pos_cta = f' style="top:{int(e["cta_y"])}px"' if "cta_y" in e else ""
+            pos_ig = f' style="top:{int(e["ig_y"])}px"' if "ig_y" in e else ""
             cta = (
-                f'<div class="cta" id="{ev}-cta"><div class="peq" id="{ev}-p">{esc(e.get("cta_antes", "toque no"))}</div>'
+                f'<div class="cta" id="{ev}-cta"{pos_cta}><div class="peq" id="{ev}-p">{esc(e.get("cta_antes", "toque no"))}</div>'
                 f'<span class="big" id="{ev}-b" style="font-size:{tam}px;{cor_viva(idt, e)}">{esc(dest)}</span>'
                 f'<div class="peq dep" id="{ev}-d">{esc(e.get("cta_depois", ""))}</div></div>'
             )
             escurece = float(e.get("escurecer_em", 1.2))
-            ig = f'<div class="fim-ig" id="{ev}-ig">{ICONE_IG}<span>{esc(arroba)}</span></div>'
+            ig = f'<div class="fim-ig" id="{ev}-ig"{pos_ig}>{ICONE_IG}<span>{esc(arroba)}</span></div>'
             comp.clip(
                 ev,
                 "fim",
@@ -764,14 +768,15 @@ def montar(roteiro_path: Path) -> Path:
             comp.entra_texto(f"#{ev}-p", t0)
             comp.entra_destaque(f"#{ev}-b", t0 + 0.12)
             comp.entra_texto(f"#{ev}-d", t0 + 0.4)
-            comp.tween(
-                f"#{ev}-esc",
-                t0 + escurece,
-                "opacity: 0",
-                "opacity: 0.7",
-                0.6,
-                "power2.out",
-            )
+            if e.get("escurecer", True):
+                comp.tween(
+                    f"#{ev}-esc",
+                    t0 + escurece,
+                    "opacity: 0",
+                    "opacity: 0.7",
+                    0.6,
+                    "power2.out",
+                )
             comp.entra_destaque(f"#{ev}-ig", t0 + escurece + 0.2)
             janelas_sem_legenda.append((t0, dur))
             comp.som("final", t0 + 0.12)

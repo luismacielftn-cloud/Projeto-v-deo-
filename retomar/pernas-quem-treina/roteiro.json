@@ -222,7 +222,10 @@
    "cta_antes": "comenta aqui",
    "cta_destaque": "qual das duas?",
    "cta_depois": "você quer ser",
-   "escurecer_em": 2.5
+   "escurecer_em": 1.1,
+   "cta_y": 1630,
+   "ig_y": 40,
+   "escurecer": false
   }
  ]
 }
