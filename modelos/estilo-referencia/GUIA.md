@@ -85,6 +85,13 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 | `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque, quebra}]` (`destaque`: `true`/1 coral, 2 verde-lima; `quebra`: pula linha depois) |
 | `rede` | Rede de neurônios que se desenha e acende (cérebro, neurociência) | `t` (onda de luz), `rotulo` |
 | `queda` | Perda com a idade: linhas retas até um marco e caindo depois ("depois dos 40 perde músculo e osso") | `idades` ([30,40,50,60,70]), `marco` (índice, 1 = 40), `t_marco`, `linhas: [{rotulo, t, t_fim, tam, marco}]` (até 3; `marco` por linha faz cada uma cair numa idade, ex.: força aos 40 e massa muscular aos 60) |
+| `busca` | "Pesquisa no Google": celular com a página de busca, a frase **digitada letra a letra no tempo da fala** (teclas acendem, som de tecla), tecla "ir" e resultados | `palavras: [{texto, t, fim}]` (tempos do `transcript.json`), `t_logo`, `t_alerta` (borda vermelha + tremida na palavra forte), `t_enter`, `resultados: [{rotulo, vivo\|cor, borda, t}]`, `logo` |
+| `versus` | Dois lados opostos ("verdade × mentira", "antes × depois") | `lados: [{texto, icone: "check"\|"x", cor, t}]`, `t_vs` |
+| `troca` | Palavra que é riscada e trocada por outra no tempo da fala ("opinião sem pesquisa → torcida") | `de: {texto, t}`, `sub: {texto, t}`, `t_risco`, `para: {texto, t, vivo}`, `topo` |
+
+Qualquer cena aceita `"sobre_camera": true`: em vez do fundo escuro, a câmera fica atrás, escurecida e desfocada (bom para frase de efeito com o rosto ainda presente).
+
+Os resultados da `busca` são **barras cinzas com etiquetas** (ACUSAÇÃO, DEFESA…): nunca invente manchete, site ou jornal real.
 
 Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), use `ferramentas/buscar_clipes.py` (Pixabay). Se a chave for recusada ("Invalid or missing API key"), troque os clipes por cenas e avise o usuário.
 
@@ -108,6 +115,23 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
 - **Clipes com som próprio:** use `"som": true` e abra espaço na fala na etapa do Video Use (trecho com `"manter": true`).
 - **Origem dos clipes:** o usuário manda os clipes de terceiros (notícias, entrevistas). Não baixe por conta própria. Clipes genéricos vêm do Pixabay (`buscar_clipes.py`, com a `PIXABAY_API_KEY` do usuário); quando ele não tem, do Mixkit (`mixkit.co/free-stock-video/<termo>/`, arquivo em `assets.mixkit.co/videos/<id>/<id>-720.mp4`). O clipe mostra o que a fala descreve: "sentar e levantar" pede alguém sentando e levantando, não uma aula com os braços para cima (recusado). Busque termos simples em inglês ("skeleton", "knee", "luggage"): frases longas dão resultados fracos. Prefira pessoas maduras para o público 45+ e recorte cada clipe antes (trecho, enquadramento, câmera lenta) com ffmpeg para `hf/assets/`.
 - **Anatomia realista, não desenho:** quando a fala pede uma imagem do corpo por dentro (músculo, gordura), o usuário quer algo **próximo do real** (carne em corte, textura de verdade), como os posts "seu músculo sem/com treino de força". Para sarcopenia já existe `ferramentas/secao_musculo.py`: duas fotos realistas da coxa em corte (`assets/sarcopenia/`, geradas no Canva do usuário) lado a lado, 30 × 70 anos, e a de 70 anos passa de músculo vermelho para músculo tomado de gordura no meio do clipe. Cartão + `filtro_clipe.py tv --brilho 1.2`. Para outro tema, gere fotos realistas no Canva (`generate-image`); só a prévia de 200 px pode ser baixada, então amplie com lanczos e deixe o filtro `tv` disfarçar.
+
+## Peças "virais" (5º vídeo, `retomar/bolsonaro-lula/`)
+
+Pedido do usuário: "extremamente viral", com efeitos sonoros e ênfase forte numa frase. Peças novas do `montar.py`:
+
+| Evento | O que faz | Campos |
+| --- | --- | --- |
+| `impacto` | A frase forte **carimbada** na tela: clarão, fundo vermelho-escuro, texto gigante (Inter Black) que bate, falha de cor vermelho/ciano, a câmera e as cenas tremem. A legenda some. Som: `boom` + `glitch`. Use em 1 frase por vídeo. | `linhas: [{texto, cor\|vivo}]`, `tam` (150), `topo`, `tremer` |
+| `trio` | Três faixas de vídeo empilhadas (1000×340, filtro `tv`), cada uma entra na sua palavra de uma enumeração ("ex-presidente, Polícia Federal e o Supremo") com número e rótulo. `batida` dá um tranco + impacto (martelo do juiz). | `itens: [{midia, rotulo, numero, t, batida, inicio_midia}]`, `topo` |
+| `trilha` | Invisível: só troca o humor da trilha nesse instante (sem véu). Ex.: `tensa` → `tensa_pulso` na busca → `batida` logo depois da frase forte (o "drop"). | `humor` |
+| `sons_extra` (no roteiro, fora dos eventos) | Efeitos avulsos: `[{"t": 17.88, "som": "riser"}]`. O `riser` termina no `t` (sobe até o impacto). | `t`, `som` |
+
+- **Rachar a imagem ao meio** (gancho "divide o Brasil ao meio"): feito em ffmpeg, com borda irregular, luz vermelha na fenda e tremida (`retomar/bolsonaro-lula/preparar_clipes.sh`). Som: `riser` terminando na rachadura + `rachadura`.
+- **Sons novos** em `ferramentas/efeitos.py`: `tecla`/`tecla2`/`tecla3` (digitação, -25 dB), `enter` (-19), `glitch` (-20), `rachadura` (-13).
+- **Cor e luz** quando o usuário pede ("qualidade, filtro, iluminação"): use o `grade` do `retomar/bolsonaro-lula/edl.json` como ponto de partida (contraste, realces comprimidos, pele quente, parede fria, vinheta, nitidez leve). Compare antes/depois num quadro lado a lado antes de renderizar.
+- **Tema político ou polêmico:** a edição segue o tom do vídeo (neutro: a frase leva "?"). Sem manchetes inventadas, sem imagens de pessoas reais baixadas por conta própria.
+- **GSAP:** `tl.fromTo` aplica o "from" assim que o timeline é criado. Se o estado inicial é visível (borda acesa, tecla apertada), ele aparece antes da hora. Use `tl.set` no instante + `tl.to` logo depois.
 
 ## Layout: não cobrir o rosto
 

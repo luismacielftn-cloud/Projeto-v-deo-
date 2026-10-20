@@ -23,6 +23,10 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 
 **Exemplo completo e aprovado:** `retomar/treino-forca/` (roteiro, cortes, clipes e o diário de cada pedido do usuário). Antes de montar um vídeo novo, leia o `LEIA.md` de lá: a linha do tempo mostra como tudo se encaixa.
 
+**Vídeo "viral" com frase forte (5º vídeo, `retomar/bolsonaro-lula/`):** quando o usuário pede ênfase numa frase, ela vira um `impacto` (texto gigante carimbado, clarão, glitch, tela tremendo, `boom` + `glitch`, com `riser` subindo antes). "Pesquisa no Google" vira a cena `busca` (celular, frase digitada letra a letra no tempo da fala, som de tecla). Enumerações rápidas viram `trio` (3 faixas de vídeo). Detalhes no `GUIA.md`, seção "Peças virais". Em tema político ou polêmico, a edição fica neutra como a fala: sem manchete ou site real inventado e sem imagem de pessoa real baixada por conta própria.
+
+**Cor e luz:** quando o usuário pedir ("qualidade, filtro, iluminação"), ponha um `grade` no `edl.json` (o do `retomar/bolsonaro-lula/` é o ponto de partida) e compare antes/depois num quadro.
+
 **Gancho visual nos primeiros 3 segundos:** todo vídeo abre com algo forte na tela já no 0 s, de preferência em **tela dividida** com um clipe de banco ligado à primeira frase (no exemplo: mulher no espelho preocupada com rugas para "envelhecer mais rápido"). Não comece só com o rosto. O gancho precisa causar impacto e curiosidade: prefira uma pessoa numa situação forte (exausta, aflita, no limite), como o homem acabado no chuveiro do exemplo do usuário. Paisagem bonita (nascer do sol etc.) não serve de gancho.
 
 ## O que já está no repositório
@@ -37,8 +41,8 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 | `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio. Com `--mix`, usa a mixagem completa do `mixar.py`. Queima legenda só fora do modelo. |
 | `ferramentas/filtro_clipe.py` | Filtros dos clipes de banco no estilo de @elias.maman: `tv` (cartão), `desfoque` (dividida) e `lente` (cheia). `--brilho 1.5` clareia clipe escuro. Rode no clipe já recortado e use o `_fx.mp4` no roteiro. |
 | `ferramentas/secao_musculo.py` | Ilustração animada da coxa em corte (30 × 70 anos) para falar de **sarcopenia / perda de músculo**. Padrão: **fotos realistas** de carne em corte (`modelos/estilo-referencia/assets/sarcopenia/`, geradas no Canva); a de 70 anos vira músculo tomado de gordura. O usuário pediu "mais próximo do real"; `--desenho` é a versão antiga desenhada. Vai no cartão com `filtro_clipe.py tv --brilho 1.2`. |
-| `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados e trilhas geradas. Tudo sem direitos autorais. |
-| `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes; `retomar/coracao-domingo/` é o terceiro, gravado no carro, com todos os clipes do Mixkit; `retomar/pernas-quem-treina/` é o quarto, que já vinha com as imagens do usuário (etiquetas `rotulos`). |
+| `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados (inclusive tecla, enter, glitch e rachadura) e trilhas geradas. Tudo sem direitos autorais. |
+| `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes; `retomar/coracao-domingo/` é o terceiro, gravado no carro, com todos os clipes do Mixkit; `retomar/pernas-quem-treina/` é o quarto, que já vinha com as imagens do usuário (etiquetas `rotulos`); `retomar/bolsonaro-lula/` é o quinto, "viral", com busca no Google digitada, frase carimbada (`impacto`), bandeira rachando e cor corrigida. |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |
 | `ferramentas/licencas/` | Licenças das ferramentas copiadas. |
 
@@ -151,6 +155,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **Imagem que contradiz a fala:** um raio-X de corpo musculoso em "sarcopenia" foi recusado. Confira se o clipe mostra o mesmo sentido da frase (perda ≠ força).
 - **Clipe que não mostra o movimento falado:** no "esse movimento simples" (sentar e levantar da cadeira) uma aula de idosos com os braços para cima foi recusada como "sem sentido". Quando a fala descreve um exercício, o clipe mostra **esse** exercício.
 - **Ilustração de anatomia com cara de desenho:** o usuário prefere imagem realista (carne, textura de verdade), como os posts de corte de coxa "sem/com treino de força". Desenho chapado só se não houver foto.
+- **Animação aparecendo antes da hora:** `tl.fromTo` com estado inicial visível (borda acesa, tecla apertada) aparece desde o começo da cena. Use `tl.set` + `tl.to`. Confira sempre com `snapshot` antes do render.
 - **Corte de 1–8 centésimos** dá "pulo" na imagem sem ganhar tempo: junte trechos separados por menos de 0,1 s no `edl.json`.
 
 ## Memória entre sessões

@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/bolsonaro-lula/fonte.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 1.58,
+      "end": 6.66,
+      "beat": "GANCHO",
+      "quote": "Existe uma frase que divide o Brasil ao meio e eu duvido que você tenha coragem de pesquisar."
+    },
+    {
+      "source": "fonte",
+      "start": 6.94,
+      "end": 10.46,
+      "beat": "CONTEXTO",
+      "quote": "Ela envolve um ex-presidente, a Polícia Federal e o Supremo."
+    },
+    {
+      "source": "fonte",
+      "start": 10.54,
+      "end": 12.7,
+      "beat": "NEUTRO",
+      "quote": "Esse vídeo não é para defender ninguém."
+    },
+    {
+      "source": "fonte",
+      "start": 12.84,
+      "end": 15.8,
+      "beat": "DIVISAO",
+      "quote": "Alguns juram que é verdade e outros juram que é mentira."
+    },
+    {
+      "source": "fonte",
+      "start": 16.12,
+      "end": 17.58,
+      "beat": "NEUTRO",
+      "quote": "E eu não vou dizer quem está certo."
+    },
+    {
+      "source": "fonte",
+      "start": 17.94,
+      "end": 19.28,
+      "beat": "BUSCA",
+      "quote": "Abre o Google e digita."
+    },
+    {
+      "source": "fonte",
+      "start": 19.64,
+      "end": 21.34,
+      "beat": "FRASE",
+      "quote": "Bolsonaro mandou matar Lula."
+    },
+    {
+      "source": "fonte",
+      "start": 21.66,
+      "end": 24.68,
+      "beat": "CTA",
+      "quote": "Lê a acusação, lê a defesa e tira sua conclusão."
+    },
+    {
+      "source": "fonte",
+      "start": 24.86,
+      "end": 29.7,
+      "beat": "FECHO",
+      "quote": "Manda para quem precisa ver, porque sua opinião sem pesquisa não é opinião, é torcida."
+    },
+    {
+      "source": "fonte",
+      "start": 29.7,
+      "end": 30.7,
+      "beat": "RESPIRO",
+      "quote": "(silêncio para a tela final)",
+      "manter": true
+    }
+  ],
+  "grade": "eq=contrast=1.12:brightness=-0.02:saturation=1.06,curves=master='0/0 0.2/0.16 0.5/0.5 0.85/0.82 1/0.93',colorbalance=rs=0.02:bs=-0.02:rm=0.045:gm=0.01:bm=-0.035:rh=-0.02:gh=0.0:bh=0.025,vignette=angle=PI/4.4,unsharp=5:5:0.5",
+  "total_duration_s": 26.98
+}
