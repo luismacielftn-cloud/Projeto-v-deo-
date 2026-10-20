@@ -9,14 +9,14 @@ O vídeo em si não fica no git: se precisar refazer, peça o link do Drive ao u
 | `edl.json` | Cortes (10 trechos, 30,7 s → 27,1 s + 0,7 s congelados = 28,0 s) **com o `grade` de cor** (ver abaixo). Aponta para `videos/bolsonaro-lula/fonte.mp4`. |
 | `transcript.json` | Transcrição do vídeo cortado ("nula" → "Lula", "ex -presidente" → "ex- presidente"). |
 | `roteiro.json` | Roteiro entregue (usa as peças novas: `trio`, `impacto`, `trilha`, cenas `busca`, `versus` e `troca`, `sons_extra`). |
-| `preparar_clipes.sh` | Baixa os 4 clipes do Pixabay e faz a bandeira que **racha ao meio** (ffmpeg) e as 3 faixas do `trio` (filtro `tv`). |
+| `preparar_clipes.sh` | Baixa os 4 clipes do Pixabay e faz a bandeira que **racha ao meio e abre revelando a foto do usuário** (3º argumento; ffmpeg) e as 3 faixas do `trio` (filtro `tv`). |
 | `project.md` | Diário. |
 
 ## Refazer
 
 1. `helpers/render.py retomar/bolsonaro-lula/edl.json -o videos/bolsonaro-lula/edit/cortado_base.mp4` → congelar 0,7 s (`tpad`/`apad`) → `cortado.mp4`.
 2. `transcript.json` e `roteiro.json` em `videos/bolsonaro-lula/edit/hf/`; `cortado.mp4` em `hf/assets/` com `-g 30`.
-3. `bash retomar/bolsonaro-lula/preparar_clipes.sh videos/bolsonaro-lula/edit/clipes_brutos videos/bolsonaro-lula/edit/hf/assets`
+3. `bash retomar/bolsonaro-lula/preparar_clipes.sh videos/bolsonaro-lula/edit/clipes_brutos videos/bolsonaro-lula/edit/hf/assets videos/bolsonaro-lula/foto_usuario.jpg` (a foto não fica no git: peça de novo ao usuário; 1600×728, duas pessoas lado a lado).
 4. `montar.py` → `lint` → `render` → `finalizar.py --mix … --entrega …`.
 
 ## Cor e luz (pedido "qualidade, filtro, iluminação")
@@ -30,8 +30,9 @@ Bom ponto de partida para outros vídeos com parede clara.
 
 | Tempo | Fala | Na tela | Som |
 | --- | --- | --- | --- |
-| 0,0–2,3 | "Existe uma frase que divide o Brasil ao meio" | **Gancho**: tela dividida com a bandeira, que **racha ao meio** (borda irregular, luz vermelha, tremida) no "meio" | `riser` subindo até a rachadura + `rachadura` |
-| 2,3–5,1 | "e eu duvido que você tenha coragem de pesquisar" | Dois zooms secos (1,18× e 1,34× no "coragem") | `hit_tenso` no "coragem" |
+| 0,0–2,05 | "Existe uma frase que divide o Brasil ao meio" | **Gancho**: tela dividida com a bandeira, que **racha ao meio** (borda irregular, luz vermelha, tremida) no "meio" | `riser` subindo até a rachadura + `rachadura` |
+| 2,05–3,6 | "e eu duvido que você tenha…" | As metades da bandeira se abrem para os lados e revelam **a foto que o usuário mandou** (zoom lento); ele continua embaixo | `whoosh` na abertura + `impacto` na foto |
+| 3,6–5,1 | "coragem de pesquisar" | Zoom seco 1,34× | `hit_tenso` no "coragem" |
 | 5,1–8,8 | "envolve um ex-presidente, a Polícia Federal e o Supremo" | `trio`: 3 faixas empilhadas (bandeira no mastro, sirene azul, martelo), cada uma entra na sua palavra; o martelo dá um tranco | swoosh em cada + `impacto` no martelo |
 | 8,8–10,7 | "Esse vídeo não é para defender ninguém" | P&B + voz de rádio + zoom seco | rádio |
 | 10,9–13,9 | "uns juram que é verdade, outros que é mentira" | cena `versus`: VERDADE ✓ (lima) × MENTIRA ✗ (vermelho), o segundo empurra o primeiro | `hit_tenso` em cada |

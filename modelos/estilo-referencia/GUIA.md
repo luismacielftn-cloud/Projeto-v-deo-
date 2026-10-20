@@ -128,6 +128,7 @@ Pedido do usuário: "extremamente viral", com efeitos sonoros e ênfase forte nu
 | `sons_extra` (no roteiro, fora dos eventos) | Efeitos avulsos: `[{"t": 17.88, "som": "riser"}]`. O `riser` termina no `t` (sobe até o impacto). | `t`, `som` |
 
 - **Rachar a imagem ao meio** (gancho "divide o Brasil ao meio"): feito em ffmpeg, com borda irregular, luz vermelha na fenda e tremida (`retomar/bolsonaro-lula/preparar_clipes.sh`). Som: `riser` terminando na rachadura + `rachadura`.
+- **Foto do usuário no gancho sem perder o clipe:** a imagem racha e as metades se abrem para os lados, **revelando a foto por trás** (3º argumento do mesmo script). A tela dividida vai até ~3,6 s para a foto ficar ~1,5 s na tela, com o usuário embaixo. Som: `whoosh` na abertura + `impacto` quando a foto aparece.
 - **Sons novos** em `ferramentas/efeitos.py`: `tecla`/`tecla2`/`tecla3` (digitação, -25 dB), `enter` (-19), `glitch` (-20), `rachadura` (-13).
 - **Cor e luz** quando o usuário pede ("qualidade, filtro, iluminação"): use o `grade` do `retomar/bolsonaro-lula/edl.json` como ponto de partida (contraste, realces comprimidos, pele quente, parede fria, vinheta, nitidez leve). Compare antes/depois num quadro lado a lado antes de renderizar.
 - **Tema político ou polêmico:** a edição segue o tom do vídeo (neutro: a frase leva "?"). Sem manchetes inventadas, sem imagens de pessoas reais baixadas por conta própria.
