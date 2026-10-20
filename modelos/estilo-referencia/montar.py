@@ -785,7 +785,9 @@ def montar(roteiro_path: Path) -> Path:
                 f'<div class="peq dep" id="{ev}-d">{esc(e.get("cta_depois", ""))}</div></div>'
             )
             escurece = float(e.get("escurecer_em", 1.2))
-            ig = f'<div class="fim-ig" id="{ev}-ig"{pos_ig}>{ICONE_IG}<span>{esc(arroba)}</span></div>'
+            # "ig": false tira o ícone com o @ da tela final (o usuário pode não querer o @ num vídeo)
+            mostra_ig = e.get("ig", True) is not False
+            ig = f'<div class="fim-ig" id="{ev}-ig"{pos_ig}>{ICONE_IG}<span>{esc(arroba)}</span></div>' if mostra_ig else ""
             comp.clip(
                 ev,
                 "fim",
@@ -795,7 +797,8 @@ def montar(roteiro_path: Path) -> Path:
                 "position:absolute;inset:0",
             )
             comp.setar(f"#{ev}-esc", t0, "opacity: 0")
-            comp.setar(f"#{ev}-ig", t0, "opacity: 0")
+            if mostra_ig:
+                comp.setar(f"#{ev}-ig", t0, "opacity: 0")
             comp.entra_texto(f"#{ev}-p", t0)
             comp.entra_destaque(f"#{ev}-b", t0 + 0.12)
             comp.entra_texto(f"#{ev}-d", t0 + 0.4)
@@ -808,7 +811,8 @@ def montar(roteiro_path: Path) -> Path:
                     0.6,
                     "power2.out",
                 )
-            comp.entra_destaque(f"#{ev}-ig", t0 + escurece + 0.2)
+            if mostra_ig:
+                comp.entra_destaque(f"#{ev}-ig", t0 + escurece + 0.2)
             janelas_sem_legenda.append((t0, dur))
             comp.som("final", t0 + 0.12)
 

@@ -21,7 +21,7 @@
   "fim_ig_y": 400
  },
  "marca": {
-  "ativa": true,
+  "ativa": false,
   "intervalo": 4,
   "posicoes": [
    [
@@ -281,7 +281,8 @@
    "cta_destaque": "quem precisa ver",
    "cta_depois": "",
    "escurecer_em": 0.5,
-   "vivo": 2
+   "vivo": 2,
+   "ig": false
   }
  ]
 }

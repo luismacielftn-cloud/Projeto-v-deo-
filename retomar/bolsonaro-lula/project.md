@@ -9,4 +9,5 @@
 **Peças novas no modelo:** `trio`, `impacto`, `trilha` (troca de humor sem véu), `sons_extra`, cenas `busca`, `versus`, `troca` (com `sobre_camera`), sons `tecla`, `enter`, `glitch`, `rachadura`.
 **Bug achado nas fotos:** `tl.fromTo` com estado inicial visível (borda vermelha, tecla apertada) aparecia antes da hora (o GSAP aplica o "from" na criação). Troquei por `tl.set` + `tl.to`.
 **Entrega:** -14,0 LUFS, pico -1,5 dBTP, 28,07 s, 26,7 MB. O boom fica ~4 dB acima da fala por 0,4 s.
-**Pendente:** retorno do usuário sobre o volume dos efeitos (teclado, boom) e da trilha.
+**Pedido 2:** "Não precisa colocar o meu @luismacciel no vídeo." Tirei a marca d'água (`marca.ativa: false`) e o ícone com o @ da tela final (opção nova `"ig": false` no `final`). Só a imagem foi renderizada de novo; som igual. Entrega `bolsonaro_lula_sem_arroba.mp4`: -14,0 LUFS, pico -1,5 dBTP, 26,6 MB.
+**Pendente:** retorno do usuário sobre o volume dos efeitos (teclado, boom) e da trilha; perguntar se o "sem @" vale só para este vídeo ou para todos.

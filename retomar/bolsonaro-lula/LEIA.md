@@ -39,6 +39,8 @@ Bom ponto de partida para outros vídeos com parede clara.
 | 17,9–18,6 | "…Lula" | `impacto`: **BOLSONARO MANDOU MATAR LULA?** gigante, "MATAR" em vermelho, clarão, fundo vermelho-escuro, falha de cor, a tela treme | `boom` + `glitch`; trilha cai para a `batida` |
 | 21,6–23,0 | "Manda para quem precisa ver" | zoom seco | |
 | 23,0–26,3 | "sua opinião sem pesquisa não é opinião, é torcida" | cena `troca` **sobre a câmera escurecida**: "Opinião / sem pesquisa" → risco coral no "não é opinião" → **torcida** (coral) bate | `glitch` no risco, `impacto` no "torcida" |
-| 26,3–28,0 | — | Final "manda para / quem precisa ver" (lima) + @ | — |
+| 26,3–28,0 | — | Final "manda para / quem precisa ver" (lima), **sem @** | — |
 
 Trilha: `tensa` → `tensa_pulso` (a busca) → `batida` (depois da frase). Cobertura por clipes e cenas: ~55%.
+
+**Sem @:** depois da 1ª entrega o usuário pediu "não precisa colocar o meu @luismacciel no vídeo". A versão final não tem a marca d'água nem o ícone com o @ na tela final (`"marca": {"ativa": false}`, `"ig": false`).

@@ -104,7 +104,7 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
 | `dividida` | Clipe/imagem na metade de cima; a câmera desce e você fica na de baixo; a legenda vai para a emenda (se o rosto estiver no alto do quadro, use `"descer": 820` para a legenda não cair no cabelo). A borda de baixo do clipe se dissolve em 190 px (emenda esfumada, como em @elias.maman) | `midia`, `altura` (980), `descer` (445), `som`, `inicio_midia` |
 | `broll` | Clipe cobrindo a câmera: `"estilo": "cheia"` (tela cheia) ou `"cartao"` (**formato menor**: cartão 840×800 de cantos suaves e borda esfumada, centralizado sobre fundo preto, como no vídeo de @elias.maman) | `midia`, `estilo`, `som`, `inicio_midia`, `ganho_db`; no cartão, `largura`, `altura`, `topo` (px). Prepare o clipe já no tamanho do cartão (ffmpeg `scale`+`crop`). |
 | `rotulos` | Etiquetas em cima de imagens que o **usuário já colocou no vídeo** (ex.: as coxas em corte no começo do vídeo 4). Cada etiqueta entra na palavra e sai quando a imagem dele some; a legenda some no trecho para não cobrir as fotos. Meça onde e quando as imagens dele aparecem (quadros a cada 0,2 s) e não cubra nada. | `itens: [{texto, sub, x (centro), y (topo), t, fim, vivo}]` |
-| `final` (opções) | Quando o usuário põe imagens próprias no fim (ex.: "qual das duas?" com as duas coxas), use `"escurecer": false` (não escurece a tela), `"cta_y"` para pôr o texto abaixo das imagens (~1630) e `"ig_y"` para o ícone do @ ficar no alto (~40), fora do rosto. | `cta_y`, `ig_y`, `escurecer` |
+| `final` (opções) | Quando o usuário põe imagens próprias no fim (ex.: "qual das duas?" com as duas coxas), use `"escurecer": false` (não escurece a tela), `"cta_y"` para pôr o texto abaixo das imagens (~1630) e `"ig_y"` para o ícone do @ ficar no alto (~40), fora do rosto. `"ig": false` tira o ícone com o @ da tela final. | `cta_y`, `ig_y`, `escurecer`, `ig` |
 
 - **Tom tenso, para vídeos sérios** (o usuário escolhe vídeo a vídeo): `"tom": "tenso"` no roteiro. Os sons passam a ser:
   - `riser` + `boom` nas entradas de clipe;
@@ -131,6 +131,7 @@ Pedido do usuário: "extremamente viral", com efeitos sonoros e ênfase forte nu
 - **Sons novos** em `ferramentas/efeitos.py`: `tecla`/`tecla2`/`tecla3` (digitação, -25 dB), `enter` (-19), `glitch` (-20), `rachadura` (-13).
 - **Cor e luz** quando o usuário pede ("qualidade, filtro, iluminação"): use o `grade` do `retomar/bolsonaro-lula/edl.json` como ponto de partida (contraste, realces comprimidos, pele quente, parede fria, vinheta, nitidez leve). Compare antes/depois num quadro lado a lado antes de renderizar.
 - **Tema político ou polêmico:** a edição segue o tom do vídeo (neutro: a frase leva "?"). Sem manchetes inventadas, sem imagens de pessoas reais baixadas por conta própria.
+- **Vídeo sem @:** neste vídeo o usuário pediu "não precisa colocar o meu @". Tire os dois: `"marca": {"ativa": false}` no roteiro e `"ig": false` no `final`. Confira com `grep -ci luismacciel index.html` (tem que dar 0).
 - **GSAP:** `tl.fromTo` aplica o "from" assim que o timeline é criado. Se o estado inicial é visível (borda acesa, tecla apertada), ele aparece antes da hora. Use `tl.set` no instante + `tl.to` logo depois.
 
 ## Layout: não cobrir o rosto
