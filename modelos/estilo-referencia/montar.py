@@ -576,18 +576,24 @@ def montar(roteiro_path: Path) -> Path:
             comp.setar("#cam", t0, f"y: {desce}")
             comp.setar("#cam", t1, "y: 0")
             ini_m = float(e.get("inicio_midia", 0))
+            # No 0 s (gancho) o clipe já está inteiro no primeiro quadro: é o quadro que o
+            # celular mostra ao carregar e ao repetir o vídeo. Entra só com um leve "punch".
+            no_inicio = t0 < 0.05
             comp.html.append(
-                f'<div id="{ev}" class="div-topo" style="height:{alt}px;opacity:0">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div>'
+                f'<div id="{ev}" class="div-topo" style="height:{alt}px;opacity:{1 if no_inicio else 0}">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div>'
             )
-            comp.setar(f"#{ev}", 0, "opacity: 0")
-            comp.tween(
-                f"#{ev}",
-                t0,
-                "opacity: 0, y: -60",
-                "opacity: 1, y: 0",
-                0.3,
-                "power3.out",
-            )
+            if no_inicio:
+                comp.tween(f"#{ev}", t0, "scale: 1.06", "scale: 1", 0.4, "power3.out")
+            else:
+                comp.setar(f"#{ev}", 0, "opacity: 0")
+                comp.tween(
+                    f"#{ev}",
+                    t0,
+                    "opacity: 0, y: -60",
+                    "opacity: 1, y: 0",
+                    0.3,
+                    "power3.out",
+                )
             comp.js.append(
                 f'tl.to("#{ev}", {{opacity: 0, duration: 0.2, ease: "power2.in"}}, {t1 - 0.2:.3f});'
             )

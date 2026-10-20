@@ -133,6 +133,7 @@ Pedido do usuário: "extremamente viral", com efeitos sonoros e ênfase forte nu
 - **Cor e luz** quando o usuário pede ("qualidade, filtro, iluminação"): use o `grade` do `retomar/bolsonaro-lula/edl.json` como ponto de partida (contraste, realces comprimidos, pele quente, parede fria, vinheta, nitidez leve). Compare antes/depois num quadro lado a lado antes de renderizar.
 - **Tema político ou polêmico:** a edição segue o tom do vídeo (neutro: a frase leva "?"). Sem manchetes inventadas, sem imagens de pessoas reais baixadas por conta própria.
 - **Vídeo sem @:** neste vídeo o usuário pediu "não precisa colocar o meu @". Tire os dois: `"marca": {"ativa": false}` no roteiro e `"ig": false` no `final`. Confira com `grep -ci luismacciel index.html` (tem que dar 0).
+- **Quadro 0:** um `dividida` que começa no 0 s já aparece inteiro no primeiro quadro (só um leve "punch" de escala), sem fade: o celular mostra esse quadro ao carregar e ao repetir o vídeo.
 - **GSAP:** `tl.fromTo` aplica o "from" assim que o timeline é criado. Se o estado inicial é visível (borda acesa, tecla apertada), ele aparece antes da hora. Use `tl.set` no instante + `tl.to` logo depois.
 
 ## Layout: não cobrir o rosto

@@ -155,6 +155,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **Imagem que contradiz a fala:** um raio-X de corpo musculoso em "sarcopenia" foi recusado. Confira se o clipe mostra o mesmo sentido da frase (perda ≠ força).
 - **Clipe que não mostra o movimento falado:** no "esse movimento simples" (sentar e levantar da cadeira) uma aula de idosos com os braços para cima foi recusada como "sem sentido". Quando a fala descreve um exercício, o clipe mostra **esse** exercício.
 - **Ilustração de anatomia com cara de desenho:** o usuário prefere imagem realista (carne, textura de verdade), como os posts de corte de coxa "sem/com treino de força". Desenho chapado só se não houver foto.
+- **Primeiro quadro preto no gancho:** a tela dividida entrava com fade e o quadro 0 saía preto em cima. É o quadro que o celular mostra ao carregar e ao repetir o vídeo (o usuário viu "o primeiro segundo sem a foto"). O `montar.py` agora põe o clipe que começa no 0 s já inteiro no quadro 0; confira o quadro 0 do arquivo entregue.
 - **Animação aparecendo antes da hora:** `tl.fromTo` com estado inicial visível (borda acesa, tecla apertada) aparece desde o começo da cena. Use `tl.set` + `tl.to`. Confira sempre com `snapshot` antes do render.
 - **Corte de 1–8 centésimos** dá "pulo" na imagem sem ganhar tempo: junte trechos separados por menos de 0,1 s no `edl.json`.
 
