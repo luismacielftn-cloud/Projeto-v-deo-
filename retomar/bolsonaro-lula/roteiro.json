@@ -58,20 +58,16 @@
  ],
  "sons_extra": [
   {
+   "t": 0.94,
+   "som": "corte_ref"
+  },
+  {
    "t": 1.88,
    "som": "riser"
   },
   {
    "t": 1.88,
    "som": "rachadura"
-  },
-  {
-   "t": 2.05,
-   "som": "whoosh"
-  },
-  {
-   "t": 2.22,
-   "som": "impacto"
   },
   {
    "t": 3.66,
@@ -86,8 +82,16 @@
   {
    "tipo": "dividida",
    "inicio": 0.0,
-   "fim": 3.62,
+   "fim": 2.3,
    "midia": "assets/gancho_racha.mp4"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 2.3,
+   "fim": 3.62,
+   "estilo": "seco",
+   "escala": 1.18,
+   "foco_y": 0.45
   },
   {
    "tipo": "zoom",
