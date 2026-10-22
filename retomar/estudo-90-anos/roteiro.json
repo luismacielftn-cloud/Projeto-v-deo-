@@ -182,7 +182,8 @@
    "tipo": "broll",
    "inicio": 26.26,
    "fim": 27.3,
-   "midia": "assets/treino_fx.mp4"
+   "midia": "assets/treino_fx.mp4",
+   "estilo": "cartao"
   },
   {
    "tipo": "titulo",

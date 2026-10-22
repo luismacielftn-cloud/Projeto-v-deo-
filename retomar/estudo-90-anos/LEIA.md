@@ -9,7 +9,7 @@ O vídeo e o print não ficam no git: se precisar refazer, peça os dois de novo
 | `edl.json` | Cortes (18 trechos, 54,3 s → 51,2 s + 1,5 s congelados = 52,7 s), com o mesmo `grade` do `retomar/bolsonaro-lula/` (só `brightness` 0 para o rosto). |
 | `transcript.json` | Transcrição do vídeo cortado ("é vende" → "te vende", "emagrecadora", "em velecer" → "envelhecer", "força" duplicado apagado). |
 | `roteiro.json` | Roteiro entregue. |
-| `preparar_clipes.sh` | Clipes (Pixabay + Mixkit 12866 e 21273), coxa em corte e o **cartão do estudo** com marca-texto e tradução (3º argumento: o print). |
+| `preparar_clipes.sh` | Clipes (Pixabay + Mixkit 12866, 21273 e 4506), coxa em corte e o **cartão do estudo** com marca-texto e tradução (3º argumento: o print). |
 | `project.md` | Diário. |
 
 ## Refazer
@@ -38,7 +38,7 @@ O vídeo e o print não ficam no git: se precisar refazer, peça os dois de novo
 | 15,1–16,9 | "A partir dos 30" | Transição (trilha → tensa) + cena `numero` "30 anos / o músculo começa a ir embora" |
 | 16,9–19,3 | "perder músculo todo ano" | Cartão: coxa em corte realista 30 × 70 anos |
 | 22,0–24,6 | "precisar de ajuda pra levantar da cadeira" | Tela dividida: senhor levantando da poltrona com dificuldade (Mixkit 12866) |
-| 24,7–27,3 | "O remédio tem nome, treino de força" | Transição (→ inspira), zoom, tela cheia do esqueleto com halteres + título **treino de força** (coral) |
+| 24,7–27,3 | "O remédio tem nome, treino de força" | Transição (→ inspira), zoom, cartão TV de um homem treinando com kettlebell (Mixkit 4506; o peso sobe no "força") + título **treino de força** (coral). O esqueleto com halteres da 1ª versão foi recusado. |
 | 28,7–33,0 | "músculo trabalha… açúcar e inflamação" | Cena `barras`: músculo ↑, açúcar ↓, inflamação ↓ |
 | 33,0–35,8 | "seu corpo fabricando o próprio remédio" | Cartão TV: agachamento com elástico em casa (Mixkit 21273) |
 | 37,6–42,9 | "No estudo com idosos de 90 anos, quase triplicaram…" | **Cartão do estudo** + marca-texto + título "quase 3× mais força" (lima) |

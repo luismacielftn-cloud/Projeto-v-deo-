@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Prepara os clipes do vídeo "o melhor remédio para passar dos 60, 70 anos" (estudo dos idosos de 90 anos).
-#   tela dividida 1080×980 (desfoque) · cartão 840×800 (tv) · tela cheia 1080×1920 (lente)
+#   tela dividida 1080×980 (desfoque) · cartão 840×800 (tv)
 # Pixabay (licença livre) e Mixkit 12866 (licença gratuita do Mixkit), quase todos já aprovados em vídeos anteriores.
 # Uso: bash retomar/estudo-90-anos/preparar_clipes.sh videos/x/edit/clipes_brutos videos/x/edit/hf/assets videos/x/estudo.jpg
 set -euo pipefail
@@ -23,10 +23,11 @@ python3 "$RAIZ/ferramentas/secao_musculo.py" -o "$A/coxa.mp4" --dur 2.4 --muda 0
 # senhor levantando da poltrona com dificuldade (dividida) — "precisar de ajuda pra levantar da cadeira"
 mixkit 12866 levantar
 ffmpeg -v error -y -ss 0.4 -t 2.6 -i "$B/levantar.mp4" -vf "scale=-2:980:flags=lanczos,crop=1080:980:(iw-1080)*0.45:0" "${X[@]}" "$A/levantar.mp4"
-# esqueleto levantando halteres (tela cheia, quadro inteiro sobre preto) — "treino de força"
-# (o agachamento com barra do Pixabay 148204 ficou um close das costas de uma moça jovem: trocado)
-pixabay 302441 halteres
-ffmpeg -v error -y -ss 2 -t 1.6 -i "$B/halteres.mp4" -vf "crop=1300:2160:(iw-1300)/2:0,scale=1080:-2,pad=1080:1920:0:(oh-ih)/2:black" "${X[@]}" "$A/treino.mp4"
+# homem adulto treinando com kettlebell (cartão) — "treino de força": a subida do peso cai no "força".
+# O usuário recusou o esqueleto com halteres ("coloca uma pessoa fazendo exercício"). O agachamento com
+# barra do Pixabay 148204 ficou um close das costas de uma moça jovem. Os bancos não têm idoso treinando força.
+mixkit 4506 kettlebell
+ffmpeg -v error -y -ss 6.9 -t 1.6 -i "$B/kettlebell.mp4" -vf "scale=-2:800:flags=lanczos,crop=840:800:(iw-840)*0.32:0" "${X[@]}" "$A/treino.mp4"
 # agachamento em casa com elástico (cartão) — "o seu corpo fabricando o próprio remédio" (Mixkit 21273)
 mixkit 21273 agachamento
 ffmpeg -v error -y -ss 8.3 -t 3.9 -i "$B/agachamento.mp4" -vf "setpts=PTS/1.4,scale=-2:800:flags=lanczos,crop=840:800:(iw-840)*0.55:0" "${X[@]}" -t 2.8 "$A/agachamento.mp4"
@@ -38,7 +39,7 @@ filtro desfoque "$A/gancho.mp4" -o "$A/gancho_fx.mp4" --forca 1.2
 filtro desfoque "$A/levantar.mp4" -o "$A/levantar_fx.mp4" --forca 1.2
 for c in remedios agachamento casal; do filtro tv "$A/$c.mp4" -o "$A/${c}_fx.mp4"; done
 filtro tv "$A/coxa.mp4" -o "$A/coxa_fx.mp4" --brilho 1.2
-filtro lente "$A/treino.mp4" -o "$A/treino_fx.mp4"
+filtro tv "$A/treino.mp4" -o "$A/treino_fx.mp4" --brilho 1.45   # academia escura e camiseta preta
 
 # Cartão do estudo (janela no alto, 994×408): o print do usuário + faixa escura com a tradução.
 # O marca-texto dourado passa em "nonagenarians" (x 52–548, y 140–198 do print) em MARCA s.
