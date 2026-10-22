@@ -136,6 +136,20 @@ Pedido do usuário: "extremamente viral", com efeitos sonoros e ênfase forte nu
 - **Quadro 0:** um `dividida` que começa no 0 s já aparece inteiro no primeiro quadro (só um leve "punch" de escala), sem fade: o celular mostra esse quadro ao carregar e ao repetir o vídeo.
 - **GSAP:** `tl.fromTo` aplica o "from" assim que o timeline é criado. Se o estado inicial é visível (borda acesa, tecla apertada), ele aparece antes da hora. Use `tl.set` no instante + `tl.to` logo depois.
 
+## Print de estudo científico (6º vídeo, `retomar/estudo-90-anos/`)
+
+Pedido: "eu falo do estudo dos idosos de 90 anos, aí você coloca essa foto, que é o estudo". Receita:
+
+- **`janela` no alto**, sem cobrir o rosto: `"posicao": "topo-centro", "largura": 0.92, "proporcao": <altura/largura do cartão>, "topo": 110`. Ela entra na palavra "estudo" e fica até o fim do número.
+- **O cartão é um vídeo curto feito em ffmpeg** (`preparar_clipes.sh`):
+  - o print do usuário em cima, sem filtro TV, porque o texto precisa ser lido;
+  - embaixo, uma faixa escura com a **tradução** (Inter Bold branco) e a **referência** (autor, revista e ano em dourado).
+- **Marca-texto:**
+  - É uma faixa dourada (`#F2C94C`, `blend=multiply` em `gbrp`) que **desliza** sobre a palavra-chave no instante em que ela é falada. O som é `pop_suave` em `sons_extra`.
+  - Ache a palavra no print medindo as colunas escuras de cada linha de texto (numpy).
+  - O `drawbox` do ffmpeg não anima a largura. Por isso, a faixa entra por `overlay` com `x` animado, sob uma máscara branca na margem.
+- **O resultado** vem num `titulo` `vivo` logo depois, com o que ele fala ("quase 3× mais força") e o dado real do estudo ("+174% em 8 semanas"). Confira o número no próprio artigo; não arredonde para mais.
+
 ## Layout: não cobrir o rosto
 
 As posições padrão servem para um rosto no terço superior. Antes de montar, olhe 3 quadros do vídeo e, se o rosto ocupar o meio do quadro, desça os textos para a altura do peito:
