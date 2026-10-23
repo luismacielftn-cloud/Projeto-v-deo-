@@ -85,6 +85,13 @@ Cor da imagem: na etapa do Video Use, olhe os quadros e só aplique `grade.py` s
 | `frase` | Frase grande, palavra por palavra | `palavras: [{texto, t, destaque, quebra}]` (`destaque`: `true`/1 coral, 2 verde-lima; `quebra`: pula linha depois) |
 | `rede` | Rede de neurônios que se desenha e acende (cérebro, neurociência) | `t` (onda de luz), `rotulo` |
 | `queda` | Perda com a idade: linhas retas até um marco e caindo depois ("depois dos 40 perde músculo e osso") | `idades` ([30,40,50,60,70]), `marco` (índice, 1 = 40), `t_marco`, `linhas: [{rotulo, t, t_fim, tam, marco}]` (até 3; `marco` por linha faz cada uma cair numa idade, ex.: força aos 40 e massa muscular aos 60) |
+| `busca` | "Pesquisa no Google": celular com a página de busca, a frase **digitada letra a letra no tempo da fala** (teclas acendem, som de tecla), tecla "ir" e resultados | `palavras: [{texto, t, fim}]` (tempos do `transcript.json`), `t_logo`, `t_alerta` (borda vermelha + tremida na palavra forte), `t_enter`, `resultados: [{rotulo, vivo\|cor, borda, t}]`, `logo` |
+| `versus` | Dois lados opostos ("verdade × mentira", "antes × depois") | `lados: [{texto, icone: "check"\|"x", cor, t}]`, `t_vs` |
+| `troca` | Palavra que é riscada e trocada por outra no tempo da fala ("opinião sem pesquisa → torcida") | `de: {texto, t}`, `sub: {texto, t}`, `t_risco`, `para: {texto, t, vivo}`, `topo` |
+
+Qualquer cena aceita `"sobre_camera": true`: em vez do fundo escuro, a câmera fica atrás, escurecida e desfocada (bom para frase de efeito com o rosto ainda presente).
+
+Os resultados da `busca` são **barras cinzas com etiquetas** (ACUSAÇÃO, DEFESA…): nunca invente manchete, site ou jornal real.
 
 Todas aceitam `titulo` (rótulo pequeno no alto). O conteúdo fica entre y 200 e 1250, e a legenda continua por cima. A entrada e a saída são cortes rápidos com desfoque e whoosh. Para vídeo real de banco (B-roll), use `ferramentas/buscar_clipes.py` (Pixabay). Se a chave for recusada ("Invalid or missing API key"), troque os clipes por cenas e avise o usuário.
 
@@ -97,7 +104,7 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
 | `dividida` | Clipe/imagem na metade de cima; a câmera desce e você fica na de baixo; a legenda vai para a emenda (se o rosto estiver no alto do quadro, use `"descer": 820` para a legenda não cair no cabelo). A borda de baixo do clipe se dissolve em 190 px (emenda esfumada, como em @elias.maman) | `midia`, `altura` (980), `descer` (445), `som`, `inicio_midia` |
 | `broll` | Clipe cobrindo a câmera: `"estilo": "cheia"` (tela cheia) ou `"cartao"` (**formato menor**: cartão 840×800 de cantos suaves e borda esfumada, centralizado sobre fundo preto, como no vídeo de @elias.maman) | `midia`, `estilo`, `som`, `inicio_midia`, `ganho_db`; no cartão, `largura`, `altura`, `topo` (px). Prepare o clipe já no tamanho do cartão (ffmpeg `scale`+`crop`). |
 | `rotulos` | Etiquetas em cima de imagens que o **usuário já colocou no vídeo** (ex.: as coxas em corte no começo do vídeo 4). Cada etiqueta entra na palavra e sai quando a imagem dele some; a legenda some no trecho para não cobrir as fotos. Meça onde e quando as imagens dele aparecem (quadros a cada 0,2 s) e não cubra nada. | `itens: [{texto, sub, x (centro), y (topo), t, fim, vivo}]` |
-| `final` (opções) | Quando o usuário põe imagens próprias no fim (ex.: "qual das duas?" com as duas coxas), use `"escurecer": false` (não escurece a tela), `"cta_y"` para pôr o texto abaixo das imagens (~1630) e `"ig_y"` para o ícone do @ ficar no alto (~40), fora do rosto. | `cta_y`, `ig_y`, `escurecer` |
+| `final` (opções) | Quando o usuário põe imagens próprias no fim (ex.: "qual das duas?" com as duas coxas), use `"escurecer": false` (não escurece a tela), `"cta_y"` para pôr o texto abaixo das imagens (~1630) e `"ig_y"` para o ícone do @ ficar no alto (~40), fora do rosto. `"ig": false` tira o ícone com o @ da tela final. | `cta_y`, `ig_y`, `escurecer`, `ig` |
 
 - **Tom tenso, para vídeos sérios** (o usuário escolhe vídeo a vídeo): `"tom": "tenso"` no roteiro. Os sons passam a ser:
   - `riser` + `boom` nas entradas de clipe;
@@ -106,8 +113,48 @@ Na segunda referência, o criador **prova o que fala com vídeos**: tira a próp
   - `coracao` no P&B.
   A trilha usa os humores `tensa` e `tensa_pulso`. Sem `"tom"`, fica a Sálvia suave.
 - **Clipes com som próprio:** use `"som": true` e abra espaço na fala na etapa do Video Use (trecho com `"manter": true`).
-- **Origem dos clipes:** o usuário manda os clipes de terceiros (notícias, entrevistas). Não baixe por conta própria. Clipes genéricos vêm do Pixabay (`buscar_clipes.py`, com a `PIXABAY_API_KEY` do usuário); quando ele não tem, do Mixkit (`mixkit.co/free-stock-video/<termo>/`, arquivo em `assets.mixkit.co/videos/<id>/<id>-720.mp4`). O clipe mostra o que a fala descreve: "sentar e levantar" pede alguém sentando e levantando, não uma aula com os braços para cima (recusado). Busque termos simples em inglês ("skeleton", "knee", "luggage"): frases longas dão resultados fracos. Prefira pessoas maduras para o público 45+ e recorte cada clipe antes (trecho, enquadramento, câmera lenta) com ffmpeg para `hf/assets/`.
+- **Origem dos clipes:** o usuário manda os clipes de terceiros (notícias, entrevistas). Não baixe por conta própria. Clipes genéricos vêm do Pixabay (`buscar_clipes.py`, com a `PIXABAY_API_KEY` do usuário); quando ele não tem, do Mixkit (`mixkit.co/free-stock-video/<termo>/`, arquivo em `assets.mixkit.co/videos/<id>/<id>-720.mp4`). O clipe mostra o que a fala descreve: "sentar e levantar" pede alguém sentando e levantando, não uma aula com os braços para cima (recusado). Busque termos simples em inglês ("skeleton", "knee", "luggage"): frases longas dão resultados fracos. Para treino, mostre **uma pessoa de verdade treinando**: o esqueleto com halteres foi recusado no 6º vídeo. Os bancos quase não têm idoso fazendo força; o Mixkit 4506 (homem adulto comum com kettlebell, em cartão) foi o escolhido. Prefira pessoas maduras para o público 45+ e recorte cada clipe antes (trecho, enquadramento, câmera lenta) com ffmpeg para `hf/assets/`.
 - **Anatomia realista, não desenho:** quando a fala pede uma imagem do corpo por dentro (músculo, gordura), o usuário quer algo **próximo do real** (carne em corte, textura de verdade), como os posts "seu músculo sem/com treino de força". Para sarcopenia já existe `ferramentas/secao_musculo.py`: duas fotos realistas da coxa em corte (`assets/sarcopenia/`, geradas no Canva do usuário) lado a lado, 30 × 70 anos, e a de 70 anos passa de músculo vermelho para músculo tomado de gordura no meio do clipe. Cartão + `filtro_clipe.py tv --brilho 1.2`. Para outro tema, gere fotos realistas no Canva (`generate-image`); só a prévia de 200 px pode ser baixada, então amplie com lanczos e deixe o filtro `tv` disfarçar.
+
+## Peças "virais" (5º vídeo, `retomar/bolsonaro-lula/`)
+
+Pedido do usuário: "extremamente viral", com efeitos sonoros e ênfase forte numa frase. Peças novas do `montar.py`:
+
+| Evento | O que faz | Campos |
+| --- | --- | --- |
+| `impacto` | A frase forte **carimbada** na tela: clarão, fundo vermelho-escuro, texto gigante (Inter Black) que bate, falha de cor vermelho/ciano, a câmera e as cenas tremem. A legenda some. Som: `boom` + `glitch`. Use em 1 frase por vídeo. | `linhas: [{texto, cor\|vivo}]`, `tam` (150), `topo`, `tremer` |
+| `trio` | Três faixas de vídeo empilhadas (1000×340, filtro `tv`), cada uma entra na sua palavra de uma enumeração ("ex-presidente, Polícia Federal e o Supremo") com número e rótulo. `batida` dá um tranco + impacto (martelo do juiz). | `itens: [{midia, rotulo, numero, t, batida, inicio_midia}]`, `topo` |
+| `trilha` | Invisível: só troca o humor da trilha nesse instante (sem véu). Ex.: `tensa` → `tensa_pulso` na busca → `batida` logo depois da frase forte (o "drop"). | `humor` |
+| `sons_extra` (no roteiro, fora dos eventos) | Efeitos avulsos: `[{"t": 17.88, "som": "riser"}]`. O `riser` termina no `t` (sobe até o impacto). | `t`, `som` |
+
+- **Rachar a imagem ao meio** (gancho "divide o Brasil ao meio"): feito em ffmpeg, com borda irregular, luz vermelha na fenda e tremida (`retomar/bolsonaro-lula/preparar_clipes.sh`). Som: `riser` terminando na rachadura + `rachadura`.
+- **Foto do usuário no gancho sem perder o clipe:** o usuário prefere **abrir na foto** (0 s, zoom rápido) e cortar com um clarão para o clipe na palavra que ele ilustra ("divide" → bandeira que racha no "meio"). Tudo na tela dividida, com ele embaixo (3º argumento de `retomar/bolsonaro-lula/preparar_clipes.sh`). A versão em que a bandeira abria e revelava a foto por trás foi trocada por esta.
+- **Sons novos** em `ferramentas/efeitos.py`: `tecla`/`tecla2`/`tecla3` (digitação, -25 dB), `enter` (-19), `glitch` (-20), `rachadura` (-13).
+- **Cor e luz** quando o usuário pede ("qualidade, filtro, iluminação"): use o `grade` do `retomar/bolsonaro-lula/edl.json` como ponto de partida (contraste, realces comprimidos, pele quente, parede fria, vinheta, nitidez leve). Compare antes/depois num quadro lado a lado antes de renderizar.
+- **Tema político ou polêmico:** a edição segue o tom do vídeo (neutro: a frase leva "?"). Sem manchetes inventadas, sem imagens de pessoas reais baixadas por conta própria.
+- **Vídeo sem @:** neste vídeo o usuário pediu "não precisa colocar o meu @". Tire os dois: `"marca": {"ativa": false}` no roteiro e `"ig": false` no `final`. Confira com `grep -ci luismacciel index.html` (tem que dar 0).
+- **Quadro 0:** um `dividida` que começa no 0 s já aparece inteiro no primeiro quadro (só um leve "punch" de escala), sem fade: o celular mostra esse quadro ao carregar e ao repetir o vídeo.
+- **GSAP:** `tl.fromTo` aplica o "from" assim que o timeline é criado. Se o estado inicial é visível (borda acesa, tecla apertada), ele aparece antes da hora. Use `tl.set` no instante + `tl.to` logo depois.
+
+## Print de estudo científico (6º vídeo, `retomar/estudo-90-anos/`)
+
+Pedido: "eu falo do estudo dos idosos de 90 anos, aí você coloca essa foto, que é o estudo". Receita:
+
+- **`janela` no alto**, sem cobrir o rosto: `"posicao": "topo-centro", "largura": 0.92, "proporcao": <altura/largura do cartão>, "topo": 110`. Ela entra na palavra "estudo" e fica até o fim do número.
+- **O cartão é um vídeo curto feito em ffmpeg** (`preparar_clipes.sh`):
+  - o print do usuário em cima, sem filtro TV, porque o texto precisa ser lido;
+  - embaixo, uma faixa escura com a **tradução** (Inter Bold branco) e a **referência** (autor, revista e ano em dourado).
+- **Marca-texto:**
+  - É uma faixa dourada (`#F2C94C`, `blend=multiply` em `gbrp`) que **desliza** sobre a palavra-chave no instante em que ela é falada. O som é `pop_suave` em `sons_extra`.
+  - Ache a palavra no print medindo as colunas escuras de cada linha de texto (numpy).
+  - O `drawbox` do ffmpeg não anima a largura. Por isso, a faixa entra por `overlay` com `x` animado, sob uma máscara branca na margem.
+- **O resultado** vem num `titulo` `vivo` logo depois, com o que ele fala ("quase 3× mais força") e o dado real do estudo ("+174% em 8 semanas"). Confira o número no próprio artigo; não arredonde para mais.
+
+## Roupa clara embaixo da legenda (7º vídeo, `retomar/infarto-duas-coisas/`)
+
+Camiseta branca bem onde ficam a legenda, os capítulos e as listas (y 1330–1400). `"base_escura": {"y": 1150, "opacidade": 0.55}` no roteiro cria uma sombra que vai de transparente (em `y`) até preto 55% (a partir de 40% da altura dela). Ela fica logo acima da câmera e embaixo de tudo o mais; o zoom não a move.
+
+Na tela dividida, o `descer` define onde a câmera começa. Com o rosto no meio-alto do quadro (cabelo em y≈460), 445 deixava a legenda da emenda (y = altura − 120) em cima do cabelo; 560 resolveu. Confira com `snapshot` no 1º segundo.
 
 ## Layout: não cobrir o rosto
 

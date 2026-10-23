@@ -74,8 +74,22 @@ SONS_TENSOS = {
     "pb": ["coracao"],
     "final": ["boom"],
 }  # trilha automática: um humor por seção
+# Sons das peças novas (busca, versus, troca, impacto, trio). A identidade pode
+# trocar qualquer um; estes valem quando ela não diz nada.
+SONS_NOVOS = {
+    "busca_logo": ["pop_suave"],
+    "busca_enter": ["enter"],
+    "tecla": ["tecla"],
+    "tecla2": ["tecla2"],
+    "tecla3": ["tecla3"],
+    "versus_lado": ["hit_tenso"],
+    "troca_risco": ["glitch"],
+    "troca_para": ["impacto"],
+    "impacto": ["boom", "glitch"],
+    "trio_item": ["corte_ref"],
+}
 # Eventos que já mostram texto: a legenda some enquanto estão ativos.
-TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista", "rotulos"}
+TIPOS_SEM_LEGENDA = {"titulo", "capitulo", "final", "lista", "rotulos", "impacto"}
 # Posição vertical (px) dos blocos de texto. O roteiro pode sobrescrever em "layout"
 # para não cobrir o rosto (ex.: rosto ocupando o meio do quadro -> textos na altura do peito).
 LAYOUT_PADRAO = {
@@ -126,6 +140,19 @@ CSS_PROVA = f"""
 .broll-cartao::after {{ content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   box-shadow: inset 0 0 38px 16px rgba(0,0,0,.85); }}
 .broll img, .broll video {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
+.trio {{ position: absolute; inset: 0; }}
+.trio-f {{ position: absolute; left: 40px; width: 1000px; height: 340px; border-radius: 22px; overflow: hidden; background: #000; }}
+.trio-f video, .trio-f img {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
+.trio-f b {{ position: absolute; left: 34px; bottom: 26px; font-family: "Inter"; font-weight: 900; font-size: 66px; line-height: 1;
+  letter-spacing: -0.02em; color: #F5F2EA; text-shadow: 0 0 6px #000, 0 4px 18px rgba(0,0,0,.9); }}
+.trio-f b em {{ font-style: normal; color: #F2C94C; margin-right: 18px; }}
+.imp {{ position: absolute; inset: 0; }}
+.imp-fundo {{ position: absolute; inset: 0; background: radial-gradient(90% 60% at 50% 48%, rgba(120,10,6,.78), rgba(0,0,0,.9) 70%); }}
+.imp-flash {{ position: absolute; inset: 0; background: #fff; opacity: 0; }}
+.imp-txt {{ position: absolute; left: 40px; width: 1000px; text-align: center; font-family: "Inter"; font-weight: 900;
+  line-height: .98; letter-spacing: -0.035em; color: #F5F2EA; }}
+.imp-txt span {{ display: block; }}
+.imp-r, .imp-c {{ mix-blend-mode: screen; opacity: 0; }}
 """
 
 
@@ -404,8 +431,9 @@ def montar(roteiro_path: Path) -> Path:
     r = json.loads(roteiro_path.read_text())
     idt = carregar_identidade(r.get("identidade", IDENTIDADE_PADRAO))
     tenso = r.get("tom") == "tenso"
+    idt["sons"] = {**SONS_NOVOS, **idt.get("sons", {})}
     if tenso:
-        idt["sons"] = {**idt.get("sons", {}), **SONS_TENSOS}
+        idt["sons"] = {**idt["sons"], **SONS_TENSOS}
     humores = HUMORES_TENSOS if tenso else HUMORES
     dest_cfg, capg_cfg = idt["destaque"], idt["capitulo_grande"]
     L = {**LAYOUT_PADRAO, **r.get("layout", {})}
@@ -426,6 +454,22 @@ def montar(roteiro_path: Path) -> Path:
     radio: list[list[float]] = []
     insertos_som: list[dict] = []
     divididas: list[tuple[float, float, int]] = []
+
+    # "base_escura": sombra suave na parte de baixo da câmera, para a legenda e os textos
+    # aparecerem sobre roupa ou fundo claro (ex.: camiseta branca). Fica sob todo o resto.
+    base = r.get("base_escura")
+    if base:
+        y = int(base.get("y", 1150))
+        op = float(base.get("opacidade", 0.55))
+        comp.clip(
+            "base-escura",
+            "base",
+            0,
+            dur,
+            "",
+            f"position:absolute;left:0;top:{y}px;width:{W}px;height:{H - y}px;"
+            f"background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,{op}) 40%, rgba(0,0,0,{op}))",
+        )
 
     for k, e in enumerate(eventos):
         tipo, t0 = e["tipo"], float(e["inicio"])
@@ -510,6 +554,9 @@ def montar(roteiro_path: Path) -> Path:
 
         elif tipo == "cena":
             corpo, js_cena, sons_cena = cenas.construir(e["modelo"], ev, e, t0, t1, idt)
+            if e.get("sobre_camera"):  # a câmera fica de fundo, escura e desfocada
+                comp.setar("#cam", t0, 'filter: "brightness(0.38) blur(5px) saturate(0.8)"')
+                comp.setar("#cam", t1, 'filter: "none"')
             comp.clip(
                 ev,
                 "cena",
@@ -545,18 +592,24 @@ def montar(roteiro_path: Path) -> Path:
             comp.setar("#cam", t0, f"y: {desce}")
             comp.setar("#cam", t1, "y: 0")
             ini_m = float(e.get("inicio_midia", 0))
+            # No 0 s (gancho) o clipe já está inteiro no primeiro quadro: é o quadro que o
+            # celular mostra ao carregar e ao repetir o vídeo. Entra só com um leve "punch".
+            no_inicio = t0 < 0.05
             comp.html.append(
-                f'<div id="{ev}" class="div-topo" style="height:{alt}px;opacity:0">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div>'
+                f'<div id="{ev}" class="div-topo" style="height:{alt}px;opacity:{1 if no_inicio else 0}">{midia_html(ev, e["midia"], t0, t1, comp, ini_m)}</div>'
             )
-            comp.setar(f"#{ev}", 0, "opacity: 0")
-            comp.tween(
-                f"#{ev}",
-                t0,
-                "opacity: 0, y: -60",
-                "opacity: 1, y: 0",
-                0.3,
-                "power3.out",
-            )
+            if no_inicio:
+                comp.tween(f"#{ev}", t0, "scale: 1.06", "scale: 1", 0.4, "power3.out")
+            else:
+                comp.setar(f"#{ev}", 0, "opacity: 0")
+                comp.tween(
+                    f"#{ev}",
+                    t0,
+                    "opacity: 0, y: -60",
+                    "opacity: 1, y: 0",
+                    0.3,
+                    "power3.out",
+                )
             comp.js.append(
                 f'tl.to("#{ev}", {{opacity: 0, duration: 0.2, ease: "power2.in"}}, {t1 - 0.2:.3f});'
             )
@@ -754,7 +807,9 @@ def montar(roteiro_path: Path) -> Path:
                 f'<div class="peq dep" id="{ev}-d">{esc(e.get("cta_depois", ""))}</div></div>'
             )
             escurece = float(e.get("escurecer_em", 1.2))
-            ig = f'<div class="fim-ig" id="{ev}-ig"{pos_ig}>{ICONE_IG}<span>{esc(arroba)}</span></div>'
+            # "ig": false tira o ícone com o @ da tela final (o usuário pode não querer o @ num vídeo)
+            mostra_ig = e.get("ig", True) is not False
+            ig = f'<div class="fim-ig" id="{ev}-ig"{pos_ig}>{ICONE_IG}<span>{esc(arroba)}</span></div>' if mostra_ig else ""
             comp.clip(
                 ev,
                 "fim",
@@ -764,7 +819,8 @@ def montar(roteiro_path: Path) -> Path:
                 "position:absolute;inset:0",
             )
             comp.setar(f"#{ev}-esc", t0, "opacity: 0")
-            comp.setar(f"#{ev}-ig", t0, "opacity: 0")
+            if mostra_ig:
+                comp.setar(f"#{ev}-ig", t0, "opacity: 0")
             comp.entra_texto(f"#{ev}-p", t0)
             comp.entra_destaque(f"#{ev}-b", t0 + 0.12)
             comp.entra_texto(f"#{ev}-d", t0 + 0.4)
@@ -777,12 +833,109 @@ def montar(roteiro_path: Path) -> Path:
                     0.6,
                     "power2.out",
                 )
-            comp.entra_destaque(f"#{ev}-ig", t0 + escurece + 0.2)
+            if mostra_ig:
+                comp.entra_destaque(f"#{ev}-ig", t0 + escurece + 0.2)
             janelas_sem_legenda.append((t0, dur))
             comp.som("final", t0 + 0.12)
 
+        elif tipo == "trio":
+            # Três faixas de vídeo empilhadas que entram uma a uma, cada uma na sua
+            # palavra ("ex-presidente", "Polícia Federal", "Supremo"), com um rótulo.
+            itens = e["itens"][:3]
+            topo0 = int(e.get("topo", 250))
+            faixas = []
+            for i, it in enumerate(itens):
+                ti = float(it.get("t", t0 + 0.2 + 0.8 * i))
+                num = f"<em>{esc(str(it['numero']))}</em>" if it.get("numero") else ""
+                faixas.append(
+                    f'<div class="trio-f" id="{ev}-f{i}" style="top:{topo0 + i * 370}px">'
+                    f'{midia_html(f"{ev}-f{i}", it["midia"], ti, t1, comp, float(it.get("inicio_midia", 0)))}'
+                    f'<b id="{ev}-b{i}">{num}{esc(it["rotulo"])}</b></div>'
+                )
+                lado = -1 if i % 2 == 0 else 1
+                comp.setar(f"#{ev}-f{i}", 0, "opacity: 0")
+                comp.tween(f"#{ev}-f{i}", ti, f'opacity: 1, x: {lado * 1100}, filter: "brightness(2.2)"',
+                           'opacity: 1, x: 0, filter: "brightness(1)"', 0.38, "expo.out")
+                comp.tween(f"#{ev}-b{i}", ti + 0.12, "opacity: 0, y: 26", "opacity: 1, y: 0", 0.35, "power3.out")
+                if it.get("batida"):  # pancada (ex.: martelo do juiz): a faixa dá um tranco
+                    tb = float(it["batida"])
+                    comp.js.append(
+                        f'tl.to("#{ev}-f{i}", {{keyframes: [{{scale: 1.06, y: 10}}, {{scale: 1, y: 0}}], duration: 0.25, ease: "power2.out"}}, {tb:.3f});'
+                    )
+                    comp.som("titulo_vivo", tb)
+                comp.som("trio_item", ti)
+            comp.clip(ev, "trio", t0, t1,
+                      f'<div id="{ev}-in" style="position:absolute;inset:0"><div class="cena-bg"></div>{"".join(faixas)}</div>',
+                      "position:absolute;inset:0")
+            comp.tween(f"#{ev}-in", t0, 'opacity: 0, filter: "blur(14px)"', 'opacity: 1, filter: "blur(0px)"', 0.25, "power3.out")
+            comp.js.append(
+                f'tl.to("#{ev}-in", {{opacity: 0, scale: 0.97, filter: "blur(12px)", duration: 0.25, ease: "power2.in"}}, {t1 - 0.25:.3f});'
+            )
+            # os rótulos são texto: o @ não fica em cima deles
+            for i in range(len(itens)):
+                y = topo0 + i * 370
+                zonas.append((t0, t1, (40, y + 220, 760, y + 340)))
+
+        elif tipo == "impacto":
+            # A frase forte "carimbada" na tela: clarão, fundo escuro avermelhado,
+            # texto gigante que bate, falha de cor (glitch) e a imagem de baixo treme.
+            linhas = e["linhas"]
+            tam = int(e.get("tam", 150))
+            topo = int(e.get("topo", 960 - len(linhas) * tam * 0.98 / 2))
+            vivos = idt["cores"].get("vivos", [])
+
+            def bloco(sufixo: str, cor_fixa: str | None) -> str:
+                spans = "".join(
+                    f'<span style="color:{cor_fixa or ln.get("cor") or (vivos[int(ln["vivo"]) - 1] if ln.get("vivo") else idt["cores"]["texto"])}">'
+                    f'{esc(ln["texto"])}</span>'
+                    for ln in linhas
+                )
+                return f'<div class="imp-txt{sufixo}" id="{ev}-t{sufixo.strip().replace("imp-", "")}" style="top:{topo}px;font-size:{tam}px">{spans}</div>'
+
+            corpo = (
+                f'<div class="imp-fundo" id="{ev}-f"></div>'
+                + bloco(" imp-c", "#00E5FF") + bloco(" imp-r", "#FF2A2A") + bloco("", None)
+                + f'<div class="imp-flash" id="{ev}-fl"></div>'
+            )
+            comp.clip(ev, "imp", t0, t1, f'<div id="{ev}-in" style="position:absolute;inset:0">{corpo}</div>',
+                      "position:absolute;inset:0")
+            comp.tween(f"#{ev}-fl", t0, "opacity: 0.9", "opacity: 0", 0.2, "power2.out")
+            comp.tween(f"#{ev}-f", t0, "opacity: 0", "opacity: 1", 0.08, "none")
+            comp.tween(f"#{ev}-t", t0, 'opacity: 0, scale: 1.9, filter: "blur(10px)"',
+                       'opacity: 1, scale: 1, filter: "blur(0px)"', 0.2, "power4.out")
+            for suf, dx in (("c", -14), ("r", 14)):
+                # falha de cor: tranco forte na entrada, depois fica uma separação leve
+                # de vermelho/ciano e um último tranco antes de sair
+                comp.js.append(
+                    f'tl.fromTo("#{ev}-t{suf}", {{opacity: 0.9, x: {dx}, y: 0}}, {{keyframes: [{{x: {-dx}, y: 6}}, {{x: {dx // 2}, y: -4}}, '
+                    f'{{x: {dx // 3}, y: 0, opacity: 0.55}}], duration: 0.32, ease: "none"}}, {t0 + 0.04:.3f});'
+                )
+                comp.js.append(
+                    f'tl.to("#{ev}-t{suf}", {{keyframes: [{{x: {dx * 2}, opacity: 0.9}}, {{x: 0, opacity: 0}}], duration: 0.18, ease: "none"}}, {t1 - 0.2:.3f});'
+                )
+            comp.js.append(
+                f'tl.to("#{ev}-t", {{keyframes: [{{x: -8, y: 5}}, {{x: 7, y: -6}}, {{x: -4, y: 3}}, {{x: 0, y: 0}}], duration: 0.3, ease: "none"}}, {t0 + 0.2:.3f});'
+            )
+            comp.js.append(
+                f'tl.to("#{ev}-in", {{opacity: 0, skewX: 18, duration: 0.16, ease: "power2.in"}}, {t1 - 0.16:.3f});'
+            )
+            if e.get("tremer", True):
+                comp.js.append(
+                    f'tl.to("#cam, .cena-in", {{keyframes: [{{x: -24, y: 10}}, {{x: 20, y: -12}}, {{x: -14, y: 8}}, {{x: 9, y: -5}}, {{x: 0, y: 0}}], '
+                    f'duration: 0.42, ease: "none"}}, {t0:.3f});'
+                )
+            zonas.append((t0, t1, (0, topo - 60, W, topo + int(len(linhas) * tam) + 60)))
+            comp.som("impacto", t0)
+
+        elif tipo == "trilha":
+            pass  # só marca a troca de humor da trilha (veja "Trilha automática" abaixo)
+
         else:
             sys.exit(f"tipo de evento desconhecido: {tipo}")
+
+    # Efeitos pedidos no roteiro, fora dos eventos: [{"t": 17.9, "som": "riser"}]
+    for s_ in r.get("sons_extra", []):
+        comp.sons.append({"t": round(float(s_["t"]), 3), "som": s_["som"]})
 
     # --- Legenda -----------------------------------------------------------
     leg = r.get("legenda", {})
@@ -944,7 +1097,7 @@ def montar(roteiro_path: Path) -> Path:
             e
             for e in eventos
             if e["tipo"] == "capitulo"
-            or (e["tipo"] in ("transicao", "clarao") and e.get("humor"))
+            or (e["tipo"] in ("transicao", "clarao", "trilha") and e.get("humor"))
         ]
         inicios = [(0.0, r.get("humor_inicial", humores[0]))]
         for n, c in enumerate(caps):
