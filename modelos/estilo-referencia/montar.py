@@ -455,6 +455,22 @@ def montar(roteiro_path: Path) -> Path:
     insertos_som: list[dict] = []
     divididas: list[tuple[float, float, int]] = []
 
+    # "base_escura": sombra suave na parte de baixo da câmera, para a legenda e os textos
+    # aparecerem sobre roupa ou fundo claro (ex.: camiseta branca). Fica sob todo o resto.
+    base = r.get("base_escura")
+    if base:
+        y = int(base.get("y", 1150))
+        op = float(base.get("opacidade", 0.55))
+        comp.clip(
+            "base-escura",
+            "base",
+            0,
+            dur,
+            "",
+            f"position:absolute;left:0;top:{y}px;width:{W}px;height:{H - y}px;"
+            f"background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,{op}) 40%, rgba(0,0,0,{op}))",
+        )
+
     for k, e in enumerate(eventos):
         tipo, t0 = e["tipo"], float(e["inicio"])
         t1 = float(e.get("fim", dur))

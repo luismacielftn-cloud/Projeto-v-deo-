@@ -150,6 +150,12 @@ Pedido: "eu falo do estudo dos idosos de 90 anos, aí você coloca essa foto, qu
   - O `drawbox` do ffmpeg não anima a largura. Por isso, a faixa entra por `overlay` com `x` animado, sob uma máscara branca na margem.
 - **O resultado** vem num `titulo` `vivo` logo depois, com o que ele fala ("quase 3× mais força") e o dado real do estudo ("+174% em 8 semanas"). Confira o número no próprio artigo; não arredonde para mais.
 
+## Roupa clara embaixo da legenda (7º vídeo, `retomar/infarto-duas-coisas/`)
+
+Camiseta branca bem onde ficam a legenda, os capítulos e as listas (y 1330–1400). `"base_escura": {"y": 1150, "opacidade": 0.55}` no roteiro cria uma sombra que vai de transparente (em `y`) até preto 55% (a partir de 40% da altura dela). Ela fica logo acima da câmera e embaixo de tudo o mais; o zoom não a move.
+
+Na tela dividida, o `descer` define onde a câmera começa. Com o rosto no meio-alto do quadro (cabelo em y≈460), 445 deixava a legenda da emenda (y = altura − 120) em cima do cabelo; 560 resolveu. Confira com `snapshot` no 1º segundo.
+
 ## Layout: não cobrir o rosto
 
 As posições padrão servem para um rosto no terço superior. Antes de montar, olhe 3 quadros do vídeo e, se o rosto ocupar o meio do quadro, desça os textos para a altura do peito:
