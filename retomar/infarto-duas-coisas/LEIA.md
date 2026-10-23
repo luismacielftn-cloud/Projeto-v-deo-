@@ -6,7 +6,7 @@ O vídeo não fica no git: se precisar refazer, peça o link do Drive ao usuári
 | Arquivo | O que é |
 | --- | --- |
 | `edl.json` | Cortes (14 trechos, 37,1 s → 34,3 s + 1,5 s congelados = 36,1 s), com um `grade` **menos amarelo** (balanço para o frio) e mais contraste. |
-| `transcript.json` | Transcrição do vídeo cortado ("salva" → "salve", "cardio respiratória" → "cardiorrespiratória"). |
+| `transcript.json` | Transcrição do vídeo cortado ("salva" → "salve", "cardio respiratória" → "cardiorrespiratória", "agrede" → "agride", vírgula tirada de "capacidade"). |
 | `roteiro.json` | Roteiro entregue (usa `base_escura`, `trio`, capítulos 01/02 e `trilha`). |
 | `preparar_clipes.sh` | Mixkit 33767 + Pixabay 3171, 152203, 32937, 139472, 57691. |
 | `project.md` | Diário. |

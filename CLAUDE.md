@@ -166,6 +166,7 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **Mixkit:** a busca no site às vezes cai no bloqueio do Cloudflare; o download por número (`assets.mixkit.co/videos/<id>/<id>-720.mp4`) continua funcionando. Os números já usados estão nos `preparar_clipes.sh` do `retomar/`.
 - **Respiros que o `ajustar_cortes.py` não vê:** quando ele tira pouco (respiração acima do limiar dele), meça o áudio a ~-42 dB e encurte para ~0,12 s os respiros acima de 0,24 s dentro dos trechos.
 - **`capitulo` sem `humor` troca a trilha sozinho** (pega o próximo humor da lista e pode voltar para "calma" no meio da tensão). Ponha o `humor` no próprio capítulo; para voltar ao "inspira" no fechamento, use o evento `trilha`.
+- **Erro de português na legenda:** o Whisper escreveu "agrede" no lugar de "agride" (verbo agredir), e o usuário percebeu. Antes de montar, leia a transcrição inteira como texto corrido e corrija ortografia, conjugação e vírgulas, não só nomes e números.
 - **Corte de 1–8 centésimos** dá "pulo" na imagem sem ganhar tempo: junte trechos separados por menos de 0,1 s no `edl.json`.
 
 ## Memória entre sessões
