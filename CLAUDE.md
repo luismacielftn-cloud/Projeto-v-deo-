@@ -23,6 +23,8 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 
 **Exemplo completo e aprovado:** `retomar/treino-forca/` (roteiro, cortes, clipes e o diário de cada pedido do usuário). Antes de montar um vídeo novo, leia o `LEIA.md` de lá: a linha do tempo mostra como tudo se encaixa.
 
+**Só cortes + legenda** (pedido explícito: "sem animação, sem efeito, sem nada", `retomar/cortes-legenda/`): faça só a Etapa 1 e queime a legenda com `ferramentas/legenda.py` (mesmo visual da legenda em destaque, sem HyperFrames, sem trilha, sem @). Pedido assim já é o plano: pode executar sem pedir OK.
+
 **Gancho visual nos primeiros 3 segundos:** todo vídeo abre com algo forte na tela já no 0 s, de preferência em **tela dividida** com um clipe de banco ligado à primeira frase (no exemplo: mulher no espelho preocupada com rugas para "envelhecer mais rápido"). Não comece só com o rosto. O gancho precisa causar impacto e curiosidade: prefira uma pessoa numa situação forte (exausta, aflita, no limite), como o homem acabado no chuveiro do exemplo do usuário. Paisagem bonita (nascer do sol etc.) não serve de gancho.
 
 ## O que já está no repositório
@@ -35,10 +37,11 @@ Depois, `ferramentas/finalizar.py` junta tudo.
 | `ferramentas/ajustar_cortes.py` | Encosta as bordas do `edl.json` no silêncio real do áudio. |
 | `modelos/estilo-referencia/` | Modelo padrão: `GUIA.md` (receita), `montar.py` (gera `index.html` + `mix.json` a partir de um `roteiro.json`), `identidades/` (Sálvia forte é a padrão), `exemplo-roteiro.json`, fontes e GSAP. |
 | `ferramentas/finalizar.py` | Junta a imagem do HyperFrames com o áudio. Com `--mix`, usa a mixagem completa do `mixar.py`. Queima legenda só fora do modelo. |
+| `ferramentas/legenda.py` | Só cortes + legenda: queima a legenda em destaque (Inter Black, palavra falada em dourado e 12 % maior) direto no `cortado.mp4`, a partir da transcrição em lista simples com o texto corrigido. `--y` é o centro vertical (abaixo do queixo); `--entrega` grava a cópia de até 30 MB. |
 | `ferramentas/filtro_clipe.py` | Filtros dos clipes de banco no estilo de @elias.maman: `tv` (cartão), `desfoque` (dividida) e `lente` (cheia). `--brilho 1.5` clareia clipe escuro. Rode no clipe já recortado e use o `_fx.mp4` no roteiro. |
 | `ferramentas/secao_musculo.py` | Ilustração animada da coxa em corte (30 × 70 anos) para falar de **sarcopenia / perda de músculo**. Padrão: **fotos realistas** de carne em corte (`modelos/estilo-referencia/assets/sarcopenia/`, geradas no Canva); a de 70 anos vira músculo tomado de gordura. O usuário pediu "mais próximo do real"; `--desenho` é a versão antiga desenhada. Vai no cartão com `filtro_clipe.py tv --brilho 1.2`. |
 | `ferramentas/mixar.py`, `efeitos.py`, `trilha.py` | Mixagem (voz + efeitos + insertos com som + trilha com ducking, -14 LUFS), efeitos sonoros sintetizados e trilhas geradas. Tudo sem direitos autorais. |
-| `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes; `retomar/coracao-domingo/` é o terceiro, gravado no carro, com todos os clipes do Mixkit; `retomar/pernas-quem-treina/` é o quarto, que já vinha com as imagens do usuário (etiquetas `rotulos`). |
+| `retomar/` | Vídeos já entregues, para retomar ou copiar a receita. `retomar/treino-forca/` é o exemplo completo e aprovado (roteiro, cortes, transcrição, script dos clipes, diário); `retomar/forca-pernas/` é o segundo, com rosto no alto do quadro, números compridos e quedas em idades diferentes; `retomar/coracao-domingo/` é o terceiro, gravado no carro, com todos os clipes do Mixkit; `retomar/pernas-quem-treina/` é o quarto, que já vinha com as imagens do usuário (etiquetas `rotulos`); `retomar/cortes-legenda/` foi só cortes + legenda. |
 | `.claude/hooks/session-start.sh` | Instala dependências, modelo Whisper, HyperFrames 0.8.145 e o Chrome dele em toda sessão nova. |
 | `ferramentas/licencas/` | Licenças das ferramentas copiadas. |
 
@@ -152,6 +155,9 @@ python3 ferramentas/finalizar.py --video videos/x/edit/hf/com_animacoes.mp4 \
 - **Clipe que não mostra o movimento falado:** no "esse movimento simples" (sentar e levantar da cadeira) uma aula de idosos com os braços para cima foi recusada como "sem sentido". Quando a fala descreve um exercício, o clipe mostra **esse** exercício.
 - **Ilustração de anatomia com cara de desenho:** o usuário prefere imagem realista (carne, textura de verdade), como os posts de corte de coxa "sem/com treino de força". Desenho chapado só se não houver foto.
 - **Corte de 1–8 centésimos** dá "pulo" na imagem sem ganhar tempo: junte trechos separados por menos de 0,1 s no `edl.json`.
+- **Voz atrasada em relação à boca:** o `render.py` original arredondava a imagem de cada trecho em quadros e o áudio não, e o AAC de cada trecho somava ~21 ms: com 14 trechos a voz chegava 0,17 s atrasada. O `render.py` daqui já está corrigido (duração em quadros inteiros, PCM nos trechos). Ao atualizar o Video Use, reaplique essa correção.
+- **Pausa cheia de respiração:** o `ajustar_cortes.py` pode tratar respiração (-32 a -40 dB) como fala e devolver a pausa, ou tratar o "s" inicial fraco como silêncio e cortá-lo. Rode com `--simular` e, se ele piorar, meça o áudio em quadros de 20 ms e marque as bordas à mão (exemplo em `retomar/cortes-legenda/`).
+- **Tempo da legenda logo depois de um corte:** a transcrição do cortado erra até 0,3 s ali (sem a pausa, o Whisper se perde). Para legenda queimada, leve os tempos da transcrição da fonte pelo `edl.json`.
 
 ## Memória entre sessões
 
@@ -164,5 +170,5 @@ O usuário quer que tudo o que for aprendido valha em qualquer sessão nova. Ao 
 As skills foram copiadas, não estão ligadas ao repositório original. Para atualizar:
 1. Clone de novo `browser-use/video-use` e `heygen-com/hyperframes`.
 2. Copie as pastas por cima.
-3. Rode os testes do Video Use (`pytest tests`).
+3. Rode os testes do Video Use (`pytest tests`). Reaplique a correção de sincronia do `helpers/render.py` (veja "Voz atrasada" acima) se o original ainda não tiver.
 4. Atualize os commits na tabela acima e a versão em `.claude/hooks/session-start.sh`.
