@@ -157,9 +157,10 @@ O canvas é 1080×1920. Vídeo horizontal é recortado no centro (`object-fit: c
 Quando o usuário pede "só os cortes e a legenda" (`retomar/cortes-legenda/`), o modelo não entra: nada de animação, efeito, trilha nem @.
 
 1. Video Use → `edit/cortado.mp4`, como no passo 1.
-2. Lista simples de palavras na linha do tempo do cortado, com o texto corrigido (números em algarismo, "pra" quando ele fala "pra", pontuação). Os tempos vêm da transcrição da **fonte** levada pelo `edl.json` (início do trecho + deslocamento em quadros): a transcrição do cortado erra até 0,3 s logo depois dos cortes. Texto vazio some da legenda.
+2. `python3 ferramentas/legenda.py mapear edit/edl.json edit/leg/transcript.json`: leva as palavras da transcrição da **fonte** para o tempo do cortado (trechos em quadros inteiros, como o `render.py`). Não transcreva o cortado para isso: ele erra até 0,3 s logo depois dos cortes. Depois corrija o texto (números em algarismo, "pra" quando ele fala "pra", pontuação). Texto vazio some da legenda; palavra que o Whisper pulou entra como item novo.
+   - Para conferir o texto, transcreva a fonte também com `--modelo medium` (numa `--edit-dir` separada) e compare: ele acerta o que o `small` erra ("emagrecendo", "treinamento de força", o "o" de "perdeu o que").
 3. `python3 ferramentas/legenda.py edit/cortado.mp4 edit/leg/transcript.json -o edit/final.mp4 --y 1480 --entrega edit/entrega/<nome>.mp4`.
-   - Mesmo visual da legenda em destaque: Inter Black 66 px, blocos de 2–3 palavras (mesma função do `montar.py`), palavra falada em dourado `#F2C94C` e 12 % maior, sombra escura. A palavra ativa vai numa camada de cima, com as outras invisíveis, para crescer no lugar sem empurrar as vizinhas; o espaço entre palavras é largo pelo mesmo motivo.
+   - Mesmo visual da legenda em destaque: Inter Black 66 px, blocos de 2–3 palavras (mesma função do `montar.py`), palavra falada em dourado `#F2C94C` e 12 % maior, sombra escura. A palavra ativa vai numa camada de cima, com as outras invisíveis, para crescer no lugar sem empurrar as vizinhas. Pelo mesmo motivo, o espaço entre as palavras de um bloco cresce com a maior palavra dele (6 % da largura dela de cada lado): com espaço fixo, "emagrecendo" encostava na vizinha.
    - `--y` é o centro vertical da legenda: meça o queixo num quadro e deixe ~100 px abaixo dele (rosto no meio do quadro: 1480).
    - No 0 s a legenda já entra inteira (o quadro 0 é a capa no celular).
    - O áudio passa por um limitador com sobreamostragem 4x: pico real -1,2 dBTP, -14 LUFS.
