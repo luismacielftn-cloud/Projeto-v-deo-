@@ -156,7 +156,7 @@ O canvas é 1080×1920. Vídeo horizontal é recortado no centro (`object-fit: c
 
 Quando o usuário pede "só os cortes e a legenda" (`retomar/cortes-legenda/`), o modelo não entra: nada de animação, efeito, trilha nem @.
 
-1. Video Use → `edit/cortado.mp4`, como no passo 1.
+1. `python3 ferramentas/pausas.py videos/x/fonte.mp4` gera o `edit/edl.json` (pausas e respirações fora; confira a lista e corte à mão alguma frase repetida, se houver). Depois `render.py` → `edit/cortado.mp4`.
 2. `python3 ferramentas/legenda.py mapear edit/edl.json edit/leg/transcript.json`: leva as palavras da transcrição da **fonte** para o tempo do cortado (trechos em quadros inteiros, como o `render.py`). Não transcreva o cortado para isso: ele erra até 0,3 s logo depois dos cortes. Depois corrija o texto (números em algarismo, "pra" quando ele fala "pra", pontuação). Texto vazio some da legenda; palavra que o Whisper pulou entra como item novo.
    - Para conferir o texto, transcreva a fonte também com `--modelo medium` (numa `--edit-dir` separada) e compare: ele acerta o que o `small` erra ("emagrecendo", "treinamento de força", o "o" de "perdeu o que").
 3. `python3 ferramentas/legenda.py edit/cortado.mp4 edit/leg/transcript.json -o edit/final.mp4 --y 1480 --entrega edit/entrega/<nome>.mp4`.

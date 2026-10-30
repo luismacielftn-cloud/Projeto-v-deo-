@@ -1,0 +1,807 @@
+[
+  {
+    "text": "Essa",
+    "start": 0.0,
+    "end": 0.217
+  },
+  {
+    "text": "pergunta",
+    "start": 0.217,
+    "end": 0.577
+  },
+  {
+    "text": "vai",
+    "start": 0.577,
+    "end": 0.797
+  },
+  {
+    "text": "dizer",
+    "start": 0.797,
+    "end": 1.017
+  },
+  {
+    "text": "como",
+    "start": 1.017,
+    "end": 1.277
+  },
+  {
+    "text": "o",
+    "start": 1.277,
+    "end": 1.417
+  },
+  {
+    "text": "seu",
+    "start": 1.417,
+    "end": 1.477
+  },
+  {
+    "text": "corpo",
+    "start": 1.477,
+    "end": 1.797
+  },
+  {
+    "text": "vai",
+    "start": 1.797,
+    "end": 1.957
+  },
+  {
+    "text": "estar",
+    "start": 1.957,
+    "end": 2.197
+  },
+  {
+    "text": "daqui",
+    "start": 2.197,
+    "end": 2.437
+  },
+  {
+    "text": "a",
+    "start": 2.437,
+    "end": 2.557
+  },
+  {
+    "text": "10",
+    "start": 2.557,
+    "end": 2.797
+  },
+  {
+    "text": "anos",
+    "start": 2.797,
+    "end": 3.057
+  },
+  {
+    "text": "e",
+    "start": 3.057,
+    "end": 3.277
+  },
+  {
+    "text": "quase",
+    "start": 3.277,
+    "end": 3.517
+  },
+  {
+    "text": "ninguém",
+    "start": 3.517,
+    "end": 3.777
+  },
+  {
+    "text": "tem",
+    "start": 3.777,
+    "end": 3.977
+  },
+  {
+    "text": "coragem",
+    "start": 3.977,
+    "end": 4.297
+  },
+  {
+    "text": "de",
+    "start": 4.297,
+    "end": 4.377
+  },
+  {
+    "text": "responder,",
+    "start": 4.377,
+    "end": 4.777
+  },
+  {
+    "text": "porque",
+    "start": 5.097,
+    "end": 5.277
+  },
+  {
+    "text": "ela",
+    "start": 5.277,
+    "end": 5.417
+  },
+  {
+    "text": "deveria",
+    "start": 5.417,
+    "end": 5.737
+  },
+  {
+    "text": "ser",
+    "start": 5.737,
+    "end": 5.897
+  },
+  {
+    "text": "respondida",
+    "start": 5.897,
+    "end": 6.297
+  },
+  {
+    "text": "hoje,",
+    "start": 6.297,
+    "end": 6.637
+  },
+  {
+    "text": "sexta-feira",
+    "start": 6.757,
+    "end": 7.317
+  },
+  {
+    "text": "",
+    "start": 7.017,
+    "end": 7.317
+  },
+  {
+    "text": "à",
+    "start": 7.317,
+    "end": 7.437
+  },
+  {
+    "text": "noite.",
+    "start": 7.437,
+    "end": 7.637
+  },
+  {
+    "text": "É",
+    "start": 7.708,
+    "end": 7.823
+  },
+  {
+    "text": "uma",
+    "start": 7.823,
+    "end": 7.903
+  },
+  {
+    "text": "pergunta",
+    "start": 7.903,
+    "end": 8.183
+  },
+  {
+    "text": "simples.",
+    "start": 8.183,
+    "end": 8.663
+  },
+  {
+    "text": "O",
+    "start": 8.957,
+    "end": 9.007
+  },
+  {
+    "text": "que",
+    "start": 8.977,
+    "end": 9.057
+  },
+  {
+    "text": "você",
+    "start": 9.057,
+    "end": 9.277
+  },
+  {
+    "text": "fez",
+    "start": 9.277,
+    "end": 9.577
+  },
+  {
+    "text": "pelo",
+    "start": 9.577,
+    "end": 9.797
+  },
+  {
+    "text": "seu",
+    "start": 9.797,
+    "end": 9.997
+  },
+  {
+    "text": "corpo",
+    "start": 9.997,
+    "end": 10.417
+  },
+  {
+    "text": "nesses",
+    "start": 10.417,
+    "end": 10.917
+  },
+  {
+    "text": "5",
+    "start": 10.917,
+    "end": 11.177
+  },
+  {
+    "text": "dias?",
+    "start": 11.177,
+    "end": 11.477
+  },
+  {
+    "text": "Treinou?",
+    "start": 11.732,
+    "end": 12.072
+  },
+  {
+    "text": "Comeu",
+    "start": 12.347,
+    "end": 12.507
+  },
+  {
+    "text": "bem?",
+    "start": 12.507,
+    "end": 12.727
+  },
+  {
+    "text": "Dormiu",
+    "start": 12.982,
+    "end": 13.202
+  },
+  {
+    "text": "direito?",
+    "start": 13.202,
+    "end": 13.522
+  },
+  {
+    "text": "Ou",
+    "start": 13.795,
+    "end": 13.895
+  },
+  {
+    "text": "foi",
+    "start": 13.895,
+    "end": 14.035
+  },
+  {
+    "text": "levando",
+    "start": 14.035,
+    "end": 14.395
+  },
+  {
+    "text": "de",
+    "start": 14.395,
+    "end": 14.635
+  },
+  {
+    "text": "bobeira,",
+    "start": 14.635,
+    "end": 15.015
+  },
+  {
+    "text": "comendo",
+    "start": 15.015,
+    "end": 15.315
+  },
+  {
+    "text": "qualquer",
+    "start": 15.315,
+    "end": 15.555
+  },
+  {
+    "text": "coisa,",
+    "start": 15.555,
+    "end": 16.075
+  },
+  {
+    "text": "sem",
+    "start": 16.208,
+    "end": 16.39
+  },
+  {
+    "text": "se",
+    "start": 16.39,
+    "end": 16.55
+  },
+  {
+    "text": "mexer,",
+    "start": 16.55,
+    "end": 16.89
+  },
+  {
+    "text": "só",
+    "start": 17.03,
+    "end": 17.11
+  },
+  {
+    "text": "esperando",
+    "start": 17.11,
+    "end": 17.53
+  },
+  {
+    "text": "a",
+    "start": 17.53,
+    "end": 17.95
+  },
+  {
+    "text": "sexta",
+    "start": 17.95,
+    "end": 18.23
+  },
+  {
+    "text": "chegar",
+    "start": 18.23,
+    "end": 18.49
+  },
+  {
+    "text": "pra",
+    "start": 18.49,
+    "end": 18.69
+  },
+  {
+    "text": "dizer",
+    "start": 18.69,
+    "end": 18.93
+  },
+  {
+    "text": "que",
+    "start": 18.93,
+    "end": 19.05
+  },
+  {
+    "text": "merece",
+    "start": 19.05,
+    "end": 19.41
+  },
+  {
+    "text": "descansar?",
+    "start": 19.41,
+    "end": 19.95
+  },
+  {
+    "text": "Porque",
+    "start": 20.042,
+    "end": 20.315
+  },
+  {
+    "text": "o",
+    "start": 20.315,
+    "end": 20.435
+  },
+  {
+    "text": "corpo",
+    "start": 20.435,
+    "end": 20.755
+  },
+  {
+    "text": "não",
+    "start": 20.755,
+    "end": 21.055
+  },
+  {
+    "text": "separa",
+    "start": 21.055,
+    "end": 21.535
+  },
+  {
+    "text": "semana",
+    "start": 21.535,
+    "end": 21.935
+  },
+  {
+    "text": "de",
+    "start": 21.935,
+    "end": 22.315
+  },
+  {
+    "text": "final",
+    "start": 22.315,
+    "end": 22.495
+  },
+  {
+    "text": "de",
+    "start": 22.495,
+    "end": 22.595
+  },
+  {
+    "text": "semana,",
+    "start": 22.595,
+    "end": 22.915
+  },
+  {
+    "text": "ele",
+    "start": 23.075,
+    "end": 23.235
+  },
+  {
+    "text": "só",
+    "start": 23.235,
+    "end": 23.415
+  },
+  {
+    "text": "soma.",
+    "start": 23.415,
+    "end": 23.835
+  },
+  {
+    "text": "Quem",
+    "start": 23.875,
+    "end": 24.023
+  },
+  {
+    "text": "cuidou",
+    "start": 24.023,
+    "end": 24.423
+  },
+  {
+    "text": "dele",
+    "start": 24.423,
+    "end": 24.663
+  },
+  {
+    "text": "dia",
+    "start": 24.663,
+    "end": 25.043
+  },
+  {
+    "text": "após",
+    "start": 25.043,
+    "end": 25.443
+  },
+  {
+    "text": "dia",
+    "start": 25.443,
+    "end": 25.683
+  },
+  {
+    "text": "tem",
+    "start": 25.683,
+    "end": 25.883
+  },
+  {
+    "text": "motivo",
+    "start": 25.883,
+    "end": 26.383
+  },
+  {
+    "text": "de",
+    "start": 26.383,
+    "end": 26.703
+  },
+  {
+    "text": "sobra",
+    "start": 26.703,
+    "end": 27.143
+  },
+  {
+    "text": "para",
+    "start": 27.143,
+    "end": 27.483
+  },
+  {
+    "text": "relaxar",
+    "start": 27.483,
+    "end": 28.003
+  },
+  {
+    "text": "hoje.",
+    "start": 28.003,
+    "end": 28.223
+  },
+  {
+    "text": "Quem",
+    "start": 28.423,
+    "end": 28.503
+  },
+  {
+    "text": "não",
+    "start": 28.503,
+    "end": 28.643
+  },
+  {
+    "text": "fez",
+    "start": 28.643,
+    "end": 28.823
+  },
+  {
+    "text": "nada",
+    "start": 28.823,
+    "end": 29.123
+  },
+  {
+    "text": "só",
+    "start": 29.123,
+    "end": 29.343
+  },
+  {
+    "text": "está",
+    "start": 29.343,
+    "end": 29.563
+  },
+  {
+    "text": "empilhando",
+    "start": 29.563,
+    "end": 30.143
+  },
+  {
+    "text": "o",
+    "start": 30.143,
+    "end": 30.203
+  },
+  {
+    "text": "cansaço,",
+    "start": 30.203,
+    "end": 30.703
+  },
+  {
+    "text": "e",
+    "start": 30.75,
+    "end": 30.858
+  },
+  {
+    "text": "depois",
+    "start": 30.858,
+    "end": 31.038
+  },
+  {
+    "text": "de",
+    "start": 31.038,
+    "end": 31.218
+  },
+  {
+    "text": "45,",
+    "start": 31.218,
+    "end": 31.778
+  },
+  {
+    "text": "essa",
+    "start": 31.778,
+    "end": 32.138
+  },
+  {
+    "text": "conta",
+    "start": 32.138,
+    "end": 32.358
+  },
+  {
+    "text": "chega",
+    "start": 32.358,
+    "end": 32.678
+  },
+  {
+    "text": "bem",
+    "start": 32.678,
+    "end": 32.978
+  },
+  {
+    "text": "mais",
+    "start": 32.978,
+    "end": 33.198
+  },
+  {
+    "text": "rápido,",
+    "start": 33.198,
+    "end": 33.498
+  },
+  {
+    "text": "em",
+    "start": 33.612,
+    "end": 33.732
+  },
+  {
+    "text": "forma",
+    "start": 33.732,
+    "end": 33.952
+  },
+  {
+    "text": "de",
+    "start": 33.952,
+    "end": 34.132
+  },
+  {
+    "text": "perda",
+    "start": 34.132,
+    "end": 34.372
+  },
+  {
+    "text": "de",
+    "start": 34.372,
+    "end": 34.512
+  },
+  {
+    "text": "força",
+    "start": 34.512,
+    "end": 34.752
+  },
+  {
+    "text": "e",
+    "start": 34.752,
+    "end": 35.192
+  },
+  {
+    "text": "de",
+    "start": 35.192,
+    "end": 35.252
+  },
+  {
+    "text": "autonomia.",
+    "start": 35.252,
+    "end": 35.812
+  },
+  {
+    "text": "Então,",
+    "start": 35.912,
+    "end": 36.112
+  },
+  {
+    "text": "antes",
+    "start": 36.172,
+    "end": 36.312
+  },
+  {
+    "text": "de",
+    "start": 36.312,
+    "end": 36.472
+  },
+  {
+    "text": "dizer",
+    "start": 36.472,
+    "end": 36.712
+  },
+  {
+    "text": "que",
+    "start": 36.712,
+    "end": 36.832
+  },
+  {
+    "text": "você",
+    "start": 36.832,
+    "end": 37.012
+  },
+  {
+    "text": "merece,",
+    "start": 37.012,
+    "end": 37.472
+  },
+  {
+    "text": "responde",
+    "start": 37.512,
+    "end": 37.972
+  },
+  {
+    "text": "pra",
+    "start": 37.972,
+    "end": 38.072
+  },
+  {
+    "text": "você",
+    "start": 38.072,
+    "end": 38.292
+  },
+  {
+    "text": "mesmo",
+    "start": 38.292,
+    "end": 38.612
+  },
+  {
+    "text": "sem",
+    "start": 38.612,
+    "end": 38.872
+  },
+  {
+    "text": "mentir:",
+    "start": 38.872,
+    "end": 39.252
+  },
+  {
+    "text": "o",
+    "start": 39.342,
+    "end": 39.422
+  },
+  {
+    "text": "que",
+    "start": 39.422,
+    "end": 39.502
+  },
+  {
+    "text": "você",
+    "start": 39.502,
+    "end": 39.682
+  },
+  {
+    "text": "entregou",
+    "start": 39.682,
+    "end": 40.122
+  },
+  {
+    "text": "pro",
+    "start": 40.122,
+    "end": 40.202
+  },
+  {
+    "text": "",
+    "start": 40.202,
+    "end": 40.262
+  },
+  {
+    "text": "seu",
+    "start": 40.262,
+    "end": 40.382
+  },
+  {
+    "text": "corpo",
+    "start": 40.382,
+    "end": 40.682
+  },
+  {
+    "text": "essa",
+    "start": 40.682,
+    "end": 40.862
+  },
+  {
+    "text": "semana.",
+    "start": 40.862,
+    "end": 41.222
+  },
+  {
+    "text": "Se",
+    "start": 41.402,
+    "end": 41.482
+  },
+  {
+    "text": "você",
+    "start": 41.482,
+    "end": 41.662
+  },
+  {
+    "text": "quer",
+    "start": 41.662,
+    "end": 41.822
+  },
+  {
+    "text": "chegar",
+    "start": 41.822,
+    "end": 42.042
+  },
+  {
+    "text": "lá",
+    "start": 42.042,
+    "end": 42.222
+  },
+  {
+    "text": "na",
+    "start": 42.222,
+    "end": 42.302
+  },
+  {
+    "text": "frente,",
+    "start": 42.302,
+    "end": 42.582
+  },
+  {
+    "text": "forte",
+    "start": 42.582,
+    "end": 42.982
+  },
+  {
+    "text": "e",
+    "start": 42.982,
+    "end": 43.102
+  },
+  {
+    "text": "independente,",
+    "start": 43.102,
+    "end": 43.682
+  },
+  {
+    "text": "segue",
+    "start": 43.802,
+    "end": 43.962
+  },
+  {
+    "text": "o",
+    "start": 43.962,
+    "end": 44.042
+  },
+  {
+    "text": "perfil.",
+    "start": 44.042,
+    "end": 44.362
+  }
+]

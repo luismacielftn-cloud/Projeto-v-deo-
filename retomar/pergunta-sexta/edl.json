@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/cortes3/fonte.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 0.0833,
+      "end": 7.7917
+    },
+    {
+      "source": "fonte",
+      "start": 8.125,
+      "end": 9.25
+    },
+    {
+      "source": "fonte",
+      "start": 9.4167,
+      "end": 12.25
+    },
+    {
+      "source": "fonte",
+      "start": 12.375,
+      "end": 12.9583
+    },
+    {
+      "source": "fonte",
+      "start": 13.0833,
+      "end": 13.75
+    },
+    {
+      "source": "fonte",
+      "start": 13.875,
+      "end": 14.7083
+    },
+    {
+      "source": "fonte",
+      "start": 14.875,
+      "end": 17.3333
+    },
+    {
+      "source": "fonte",
+      "start": 17.4583,
+      "end": 21.2917
+    },
+    {
+      "source": "fonte",
+      "start": 21.6667,
+      "end": 25.5
+    },
+    {
+      "source": "fonte",
+      "start": 25.7917,
+      "end": 32.6667
+    },
+    {
+      "source": "fonte",
+      "start": 32.7917,
+      "end": 35.625
+    },
+    {
+      "source": "fonte",
+      "start": 35.7917,
+      "end": 41.5
+    },
+    {
+      "source": "fonte",
+      "start": 41.75,
+      "end": 46.9167
+    }
+  ],
+  "total_duration_s": 44.458
+}
