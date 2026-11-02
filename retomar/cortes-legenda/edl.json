@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/cortes/fonte.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 0.0,
+      "end": 5.2083
+    },
+    {
+      "source": "fonte",
+      "start": 5.4167,
+      "end": 8.9167
+    },
+    {
+      "source": "fonte",
+      "start": 9.2083,
+      "end": 12.2083
+    },
+    {
+      "source": "fonte",
+      "start": 12.5417,
+      "end": 16.0417
+    },
+    {
+      "source": "fonte",
+      "start": 16.2083,
+      "end": 18.0833
+    },
+    {
+      "source": "fonte",
+      "start": 18.25,
+      "end": 22.375
+    },
+    {
+      "source": "fonte",
+      "start": 22.5417,
+      "end": 26.25
+    },
+    {
+      "source": "fonte",
+      "start": 26.5,
+      "end": 28.5
+    },
+    {
+      "source": "fonte",
+      "start": 28.625,
+      "end": 30.625
+    },
+    {
+      "source": "fonte",
+      "start": 30.7917,
+      "end": 33.5417
+    },
+    {
+      "source": "fonte",
+      "start": 33.75,
+      "end": 35.375
+    },
+    {
+      "source": "fonte",
+      "start": 35.7083,
+      "end": 36.8333
+    },
+    {
+      "source": "fonte",
+      "start": 36.9583,
+      "end": 39.7917
+    },
+    {
+      "source": "fonte",
+      "start": 40.0,
+      "end": 43.375,
+      "manter": true,
+      "reason": "última frase + ~0,4 s de respiro no fim"
+    }
+  ],
+  "total_duration_s": 40.625
+}
