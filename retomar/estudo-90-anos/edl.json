@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/estudo-90-anos/fonte.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 0.16,
+      "end": 5.04,
+      "quote": "Esse é o melhor remédio pra você passar dos 60, 70 anos sem depender de ninguém."
+    },
+    {
+      "source": "fonte",
+      "start": 5.38,
+      "end": 6.88,
+      "quote": "E nenhuma farmácia é vende."
+    },
+    {
+      "source": "fonte",
+      "start": 7.02,
+      "end": 7.88,
+      "quote": "Não é suplemento,"
+    },
+    {
+      "source": "fonte",
+      "start": 8.02,
+      "end": 9.0,
+      "quote": "não é creatina,"
+    },
+    {
+      "source": "fonte",
+      "start": 9.18,
+      "end": 10.2,
+      "quote": "não é colágeno,"
+    },
+    {
+      "source": "fonte",
+      "start": 10.34,
+      "end": 11.6,
+      "quote": "nem caneta emagrecadora."
+    },
+    {
+      "source": "fonte",
+      "start": 11.78,
+      "end": 14.64,
+      "quote": "Salva esse vídeo, porque isso aqui mantém o corpo jovem,"
+    },
+    {
+      "source": "fonte",
+      "start": 14.76,
+      "end": 16.3,
+      "quote": "mesmo com a idade chegando."
+    },
+    {
+      "source": "fonte",
+      "start": 16.6,
+      "end": 26.06,
+      "quote": "A partir dos 30, você começa a perder músculo todo ano, sem perceber. E é essa perda que lá na frente faz muita gente precisar de ajuda pra levantar da cadeira."
+    },
+    {
+      "source": "fonte",
+      "start": 26.36,
+      "end": 27.9,
+      "quote": "O remédio para isso tem nome,"
+    },
+    {
+      "source": "fonte",
+      "start": 28.12,
+      "end": 29.1,
+      "quote": "treino de força."
+    },
+    {
+      "source": "fonte",
+      "start": 29.3,
+      "end": 35.0,
+      "quote": "Quando o músculo trabalha, ele solta substâncias que ajudam a controlar o açúcar e a inflamação."
+    },
+    {
+      "source": "fonte",
+      "start": 35.1,
+      "end": 37.88,
+      "quote": "É o seu corpo fabricando o próprio remédio."
+    },
+    {
+      "source": "fonte",
+      "start": 38.0,
+      "end": 39.7,
+      "quote": "E nunca é tarde para começar."
+    },
+    {
+      "source": "fonte",
+      "start": 39.92,
+      "end": 45.32,
+      "quote": "No estudo, com idosos de 90 anos, quase triplicaram a força das pernas em 8 semanas."
+    },
+    {
+      "source": "fonte",
+      "start": 45.56,
+      "end": 48.04,
+      "quote": "Não existe em velecer bem sem força,"
+    },
+    {
+      "source": "fonte",
+      "start": 48.16,
+      "end": 49.24,
+      "quote": "sem treinamento de força."
+    },
+    {
+      "source": "fonte",
+      "start": 49.42,
+      "end": 54.25,
+      "quote": "Mande esse vídeo para quem você quer ver chegando nos 80 com as próprias as pernas.",
+      "manter": true
+    }
+  ],
+  "grade": "eq=contrast=1.12:brightness=0.0:saturation=1.06,curves=master='0/0 0.2/0.16 0.5/0.5 0.85/0.82 1/0.93',colorbalance=rs=0.02:bs=-0.02:rm=0.045:gm=0.01:bm=-0.035:rh=-0.02:gh=0.0:bh=0.025,vignette=angle=PI/4.4,unsharp=5:5:0.5",
+  "total_duration_s": 51.07
+}

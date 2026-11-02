@@ -1,0 +1,9 @@
+## Sessão 1 — 2026-11-02
+
+**Pedido:** dois links (a gravação e a cena do filme). "Edite esse vídeo apenas tirando os espaços em silêncio, fazendo os cortes e colocando a legenda… não coloca essa legenda colorida… deixe ela toda branca e sem sombra… colocando o vídeo da cena do filme no espaço… que tem uma transição… sem animações… sem som musical nenhum, sem efeito musical também, sem efeito sonoro." Pedido fechado: executado sem plano (regra do "só cortes + legenda").
+**Antes:** a branch `claude/cortes-legenda` (PR #13, outra sessão) tinha `pausas.py`, `legenda.py` e a correção de sincronia do `render.py`, fora do `main`; juntei na branch do PR #12.
+**Cortes:** `pausas.py` achou o espaço de 45,8 s (silêncio total, -180 dB: a pessoa só olha o tablet) e 10 pausas de 0,15–0,47 s. A cena entrou no lugar do espaço como 2ª fonte do `edl.json`.
+**Cena:** 1180×584 sem interface do celular (só o filme). Na vertical com a largura toda e faixas pretas, para não cortar as personagens nos planos abertos. Tem diálogo, então o som dela ficou; "sem som musical" foi lido como não pôr trilha nem efeito. Estava 2,7 dB abaixo da fala (-25,9 × -23,2 LUFS): +2,6 dB com limitador. Sem legenda na cena.
+**Legenda:** `legenda.py --simples` (novo): branca `#FFFFFF`, sem contorno, sem sombra, sem a palavra falada mudar de cor ou crescer e sem animação de entrada; blocos de 2–3 palavras. y 1480 (queixo em ~1065; abaixo fica o colete marrom e o cabelo, onde o branco aparece). Texto pelo modelo `medium`: "perder xixi" (small: "este esti"), "pélvico/pélvica", "incontinência" (small: "em continência"), "perder urina" (small: "perteurina"), "da idade e não deve".
+**Entrega:** 95,6 s, 1080×1920 60 fps, -14,0 LUFS, pico -1,3 dBTP, 27,6 MB (vídeo a 2,2 Mbps para caber em 30 MB; nítido o bastante nos quadros conferidos).
+**Pendente:** retorno do usuário (som da cena, legenda na cena).

@@ -1,0 +1,248 @@
+{
+ "identidade": "salvia-forte",
+ "video": "assets/cortado.mp4",
+ "transcricao": "transcript.json",
+ "arroba": "@luismacciel",
+ "humor_inicial": "calma",
+ "legenda": {
+  "ativa": true,
+  "max_palavras": 3,
+  "estilo": "destaque",
+  "cor": "#F2C94C",
+  "tam": 66
+ },
+ "layout": {
+  "legenda_y": 1400,
+  "titulo_y": 1340,
+  "capitulo_y": 1380,
+  "cta_y": 1360,
+  "lista_y": 1330,
+  "fim_ig_y": 300
+ },
+ "base_escura": {
+  "y": 1150,
+  "opacidade": 0.55
+ },
+ "marca": {
+  "ativa": true,
+  "intervalo": 4,
+  "posicoes": [
+   [
+    850,
+    300
+   ],
+   [
+    40,
+    320
+   ],
+   [
+    850,
+    1700
+   ],
+   [
+    40,
+    1700
+   ],
+   [
+    40,
+    140
+   ],
+   [
+    850,
+    140
+   ]
+  ]
+ },
+ "eventos": [
+  {
+   "tipo": "dividida",
+   "inicio": 0.0,
+   "fim": 2.92,
+   "midia": "assets/infarto_fx.mp4",
+   "descer": 560
+  },
+  {
+   "tipo": "cena",
+   "modelo": "numero",
+   "inicio": 3.06,
+   "fim": 5.8,
+   "titulo": "a doença que mais mata",
+   "grande": "nº1",
+   "unidade": "causa de morte no mundo",
+   "texto": "doenças do coração · OMS",
+   "t": 3.9
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 5.84,
+   "fim": 7.9,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.4
+  },
+  {
+   "tipo": "capitulo",
+   "inicio": 8.08,
+   "fim": 10.62,
+   "numero": 1,
+   "pequeno": "a primeira",
+   "grande": "atividade física",
+   "humor": "inspira"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 10.8,
+   "fim": 12.38,
+   "estilo": "seco",
+   "escala": 1.18,
+   "foco_y": 0.4
+  },
+  {
+   "tipo": "trio",
+   "inicio": 12.4,
+   "fim": 16.22,
+   "itens": [
+    {
+     "midia": "assets/pernas_fx.mp4",
+     "rotulo": "Caminhar mais",
+     "numero": "✓",
+     "t": 12.52
+    },
+    {
+     "midia": "assets/escada_fx.mp4",
+     "rotulo": "Subir escadas",
+     "numero": "✓",
+     "t": 13.3
+    },
+    {
+     "midia": "assets/aula_fx.mp4",
+     "rotulo": "Se movimentar",
+     "numero": "✓",
+     "t": 14.18
+    }
+   ]
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 16.34,
+   "fim": 17.66,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.4
+  },
+  {
+   "tipo": "cena",
+   "modelo": "barras",
+   "inicio": 17.7,
+   "fim": 22.76,
+   "titulo": "quanto mais ativo você é",
+   "itens": [
+    {
+     "rotulo": "pressão",
+     "valor": 30,
+     "seta": "↓",
+     "t": 18.62
+    },
+    {
+     "rotulo": "fôlego",
+     "valor": 86,
+     "seta": "↑",
+     "t": 19.72
+    },
+    {
+     "rotulo": "metabolismo",
+     "valor": 80,
+     "seta": "↑",
+     "t": 21.92
+    }
+   ]
+  },
+  {
+   "tipo": "transicao",
+   "inicio": 22.8
+  },
+  {
+   "tipo": "capitulo",
+   "inicio": 22.98,
+   "fim": 24.92,
+   "numero": 2,
+   "pequeno": "a segunda",
+   "grande": "parar de fumar",
+   "vivo": 1,
+   "humor": "tensa"
+  },
+  {
+   "tipo": "dividida",
+   "inicio": 24.96,
+   "fim": 26.02,
+   "midia": "assets/fumando_fx.mp4",
+   "descer": 560
+  },
+  {
+   "tipo": "broll",
+   "inicio": 26.04,
+   "fim": 27.0,
+   "midia": "assets/vasos_fx.mp4",
+   "estilo": "cartao"
+  },
+  {
+   "tipo": "cena",
+   "modelo": "numero",
+   "inicio": 27.04,
+   "fim": 29.44,
+   "grande": "2 a 4×",
+   "tam": 230,
+   "unidade": "mais risco",
+   "texto": "de doença do coração em quem fuma · CDC",
+   "t": 27.38
+  },
+  {
+   "tipo": "trilha",
+   "inicio": 29.5,
+   "humor": "inspira"
+  },
+  {
+   "tipo": "lista",
+   "inicio": 29.56,
+   "fim": 31.1,
+   "titulo": "duas mudanças simples",
+   "itens": [
+    {
+     "icone": "✓",
+     "texto": "se mexer mais",
+     "t": 29.94
+    },
+    {
+     "icone": "✓",
+     "texto": "parar de fumar",
+     "t": 30.5
+    }
+   ]
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 31.14,
+   "fim": 32.1,
+   "estilo": "seco",
+   "escala": 1.18,
+   "foco_y": 0.4
+  },
+  {
+   "tipo": "titulo",
+   "inicio": 32.12,
+   "fim": 34.5,
+   "antes": "uma",
+   "destaque": "diferença enorme",
+   "depois": "no seu coração",
+   "vivo": 2
+  },
+  {
+   "tipo": "final",
+   "inicio": 34.56,
+   "cta_antes": "salva e manda pra",
+   "cta_destaque": "quem você ama",
+   "cta_depois": "",
+   "escurecer_em": 0.4
+  }
+ ]
+}

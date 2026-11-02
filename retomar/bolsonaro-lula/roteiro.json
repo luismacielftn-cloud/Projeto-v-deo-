@@ -1,0 +1,292 @@
+{
+ "identidade": "salvia-forte",
+ "video": "assets/cortado.mp4",
+ "transcricao": "transcript.json",
+ "arroba": "@luismacciel",
+ "humor_inicial": "tensa",
+ "efeitos_volume_db": 2,
+ "legenda": {
+  "ativa": true,
+  "max_palavras": 3,
+  "estilo": "destaque",
+  "cor": "#F2C94C",
+  "tam": 66
+ },
+ "layout": {
+  "legenda_y": 1400,
+  "titulo_y": 1340,
+  "capitulo_y": 1380,
+  "cta_y": 1360,
+  "lista_y": 1330,
+  "fim_ig_y": 400
+ },
+ "marca": {
+  "ativa": false,
+  "intervalo": 4,
+  "posicoes": [
+   [
+    40,
+    1690
+   ],
+   [
+    790,
+    300
+   ],
+   [
+    790,
+    1690
+   ],
+   [
+    40,
+    300
+   ],
+   [
+    790,
+    1110
+   ],
+   [
+    40,
+    1110
+   ]
+  ]
+ },
+ "vozes": [
+  {
+   "inicio": 8.84,
+   "fim": 10.7
+  }
+ ],
+ "sons_extra": [
+  {
+   "t": 0.94,
+   "som": "corte_ref"
+  },
+  {
+   "t": 1.88,
+   "som": "riser"
+  },
+  {
+   "t": 1.88,
+   "som": "rachadura"
+  },
+  {
+   "t": 3.66,
+   "som": "hit_tenso"
+  },
+  {
+   "t": 17.88,
+   "som": "riser"
+  }
+ ],
+ "eventos": [
+  {
+   "tipo": "dividida",
+   "inicio": 0.0,
+   "fim": 2.3,
+   "midia": "assets/gancho_racha.mp4"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 2.3,
+   "fim": 3.62,
+   "estilo": "seco",
+   "escala": 1.18,
+   "foco_y": 0.45
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 3.62,
+   "fim": 5.1,
+   "estilo": "seco",
+   "escala": 1.34,
+   "foco_y": 0.47
+  },
+  {
+   "tipo": "trio",
+   "inicio": 5.12,
+   "fim": 8.84,
+   "itens": [
+    {
+     "midia": "assets/mastro_fx.mp4",
+     "rotulo": "Ex-presidente",
+     "numero": 1,
+     "t": 5.6
+    },
+    {
+     "midia": "assets/sirene_fx.mp4",
+     "rotulo": "Polícia Federal",
+     "numero": 2,
+     "t": 6.74
+    },
+    {
+     "midia": "assets/martelo_fx.mp4",
+     "rotulo": "Supremo",
+     "numero": 3,
+     "t": 7.98,
+     "batida": 8.06
+    }
+   ]
+  },
+  {
+   "tipo": "pb",
+   "inicio": 8.84,
+   "fim": 10.7
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 9.86,
+   "fim": 10.7,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.45
+  },
+  {
+   "tipo": "cena",
+   "modelo": "versus",
+   "inicio": 10.86,
+   "fim": 13.92,
+   "t_vs": 12.44,
+   "lados": [
+    {
+     "texto": "VERDADE",
+     "icone": "check",
+     "cor": "#D4F25E",
+     "t": 11.74
+    },
+    {
+     "texto": "MENTIRA",
+     "icone": "x",
+     "cor": "#FF4A3D",
+     "t": 13.28
+    }
+   ]
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 13.98,
+   "fim": 15.36,
+   "estilo": "seco",
+   "escala": 1.25,
+   "foco_y": 0.45
+  },
+  {
+   "tipo": "trilha",
+   "inicio": 15.36,
+   "humor": "tensa_pulso"
+  },
+  {
+   "tipo": "cena",
+   "modelo": "busca",
+   "inicio": 15.38,
+   "fim": 21.55,
+   "t_logo": 15.72,
+   "palavras": [
+    {
+     "texto": "Bolsonaro",
+     "t": 16.76,
+     "fim": 17.08
+    },
+    {
+     "texto": "mandou",
+     "t": 17.08,
+     "fim": 17.62
+    },
+    {
+     "texto": "matar",
+     "t": 17.64,
+     "fim": 17.88
+    },
+    {
+     "texto": "Lula",
+     "t": 17.88,
+     "fim": 18.24
+    }
+   ],
+   "t_alerta": 17.64,
+   "t_enter": 18.34,
+   "resultados": [
+    {
+     "rotulo": "ACUSAÇÃO",
+     "vivo": 1,
+     "t": 18.7
+    },
+    {
+     "rotulo": "DEFESA",
+     "vivo": 2,
+     "t": 19.68
+    },
+    {
+     "rotulo": "SUA CONCLUSÃO",
+     "cor": "#F2C94C",
+     "borda": true,
+     "t": 20.78
+    }
+   ]
+  },
+  {
+   "tipo": "impacto",
+   "inicio": 17.9,
+   "fim": 18.62,
+   "tam": 150,
+   "linhas": [
+    {
+     "texto": "BOLSONARO"
+    },
+    {
+     "texto": "MANDOU"
+    },
+    {
+     "texto": "MATAR",
+     "cor": "#FF3B30"
+    },
+    {
+     "texto": "LULA?"
+    }
+   ]
+  },
+  {
+   "tipo": "trilha",
+   "inicio": 18.62,
+   "humor": "batida"
+  },
+  {
+   "tipo": "zoom",
+   "inicio": 21.6,
+   "fim": 22.98,
+   "estilo": "seco",
+   "escala": 1.2,
+   "foco_y": 0.45
+  },
+  {
+   "tipo": "cena",
+   "modelo": "troca",
+   "sobre_camera": true,
+   "inicio": 23.0,
+   "fim": 26.3,
+   "de": {
+    "texto": "Opinião",
+    "t": 23.44
+   },
+   "sub": {
+    "texto": "sem pesquisa",
+    "t": 23.92
+   },
+   "t_risco": 25.18,
+   "para": {
+    "texto": "torcida",
+    "t": 25.84,
+    "vivo": 1
+   }
+  },
+  {
+   "tipo": "final",
+   "inicio": 26.3,
+   "cta_antes": "manda para",
+   "cta_destaque": "quem precisa ver",
+   "cta_depois": "",
+   "escurecer_em": 0.5,
+   "vivo": 2,
+   "ig": false
+  }
+ ]
+}

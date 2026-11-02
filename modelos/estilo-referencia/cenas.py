@@ -14,6 +14,10 @@ Modelos (campo "modelo" do evento "cena"):
     rede          rede de neurônios que se desenha e acende {titulo, t, rotulo}
     queda         linhas retas até uma idade e depois caindo {titulo, idades, t_marco, rotulo_marco,
                   (perda com a idade: músculo, osso, …)       linhas:[{rotulo, t, t_fim, cor?, marco?}]}
+    busca         celular: página de busca, frase digitada    {palavras:[{texto, t, fim}], t_logo, t_alerta,
+                  letra a letra e resultados                   t_enter, resultados:[{rotulo, vivo|cor, t}], logo}
+    versus        dois cartões lado a lado (✓ × ✗)            {lados:[{texto, icone, cor?, t}], t_vs}
+    troca         palavra riscada e trocada por outra         {de:{texto,t}, sub:{texto,t}, t_risco, para:{texto,t,vivo}}
 
 construir() devolve (html, js, sons): o HTML do conteúdo, as linhas de GSAP e
 as deixas de som [(t, tipo)] — "cena_item" para cada elemento que entra.
@@ -85,7 +89,267 @@ def css(idt: dict) -> str:
 .cena-frase span {{ display: inline-block; margin: 0 .14em; }}
 .cena-rede-rot {{ position: absolute; left: 80px; width: 920px; top: 1150px; text-align: center; font-family: "Inter";
   font-weight: 500; font-size: 48px; color: {c["texto"]}; }}
+{CSS_BUSCA}{CSS_VERSUS}{CSS_TROCA}"""
+
+
+# --- busca: celular com a página de busca, a frase digitada e os resultados ---
+CSS_BUSCA = """
+.bus-cel { position: absolute; left: 150px; top: 180px; width: 780px; height: 1190px; border-radius: 72px; overflow: hidden;
+  background: #fff; border: 10px solid #121417; box-shadow: 0 30px 90px rgba(0,0,0,.6); font-family: "Inter"; color: #202124; }
+.bus-status { position: absolute; left: 0; right: 0; top: 0; height: 56px; padding: 16px 44px 0; display: flex; justify-content: space-between;
+  font-weight: 600; font-size: 26px; }
+.bus-status i { display: inline-block; width: 46px; height: 22px; border: 2px solid #202124; border-radius: 6px; position: relative; top: 2px; }
+.bus-status i::after { content: ""; position: absolute; left: 2px; top: 2px; width: 30px; height: 14px; border-radius: 3px; background: #202124; }
+.bus-p1, .bus-p2 { position: absolute; inset: 56px 0 0 0; }
+.bus-logo { position: absolute; left: 0; width: 100%; top: 150px; text-align: center; font-weight: 600; font-size: 136px;
+  letter-spacing: -0.045em; line-height: 1; }
+.bus-logo span { display: inline-block; }
+.bus-caixa { position: absolute; left: 36px; width: 708px; top: 360px; height: 104px; border-radius: 52px; border: 2px solid #dfe1e5;
+  box-shadow: 0 4px 16px rgba(32,33,36,.18); }
+.bus-caixa svg { position: absolute; left: 30px; top: 30px; width: 44px; height: 44px; }
+.bus-txt { position: absolute; left: 94px; top: 27px; font-weight: 500; font-size: 40px; white-space: pre; line-height: 50px; }
+.bus-txt span { display: none; }
+.bus-caret { display: inline-block; width: 3px; height: 46px; background: #1a73e8; vertical-align: -9px; margin-left: 2px; }
+.bus-kb { position: absolute; left: 0; right: 0; bottom: 0; height: 450px; background: #d2d5db; }
+.bus-k { position: absolute; height: 84px; border-radius: 12px; background: #fff; box-shadow: 0 2px 0 #898a8d;
+  text-align: center; line-height: 84px; font-weight: 400; font-size: 38px; color: #111; }
+.bus-k.esc { background: #abb0ba; font-size: 28px; }
+.bus-k.ir { background: #1a73e8; color: #fff; font-size: 30px; font-weight: 600; }
+.bus-topo-logo { position: absolute; left: 0; width: 100%; top: 26px; text-align: center; font-weight: 600; font-size: 60px;
+  letter-spacing: -0.045em; line-height: 1; }
+.bus-caixa2 { position: absolute; left: 30px; width: 720px; top: 112px; height: 84px; border-radius: 42px; background: #f1f3f4;
+  font-weight: 500; font-size: 32px; line-height: 84px; padding-left: 82px; white-space: nowrap; overflow: hidden; }
+.bus-caixa2 svg { position: absolute; left: 26px; top: 22px; width: 38px; height: 38px; }
+.bus-abas { position: absolute; left: 40px; top: 226px; display: flex; gap: 38px; font-weight: 500; font-size: 28px; color: #5f6368; }
+.bus-abas b { color: #1a73e8; font-weight: 600; border-bottom: 4px solid #1a73e8; padding-bottom: 10px; }
+.bus-linha { position: absolute; left: 0; top: 282px; height: 2px; width: 100%; background: #ebebeb; }
+.bus-carga { position: absolute; left: 0; top: 280px; height: 5px; width: 100%; background: #1a73e8; transform-origin: 0 50%; }
+.bus-res { position: absolute; left: 30px; width: 720px; height: 236px; border-radius: 26px; background: #fff;
+  border: 3px solid #ececec; padding: 26px 30px; }
+.bus-chip { display: inline-block; padding: 6px 22px; border-radius: 30px; font-weight: 900; font-size: 34px; color: #141414;
+  letter-spacing: -0.01em; }
+.bus-barra { height: 20px; border-radius: 10px; background: #e6e8eb; margin-top: 18px; }
+.bus-barra.t { background: #c9d7f8; height: 26px; margin-top: 22px; }
+.bus-alerta { position: absolute; inset: 0; border-radius: 62px; box-shadow: inset 0 0 0 10px #ff3b30, inset 0 0 120px rgba(255,59,48,.55); opacity: 0; }
 """
+
+LUPA = (
+    '<svg viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="2.4" stroke-linecap="round">'
+    '<circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>'
+)
+CORES_GOOGLE = ["#4285F4", "#EA4335", "#FBBC05", "#4285F4", "#34A853", "#EA4335"]
+TECLAS = ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
+
+
+def _sem_acento(ch: str) -> str:
+    return {"á": "a", "à": "a", "â": "a", "ã": "a", "é": "e", "ê": "e", "í": "i", "ó": "o",
+            "ô": "o", "õ": "o", "ú": "u", "ç": "c"}.get(ch.lower(), ch.lower())
+
+
+def _busca(ev: str, e: dict, t0: float, t1: float, c: dict, js: list[str], sons: list) -> str:
+    """Celular com a página de busca. A frase é digitada letra a letra no tempo
+    de cada palavra falada ("palavras": [{texto, t, fim}]); em "t_enter" a tecla
+    "ir" é tocada e entram os resultados ("resultados": [{rotulo, cor, t}]), que
+    são só barras cinzas: nenhuma manchete inventada. "t_alerta" acende a borda
+    em vermelho e treme o celular (palavra forte da frase)."""
+    vivos = c.get("vivos", [c["destaque"]])
+    logo_txt = e.get("logo", "Google")
+    logo = "".join(
+        f'<span id="{ev}-g{i}" style="color:{CORES_GOOGLE[i % len(CORES_GOOGLE)]}">{esc(ch)}</span>'
+        for i, ch in enumerate(logo_txt)
+    )
+    logo_peq = "".join(
+        f'<span style="color:{CORES_GOOGLE[i % len(CORES_GOOGLE)]}">{esc(ch)}</span>'
+        for i, ch in enumerate(logo_txt)
+    )
+    # letras com o instante em que cada uma aparece
+    letras: list[tuple[str, float]] = []
+    palavras = e["palavras"]
+    for k, p in enumerate(palavras):
+        txt = p["texto"] + (" " if k + 1 < len(palavras) else "")
+        a, z = float(p["t"]), float(p.get("fim", float(p["t"]) + 0.4))
+        for j, ch in enumerate(txt):
+            letras.append((ch, a + (z - a) * j / max(1, len(txt))))
+    frase = " ".join(p["texto"] for p in palavras)
+    spans = "".join(f'<span id="{ev}-c{i}">{esc(ch)}</span>' for i, (ch, _) in enumerate(letras))
+
+    # teclado
+    teclas = []
+    larg, alt, gap = 67, 84, 9
+    for r, linha in enumerate(TECLAS):
+        x0 = (780 - (len(linha) * larg + (len(linha) - 1) * gap)) / 2
+        for i, ch in enumerate(linha):
+            teclas.append(
+                f'<div class="bus-k" id="{ev}-k{ch}" style="left:{x0 + i * (larg + gap):.0f}px;top:{22 + r * 104}px;width:{larg}px">{ch}</div>'
+            )
+    teclas.append(f'<div class="bus-k esc" style="left:10px;top:230px;width:96px">⇧</div>')
+    teclas.append(f'<div class="bus-k esc" style="left:674px;top:230px;width:96px">⌫</div>')
+    teclas.append(f'<div class="bus-k esc" style="left:10px;top:334px;width:150px">123</div>')
+    teclas.append(f'<div class="bus-k" id="{ev}-kesp" style="left:170px;top:334px;width:430px;font-size:28px">espaço</div>')
+    teclas.append(f'<div class="bus-k ir" id="{ev}-kir" style="left:610px;top:334px;width:160px">ir</div>')
+
+    res = []
+    for i, rs in enumerate(e.get("resultados", [])):
+        cor = rs.get("cor") or (vivos[int(rs["vivo"]) - 1] if rs.get("vivo") else c["destaque"])
+        borda = f"border-color:{cor};" if rs.get("borda") else ""
+        res.append(
+            f'<div class="bus-res" id="{ev}-r{i}" style="top:{318 + i * 262}px;{borda}">'
+            f'<span class="bus-chip" style="background:{cor}">{esc(rs["rotulo"])}</span>'
+            f'<div class="bus-barra t" style="width:{88 - 9 * i}%"></div><div class="bus-barra" style="width:96%"></div>'
+            f'<div class="bus-barra" style="width:{70 + 8 * i}%"></div></div>'
+        )
+
+    partes = [
+        f'<div class="bus-cel" id="{ev}-cel"><div class="bus-status"><span>9:41</span><i></i></div>',
+        f'<div class="bus-p1" id="{ev}-p1"><div class="bus-logo">{logo}</div>',
+        f'<div class="bus-caixa" id="{ev}-cx">{LUPA}<div class="bus-txt">{spans}<i class="bus-caret" id="{ev}-car"></i></div></div></div>',
+        f'<div class="bus-p2" id="{ev}-p2" style="opacity:0"><div class="bus-topo-logo">{logo_peq}</div>',
+        f'<div class="bus-caixa2">{LUPA}{esc(frase)}</div>',
+        '<div class="bus-abas"><b>Tudo</b><span>Notícias</span><span>Vídeos</span><span>Imagens</span></div>',
+        f'<div class="bus-linha"></div><div class="bus-carga" id="{ev}-ld"></div>{"".join(res)}</div>',
+        f'<div class="bus-kb" id="{ev}-kb">{"".join(teclas)}</div>',
+        f'<div class="bus-alerta" id="{ev}-al"></div></div>',
+    ]
+
+    js.append(_entra(f"#{ev}-cel", t0 + 0.02, "y: 260, opacity: 0", "y: 0, opacity: 1", 0.5, "power3.out"))
+    tl_logo = float(e.get("t_logo", t0 + 0.3))
+    for i in range(len(logo_txt)):
+        js.append(_entra(f"#{ev}-g{i}", tl_logo + 0.05 * i, "opacity: 0, y: 30, scale: 0.6",
+                         "opacity: 1, y: 0, scale: 1", 0.35, "back.out(2.2)"))
+    sons.append((tl_logo, "busca_logo"))
+    # cursor piscando até a primeira letra
+    t_primeira = letras[0][1] if letras else t1
+    t = t0 + 0.5
+    ligado = False
+    while t < t_primeira - 0.05:
+        js.append(f'tl.set("#{ev}-car", {{opacity: {1 if ligado else 0}}}, {t:.3f});')
+        ligado = not ligado
+        t += 0.45
+    js.append(f'tl.set("#{ev}-car", {{opacity: 1}}, {t_primeira:.3f});')
+    for i, (ch, tc) in enumerate(letras):
+        js.append(f'tl.set("#{ev}-c{i}", {{display: "inline"}}, {tc:.3f});')
+        tecla = "esp" if ch == " " else _sem_acento(ch)
+        if tecla == "esp" or tecla in "".join(TECLAS):
+            # set + to: um fromTo deixaria a tecla "apertada" antes da hora (immediateRender)
+            js.append(f'tl.set("#{ev}-k{tecla}", {{backgroundColor: "#9aa3b2", scale: 1.12}}, {tc:.3f});')
+            js.append(
+                f'tl.to("#{ev}-k{tecla}", {{backgroundColor: "#ffffff", scale: 1, duration: 0.14, ease: "power1.out"}}, {tc + 0.02:.3f});'
+            )
+        if ch != " ":
+            sons.append((tc, ("tecla", "tecla2", "tecla3")[i % 3]))
+    if e.get("t_alerta"):
+        ta = float(e["t_alerta"])
+        js.append(f'tl.set("#{ev}-al", {{opacity: 1}}, {ta:.3f});')
+        js.append(f'tl.to("#{ev}-al", {{opacity: 0, duration: 0.6, ease: "power2.in"}}, {ta + 0.02:.3f});')
+        js.append(
+            f'tl.to("#{ev}-cel", {{keyframes: [{{x: -14, rotation: -1}}, {{x: 12, rotation: 1}}, {{x: -8}}, {{x: 6}}, {{x: 0, rotation: 0}}], '
+            f'duration: 0.3, ease: "none"}}, {ta:.3f});'
+        )
+    te = float(e.get("t_enter", letras[-1][1] + 0.1 if letras else t0 + 1))
+    js.append(f'tl.set("#{ev}-kir", {{backgroundColor: "#0b4fb3", scale: 0.92}}, {te:.3f});')
+    js.append(f'tl.to("#{ev}-kir", {{backgroundColor: "#1a73e8", scale: 1, duration: 0.2}}, {te + 0.02:.3f});')
+    sons.append((te, "busca_enter"))
+    js.append(f'tl.to("#{ev}-p1", {{opacity: 0, duration: 0.12}}, {te + 0.06:.3f});')
+    js.append(f'tl.to("#{ev}-kb", {{y: 470, duration: 0.3, ease: "power2.in"}}, {te + 0.06:.3f});')
+    js.append(f'tl.to("#{ev}-p2", {{opacity: 1, duration: 0.12}}, {te + 0.1:.3f});')
+    js.append(
+        f'tl.fromTo("#{ev}-ld", {{scaleX: 0, opacity: 1}}, {{scaleX: 1, duration: 0.35, ease: "power2.out"}}, {te + 0.1:.3f});'
+    )
+    js.append(f'tl.to("#{ev}-ld", {{opacity: 0, duration: 0.15}}, {te + 0.45:.3f});')
+    for i, rs in enumerate(e.get("resultados", [])):
+        tr = float(rs.get("t", te + 0.4 + 0.5 * i))
+        js.append(
+            _entra(f"#{ev}-r{i}", tr, 'opacity: 0, y: 40, scale: 0.94', 'opacity: 1, y: 0, scale: 1', 0.4, "back.out(1.8)")
+        )
+        sons.append((tr, "cena_item"))
+    return "".join(partes)
+
+
+# --- versus: dois cartões lado a lado (ex.: VERDADE ✓ × MENTIRA ✗) ---
+CSS_VERSUS = """
+.vs-c { position: absolute; top: 470px; width: 460px; height: 620px; border-radius: 40px; border: 6px solid; text-align: center; }
+.vs-c svg { position: absolute; left: 115px; top: 80px; width: 230px; height: 230px; }
+.vs-c b { position: absolute; left: 0; width: 100%; top: 380px; font-family: "Inter"; font-weight: 900; font-size: 78px;
+  letter-spacing: -0.02em; line-height: 1; }
+.vs-x { position: absolute; left: 470px; top: 710px; width: 140px; height: 140px; border-radius: 50%; background: #0b0d0c;
+  border: 5px solid #F5F2EA; text-align: center; line-height: 128px; font-family: "Inter"; font-weight: 900; font-size: 56px; color: #F5F2EA; }
+"""
+ICONES_VS = {
+    "check": '<path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="{cor}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    "x": '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11" fill="none" stroke="{cor}" stroke-width="3.2" stroke-linecap="round"/>',
+}
+
+
+def _versus(ev: str, e: dict, t0: float, c: dict, js: list[str], sons: list) -> str:
+    vivos = c.get("vivos", [c["destaque"]])
+    partes = []
+    for i, ld in enumerate(e["lados"][:2]):
+        cor = ld.get("cor") or vivos[i % len(vivos)]
+        icone = ICONES_VS.get(ld.get("icone", "check" if i == 0 else "x"), "").replace("{cor}", cor)
+        partes.append(
+            f'<div class="vs-c" id="{ev}-l{i}" style="left:{50 + i * 520}px;border-color:{cor};background:{cor}22">'
+            f'<svg viewBox="0 0 24 24">{icone}</svg><b style="color:{cor}">{esc(ld["texto"])}</b></div>'
+        )
+        tl_ = float(ld.get("t", t0 + 0.3 + 1.2 * i))
+        lado = -1 if i == 0 else 1
+        js.append(
+            _entra(f"#{ev}-l{i}", tl_, f"opacity: 0, x: {lado * 520}, rotation: {lado * 8}",
+                   "opacity: 1, x: 0, rotation: 0", 0.45, "back.out(1.6)")
+        )
+        if i == 1:  # o segundo "empurra" o primeiro
+            js.append(
+                f'tl.to("#{ev}-l0", {{keyframes: [{{x: -26, rotation: -3}}, {{x: 0, rotation: 0}}], duration: 0.4, ease: "power2.out"}}, {tl_ + 0.12:.3f});'
+            )
+        sons.append((tl_, "versus_lado"))
+    partes.append(f'<div class="vs-x" id="{ev}-vs">VS</div>')
+    tv = float(e.get("t_vs", t0 + 0.9))
+    js.append(_entra(f"#{ev}-vs", tv, "opacity: 0, scale: 0", "opacity: 1, scale: 1", 0.35, "back.out(2.5)"))
+    sons.append((tv, "cena_item"))
+    return "".join(partes)
+
+
+# --- troca: palavra grande que é riscada e trocada por outra (opinião → torcida) ---
+CSS_TROCA = """
+.tr-a { position: absolute; left: 0; width: 1080px; text-align: center; font-family: "Inter"; font-weight: 900; line-height: 1;
+  letter-spacing: -0.03em; text-shadow: 0 6px 30px rgba(0,0,0,.6); }
+.tr-a .risco { position: absolute; left: 50%; top: 52%; height: 22px; border-radius: 11px; transform-origin: 0 50%; }
+"""
+
+
+def _troca(ev: str, e: dict, t0: float, c: dict, js: list[str], sons: list) -> str:
+    vivos = c.get("vivos", [c["destaque"]])
+    a, b = e["de"], e["para"]
+    tam_a, tam_b = int(e.get("tam_de", 170)), int(e.get("tam_para", 200))
+    larg_a = int(tam_a * 0.66 * len(a["texto"]))
+    y = int(e.get("topo", 470))
+    cor_b = vivos[int(b.get("vivo", 1)) - 1]
+    partes = [
+        f'<div class="tr-a" id="{ev}-a" style="top:{y}px;font-size:{tam_a}px;color:{c["texto"]}"><span style="position:relative;display:inline-block">'
+        f'{esc(a["texto"])}<i class="risco" id="{ev}-x" style="left:-20px;width:{larg_a + 40}px;background:{cor_b}"></i></span></div>'
+    ]
+    js.append(_entra(f"#{ev}-a", float(a["t"]), 'opacity: 0, scale: 1.3, filter: "blur(12px)"',
+                     'opacity: 1, scale: 1, filter: "blur(0px)"', 0.35, "power3.out"))
+    js.append(f'tl.set("#{ev}-x", {{scaleX: 0}}, 0);')
+    if e.get("sub"):
+        partes.append(
+            f'<div class="tr-a" id="{ev}-s" style="top:{y + tam_a + 30}px;font-size:76px;color:{c["destaque"]}">{esc(e["sub"]["texto"])}</div>'
+        )
+        js.append(_entra(f"#{ev}-s", float(e["sub"]["t"]), "opacity: 0, y: 24", "opacity: 1, y: 0", 0.35, "power3.out"))
+        sons.append((float(e["sub"]["t"]), "cena_item"))
+    tr = float(e["t_risco"])
+    js.append(f'tl.fromTo("#{ev}-x", {{scaleX: 0}}, {{scaleX: 1, duration: 0.22, ease: "power3.out"}}, {tr:.3f});')
+    js.append(f'tl.to("#{ev}-a", {{color: "rgba(245,242,234,0.4)", duration: 0.25}}, {tr + 0.15:.3f});')
+    if e.get("sub"):
+        js.append(f'tl.to("#{ev}-s", {{opacity: 0.35, duration: 0.25}}, {tr + 0.15:.3f});')
+    sons.append((tr, "troca_risco"))
+    yb = y + tam_a + (150 if e.get("sub") else 60) + 40
+    partes.append(
+        f'<div class="tr-a" id="{ev}-b" style="top:{yb}px;font-size:{tam_b}px;color:{cor_b}">{esc(b["texto"])}</div>'
+    )
+    js.append(_entra(f"#{ev}-b", float(b["t"]), "opacity: 0, scale: 2.2, rotation: -6",
+                     "opacity: 1, scale: 1, rotation: -3", 0.28, "power4.out"))
+    sons.append((float(b["t"]), "troca_para"))
+    return "".join(partes)
 
 
 def _entra(
@@ -99,12 +363,13 @@ def construir(
 ) -> tuple[str, list[str], list[tuple[float, str]]]:
     c = idt["cores"]
     vivos = c.get("vivos", [c["destaque"]])
-    html_: list[str] = [
-        f'<div class="cena-bg"></div><div class="cena-luz" id="{ev}-luz"></div>'
-    ]
-    js: list[str] = [
-        f'tl.fromTo("#{ev}-luz", {{x: -120, y: 40}}, {{x: 120, y: -40, duration: {t1 - t0:.2f}, ease: "none"}}, {t0:.3f});'
-    ]
+    html_: list[str] = []
+    js: list[str] = []
+    if not e.get("sobre_camera"):  # "sobre_camera": a câmera escurecida fica de fundo
+        html_.append(f'<div class="cena-bg"></div><div class="cena-luz" id="{ev}-luz"></div>')
+        js.append(
+            f'tl.fromTo("#{ev}-luz", {{x: -120, y: 40}}, {{x: 120, y: -40, duration: {t1 - t0:.2f}, ease: "none"}}, {t0:.3f});'
+        )
     sons: list[tuple[float, str]] = []
     if e.get("titulo"):
         html_.append(f'<div class="cena-kick" id="{ev}-k">{esc(e["titulo"])}</div>')
@@ -399,6 +664,15 @@ def construir(
 
     elif modelo == "rede":
         html_.append(_rede(ev, e, t0, t1, c, js, sons))
+
+    elif modelo == "busca":
+        html_.append(_busca(ev, e, t0, t1, c, js, sons))
+
+    elif modelo == "versus":
+        html_.append(_versus(ev, e, t0, c, js, sons))
+
+    elif modelo == "troca":
+        html_.append(_troca(ev, e, t0, c, js, sons))
 
     else:
         raise ValueError(f"modelo de cena desconhecido: {modelo}")
