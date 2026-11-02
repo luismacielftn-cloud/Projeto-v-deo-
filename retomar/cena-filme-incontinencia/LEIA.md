@@ -9,6 +9,7 @@ Os vídeos não ficam no git: se precisar refazer, peça os dois links do Drive 
 | --- | --- |
 | `edl.json` | 13 trechos: abertura, **a cena inteira** (fonte `cena`), e a fala com 10 pausas cortadas pelo `pausas.py`. 100,3 s → 95,6 s. |
 | `transcript.json` | Palavras no tempo do cortado (`legenda.py mapear`), texto conferido com o modelo `medium`. A cena não tem legenda. |
+| `polaroid.py` | Foto parada da cena (quadro 120, a atriz em close) numa polaroid inclinada com o nome do filme, para a abertura. |
 | `project.md` | Diário. |
 
 ## Refazer
@@ -22,6 +23,11 @@ ffmpeg -i videos/v8/cena.mov -vf "scale=1080:-2:flags=lanczos,pad=1080:1920:0:(o
 # no edl.json: fonte "cena" e o trecho {"source": "cena", "start": 0, "end": 44.8} logo depois da abertura
 echo '{"words": []}' > videos/v8/edit/transcripts/cena.json   # a cena fica sem legenda
 python3 .claude/skills/video-use/helpers/render.py videos/v8/edit/edl.json -o videos/v8/edit/cortado.mp4
-python3 ferramentas/legenda.py videos/v8/edit/cortado.mp4 retomar/cena-filme-incontinencia/transcript.json \
+# polaroid acima da cabeça só na abertura (até a cena começar, 3,6 s)
+ffmpeg -i videos/v8/cena.mov -vf "select='eq(n\,120)'" -vsync 0 -frames:v 1 videos/v8/edit/capa/quadro_cena.png
+python3 retomar/cena-filme-incontinencia/polaroid.py videos/v8/edit/capa/quadro_cena.png modelos/estilo-referencia/assets/Inter-Bold.otf videos/v8/edit/capa/polaroid.png
+ffmpeg -i videos/v8/edit/cortado.mp4 -i videos/v8/edit/capa/polaroid.png \
+  -filter_complex "[0:v][1:v]overlay=x=244:y=-24:enable='lt(t,3.6)'" -c:v libx264 -crf 16 -c:a copy videos/v8/edit/cortado_capa.mp4
+python3 ferramentas/legenda.py videos/v8/edit/cortado_capa.mp4 retomar/cena-filme-incontinencia/transcript.json \
   -o videos/v8/edit/final.mp4 --y 1480 --simples --entrega videos/v8/edit/entrega/incontinencia_cena_filme.mp4
 ```
