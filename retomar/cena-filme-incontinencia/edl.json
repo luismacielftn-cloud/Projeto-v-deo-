@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/v8/fonte.mp4",
+    "cena": "/home/user/Projeto-v-deo-/videos/v8/cena_vertical.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 0.5667,
+      "end": 4.1667
+    },
+    {
+      "source": "cena",
+      "start": 0.0,
+      "end": 44.8,
+      "quote": "(cena do filme Minha Melhor Amiga, com o som original)"
+    },
+    {
+      "source": "fonte",
+      "start": 50.0,
+      "end": 51.8833
+    },
+    {
+      "source": "fonte",
+      "start": 52.2,
+      "end": 56.1833
+    },
+    {
+      "source": "fonte",
+      "start": 56.4167,
+      "end": 58.0
+    },
+    {
+      "source": "fonte",
+      "start": 58.4667,
+      "end": 61.1833
+    },
+    {
+      "source": "fonte",
+      "start": 61.3333,
+      "end": 65.35
+    },
+    {
+      "source": "fonte",
+      "start": 65.8167,
+      "end": 72.7667
+    },
+    {
+      "source": "fonte",
+      "start": 73.1667,
+      "end": 74.75
+    },
+    {
+      "source": "fonte",
+      "start": 74.9667,
+      "end": 78.7833
+    },
+    {
+      "source": "fonte",
+      "start": 79.15,
+      "end": 88.3833
+    },
+    {
+      "source": "fonte",
+      "start": 88.5667,
+      "end": 91.4833
+    },
+    {
+      "source": "fonte",
+      "start": 91.8333,
+      "end": 100.3333
+    }
+  ],
+  "total_duration_s": 50.783
+}

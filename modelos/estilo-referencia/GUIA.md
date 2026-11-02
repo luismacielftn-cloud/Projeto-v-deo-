@@ -211,6 +211,12 @@ Quando o usuário pede "só os cortes e a legenda" (`retomar/cortes-legenda/`), 
    - `--y` é o centro vertical da legenda: meça o queixo num quadro e deixe ~100 px abaixo dele (rosto no meio do quadro: 1480).
    - No 0 s a legenda já entra inteira (o quadro 0 é a capa no celular).
    - O áudio passa por um limitador com sobreamostragem 4x: pico real -1,2 dBTP, -14 LUFS.
+   - **`--simples` (preferida desde 2026-11-02):** o usuário pediu a legenda "toda branca e sem sombra", sem a palavra ficar amarela. Sai branca `#FFFFFF`, sem contorno, sem sombra e sem desfoque. O bloco aparece e some de uma vez, sem subir e sem a palavra falada crescer. Escolha o `--y` sobre uma área escura (roupa, cabelo).
+4. **Vídeo do usuário num espaço da gravação** (ex.: "coloca a cena do filme no espaço"; `retomar/cena-filme-incontinencia/`):
+   - Ache o espaço medindo o áudio: o `pausas.py` o corta junto com as outras pausas.
+   - Ponha o vídeo como 2ª fonte do `edl.json`, logo depois do trecho que o anuncia. Antes, deixe-o na vertical e na taxa de quadros da gravação: largura toda, faixas pretas, sem cortar quem aparece.
+   - Se ele tem diálogo, o som próprio fica, no mesmo volume da fala (meça os LUFS dos dois). "Sem música/efeito" quer dizer não pôr trilha nem efeito por cima.
+   - Crie `edit/transcripts/<fonte>.json` com `{"words": []}` para o `legenda.py mapear` deixar o trecho sem legenda.
 
 ## Limitações
 

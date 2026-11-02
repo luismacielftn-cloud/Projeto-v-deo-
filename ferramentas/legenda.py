@@ -130,6 +130,9 @@ def gerar_ass(palavras: list[dict], dur: float, a: argparse.Namespace) -> str:
     tam = round(a.tam * INTER_ASS)
     fonte = ImageFont.truetype(str(FONTE), round(a.tam))
     base, ativa = cor_ass(a.cor_base), cor_ass(a.cor)
+    # --simples: toda branca, sem contorno nem sombra, sem a palavra falada mudar
+    # de cor/tamanho e sem animação de entrada (pedido do usuário no vídeo 8)
+    borda, sombra = (0, 0) if a.simples else (3.5, 3)
     cab = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
@@ -139,7 +142,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Leg,Inter Black,{tam},{base},{base},&H00000000,&H50000000,0,0,0,0,100,100,0,0,1,3.5,3,5,60,60,0,1
+Style: Leg,Inter Black,{tam},{base},{base},&H00000000,&H50000000,0,0,0,0,100,100,0,0,1,{borda},{sombra},5,60,60,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -152,6 +155,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         t0 = b[0]["start"]
         prox = blocos[i + 1][0]["start"] if i + 1 < len(blocos) else dur
         t1 = min(prox if prox - b[-1]["end"] < 0.5 else b[-1]["end"] + 0.15, dur)
+        if a.simples:
+            texto = " ".join(esc(x["text"]) for x in b)
+            linhas.append(f"Dialogue: 0,{tempo_ass(t0)},{tempo_ass(t1)},Leg,,0,0,0,,{{{pos}}}{texto}")
+            continue
         for k, w in enumerate(b):
             ini = t0 if k == 0 else w["start"]
             fim = b[k + 1]["start"] if k + 1 < len(b) else t1
@@ -202,8 +209,12 @@ def main() -> None:
     ap.add_argument("--cor", default="#F2C94C", help="cor da palavra falada")
     ap.add_argument("--cor-base", default="#F5F2EA")
     ap.add_argument("--max-palavras", type=int, default=3)
+    ap.add_argument("--simples", action="store_true",
+                    help="toda branca, sem sombra, sem destaque na palavra falada e sem animação")
     ap.add_argument("--entrega", type=Path, help="cópia abaixo de 30 MB para o chat")
     a = ap.parse_args()
+    if a.simples:
+        a.cor_base = "#FFFFFF"
 
     palavras = [w for w in json.loads(a.transcricao.read_text()) if w["text"].strip()]
     dur = duracao(a.video)
