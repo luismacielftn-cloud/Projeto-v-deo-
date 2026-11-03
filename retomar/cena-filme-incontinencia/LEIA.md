@@ -9,6 +9,7 @@ Os vídeos não ficam no git: se precisar refazer, peça os dois links do Drive 
 | --- | --- |
 | `edl.json` | 13 trechos: abertura, **a cena inteira** (fonte `cena`), e a fala com 10 pausas cortadas pelo `pausas.py`. 100,3 s → 95,6 s. |
 | `transcript.json` | Palavras no tempo do cortado (`legenda.py mapear`), texto conferido com o modelo `medium`. A cena não tem legenda. |
+| `gancho_texto.py` | Gancho escrito da abertura: caixa branca de cantos arredondados com texto preto em Inter Black 50 px. |
 | `project.md` | Diário. |
 
 ## Refazer
@@ -24,9 +25,12 @@ echo '{"words": []}' > videos/v8/edit/transcripts/cena.json   # a cena fica sem 
 python3 .claude/skills/video-use/helpers/render.py videos/v8/edit/edl.json -o videos/v8/edit/cortado.mp4
 # abertura em tela dividida (até a cena começar, 3,6 s): o trecho mais animado da cena rolando SEM SOM
 # em cima (1,6–5,2 s do filme: a atriz em close, rindo e gesticulando; o plano aberto acaba em 1,37 s),
-# na largura toda (1080×534, sem cortar ninguém), e a câmera descida 200 px embaixo
-ffmpeg -i videos/v8/edit/cortado.mp4 -ss 1.6 -t 3.62 -i videos/v8/cena.mov -filter_complex \
-  "[1:v]scale=1080:-2:flags=lanczos,fps=60,setpts=PTS-STARTPTS[f];[0:v]split[o][c];[c]crop=1080:1720:0:0,pad=1080:1920:0:200:black[s];[s][f]overlay=0:0:eof_action=repeat[d];[o][d]overlay=0:0:enable='lt(t,3.6)'" \
+# na largura toda (1080×534, sem cortar ninguém), a câmera descida 250 px embaixo e o gancho escrito
+# na emenda (y 450–624: sobre o pé da cena, acima da cabeça, que fica em y≈630)
+python3 retomar/cena-filme-incontinencia/gancho_texto.py modelos/estilo-referencia/assets/Inter-Black.otf \
+  videos/v8/edit/capa/gancho.png "Muitas mulheres escondem isso" "por anos achando que é normal."
+ffmpeg -i videos/v8/edit/cortado.mp4 -ss 1.6 -t 3.62 -i videos/v8/cena.mov -i videos/v8/edit/capa/gancho.png -filter_complex \
+  "[1:v]scale=1080:-2:flags=lanczos,fps=60,setpts=PTS-STARTPTS[f];[0:v]split[o][c];[c]crop=1080:1670:0:0,pad=1080:1920:0:250:black[s];[s][f]overlay=0:0:eof_action=repeat[d1];[d1][2:v]overlay=101:450[d];[o][d]overlay=0:0:enable='lt(t,3.6)'" \
   -map 0:a -c:v libx264 -crf 16 -c:a copy videos/v8/edit/cortado_capa.mp4
 python3 ferramentas/legenda.py videos/v8/edit/cortado_capa.mp4 retomar/cena-filme-incontinencia/transcript.json \
   -o videos/v8/edit/final.mp4 --y 1480 --simples --entrega videos/v8/edit/entrega/incontinencia_cena_filme.mp4
