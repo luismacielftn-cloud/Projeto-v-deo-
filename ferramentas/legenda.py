@@ -191,6 +191,18 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     return cab + "\n".join(linhas) + "\n"
 
 
+def desenhar_base(destino: Path, y: int, opacidade: float, w: int = 1080, h: int = 1920) -> None:
+    from PIL import Image
+
+    alto = h - y
+    img = Image.new("RGBA", (w, alto))
+    cheio = 0.4 * alto
+    for linha in range(alto):
+        alfa = round(255 * opacidade * min(1.0, linha / cheio))
+        img.paste((0, 0, 0, alfa), (0, linha, w, linha + 1))
+    img.save(destino)
+
+
 def main() -> None:
     if sys.argv[1:2] == ["mapear"]:
         ap = argparse.ArgumentParser(description="Palavras da fonte no tempo do cortado")
@@ -211,6 +223,10 @@ def main() -> None:
     ap.add_argument("--max-palavras", type=int, default=3)
     ap.add_argument("--simples", action="store_true",
                     help="toda branca, sem sombra, sem destaque na palavra falada e sem animação")
+    ap.add_argument("--base-escura", type=int, metavar="Y",
+                    help="sombra suave na parte de baixo da câmera, de transparente em Y até "
+                         "preto (roupa clara embaixo da legenda), como o base_escura do modelo")
+    ap.add_argument("--base-opacidade", type=float, default=0.55)
     ap.add_argument("--entrega", type=Path, help="cópia abaixo de 30 MB para o chat")
     a = ap.parse_args()
     if a.simples:
@@ -223,10 +239,19 @@ def main() -> None:
 
     caminho = str(ass.resolve()).replace("\\", "\\\\").replace(":", "\\:").replace("'", "\\'")
     fontes = str(MODELO / "assets").replace(":", "\\:")
+    legenda = f"subtitles='{caminho}':fontsdir='{fontes}'"
+    entradas, filtro = ["-i", str(a.video)], ["-vf", legenda]
+    if a.base_escura is not None:
+        # Mesmo degradê do "base_escura" do montar.py: transparente em Y, preto
+        # na opacidade pedida a partir de 40 % da altura dele. Fica sob a legenda.
+        base = a.output.with_name(a.output.stem + "_base.png")
+        desenhar_base(base, a.base_escura, a.base_opacidade)
+        entradas += ["-i", str(base)]
+        filtro = ["-filter_complex", f"[0:v][1:v]overlay=0:{a.base_escura},{legenda}[v]",
+                  "-map", "[v]", "-map", "0:a"]
     subprocess.run(
         [
-            "ffmpeg", "-y", "-loglevel", "error", "-i", str(a.video),
-            "-vf", f"subtitles='{caminho}':fontsdir='{fontes}'",
+            "ffmpeg", "-y", "-loglevel", "error", *entradas, *filtro,
             "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
             # O AAC do cortado.mp4 passa um pouco de -1 dBTP (medido: -0,8). Limitador
             # com sobreamostragem 4x: pico real -1,2 dBTP, sem mexer nos -14 LUFS.

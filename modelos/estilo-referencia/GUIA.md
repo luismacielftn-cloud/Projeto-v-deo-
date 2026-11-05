@@ -212,6 +212,7 @@ Quando o usuário pede "só os cortes e a legenda" (`retomar/cortes-legenda/`), 
    - No 0 s a legenda já entra inteira (o quadro 0 é a capa no celular).
    - O áudio passa por um limitador com sobreamostragem 4x: pico real -1,2 dBTP, -14 LUFS.
    - **`--simples` (preferida desde 2026-11-02):** o usuário pediu a legenda "toda branca e sem sombra", sem a palavra ficar amarela. Sai branca `#FFFFFF`, sem contorno, sem sombra e sem desfoque. O bloco aparece e some de uma vez, sem subir e sem a palavra falada crescer. Escolha o `--y` sobre uma área escura (roupa, cabelo).
+   - **Roupa clara embaixo da legenda** (`retomar/levantar-do-chao/`, camiseta cinza-clara, luma ~185 na faixa da legenda): o branco sem sombra quase some. `--base-escura 1380` põe o mesmo degradê do `base_escura` do modelo (transparente em y 1380, preto 55 % a partir de 40 % da altura) por baixo da legenda: as letras continuam brancas e sem sombra, e a camiseta escurece de leve. `--base-opacidade` muda os 55 %. Compare um quadro com e sem antes de escolher.
 4. **Vídeo do usuário num espaço da gravação** (ex.: "coloca a cena do filme no espaço"; `retomar/cena-filme-incontinencia/`):
    - Ache o espaço medindo o áudio: o `pausas.py` o corta junto com as outras pausas.
    - Ponha o vídeo como 2ª fonte do `edl.json`, logo depois do trecho que o anuncia. Antes, deixe-o na vertical e na taxa de quadros da gravação: largura toda, faixas pretas, sem cortar quem aparece.
