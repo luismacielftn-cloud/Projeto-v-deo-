@@ -260,6 +260,68 @@ def corte_ref(saida: bool = False) -> tuple[np.ndarray, float]:
     return _norm(_estereo(x, -0.3, 0.3)), 0.0
 
 
+# --- Pacote "busca" (alguém digitando no celular, revelação com glitch) -------
+
+
+def tecla(variante: int = 0) -> tuple[np.ndarray, float]:
+    """Toque de tecla de celular: clique curto e seco com um "toc" grave por baixo.
+    A variante muda o timbre um pouco para a digitação não soar como metralhadora."""
+    n = int(0.07 * SR)
+    t = np.arange(n) / SR
+    b, a = signal.butter(2, [1800 + 500 * variante, 6500], btype="band", fs=SR)
+    clique = signal.lfilter(b, a, _ruido(n, 60 + variante)) * np.exp(-t / 0.004)
+    toc = np.sin(2 * np.pi * (210 - 25 * variante) * t) * np.exp(-t / 0.012) * 0.5
+    return _norm(_estereo(clique + toc, 0.1 * (variante - 1), 0.1 * (variante - 1))), 0.0
+
+
+def enter() -> tuple[np.ndarray, float]:
+    """Tecla de "ir"/Enter: mais funda que a tecla comum."""
+    n = int(0.16 * SR)
+    t = np.arange(n) / SR
+    b, a = signal.butter(2, [1200, 5000], btype="band", fs=SR)
+    clique = signal.lfilter(b, a, _ruido(n, 70)) * np.exp(-t / 0.006)
+    toc = np.sin(2 * np.pi * (150 * np.exp(-t * 12) + 90) * t) * np.exp(-t / 0.04)
+    return _norm(_estereo(clique + 0.8 * toc)), 0.0
+
+
+def glitch() -> tuple[np.ndarray, float]:
+    """Falha digital: pedaços curtos de tom quadrado e ruído "bitcrush" que
+    ligam e desligam, com o tom pulando."""
+    n = int(0.42 * SR)
+    rng = np.random.default_rng(80)
+    x = np.zeros(n)
+    i = 0
+    while i < n:
+        bloco = int(rng.uniform(0.012, 0.045) * SR)
+        if rng.random() < 0.72:
+            t = np.arange(min(bloco, n - i)) / SR
+            f = rng.choice([220, 330, 440, 880, 1320, 1760])
+            tom = np.sign(np.sin(2 * np.pi * f * t))
+            ruido = np.round(_ruido(len(t), int(rng.integers(1000))) * 3) / 3
+            x[i : i + len(t)] = 0.6 * tom + 0.4 * ruido
+        i += bloco
+    b, a = signal.butter(2, 7000, fs=SR)
+    x = signal.lfilter(b, a, x) * _env(n, 0.002, 0.35, 2.2)
+    return _norm(_estereo(x, -0.5, 0.5)), 0.0
+
+
+def rachadura() -> tuple[np.ndarray, float]:
+    """Algo rachando ao meio: estalos secos em sequência sobre um baque grave."""
+    n = int(1.1 * SR)
+    t = np.arange(n) / SR
+    x = np.zeros(n)
+    rng = np.random.default_rng(90)
+    b, a = signal.butter(2, 1500, btype="high", fs=SR)
+    for k, ini in enumerate((0.0, 0.018, 0.041, 0.07, 0.11, 0.16)):
+        i = int(ini * SR)
+        m = int(0.05 * SR)
+        e = np.exp(-np.arange(m) / SR / 0.006) * (0.9 ** k) * rng.uniform(0.6, 1.0)
+        x[i : i + m] += signal.lfilter(b, a, _ruido(m, 91 + k)) * e
+    f = 70 * np.exp(-t * 4) + 40
+    baque = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.3)
+    return _norm(_estereo(np.tanh(1.4 * (x + 0.9 * baque)), -0.2, 0.2)), 0.0
+
+
 EFEITOS = {
     "whoosh": lambda: whoosh(False),
     "whoosh_suave": lambda: whoosh(True),
@@ -275,6 +337,12 @@ EFEITOS = {
     "coracao": coracao,
     "corte_ref": lambda: corte_ref(False),
     "corte_ref_saida": lambda: corte_ref(True),
+    "tecla": lambda: tecla(0),
+    "tecla2": lambda: tecla(1),
+    "tecla3": lambda: tecla(2),
+    "enter": enter,
+    "glitch": glitch,
+    "rachadura": rachadura,
 }
 # Volume de cada efeito na mixagem, em dB relativos ao pico da voz.
 # Efeito bom é sentido, não notado: fica bem abaixo da fala.
@@ -293,6 +361,12 @@ GANHO_DB = {
     "coracao": -14,
     "corte_ref": -32,  # só o swoosh, no mesmo nível em que ele tocava junto do tic (antes -14 com o tic)
     "corte_ref_saida": -19,
+    "tecla": -25,
+    "tecla2": -25,
+    "tecla3": -25,
+    "enter": -19,
+    "glitch": -20,
+    "rachadura": -13,
 }
 
 

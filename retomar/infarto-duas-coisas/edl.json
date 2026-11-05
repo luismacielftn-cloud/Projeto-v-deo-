@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "sources": {
+    "fonte": "/home/user/Projeto-v-deo-/videos/v7/fonte.mp4"
+  },
+  "ranges": [
+    {
+      "source": "fonte",
+      "start": 0.1,
+      "end": 5.82,
+      "quote": "O infarto odeia quem para de fazer essas duas coisas. Em um mundo onde o infarto é a doença que mais mata,"
+    },
+    {
+      "source": "fonte",
+      "start": 6.06,
+      "end": 8.14,
+      "quote": "é muito importante que você salva esse vídeo."
+    },
+    {
+      "source": "fonte",
+      "start": 8.26,
+      "end": 11.06,
+      "quote": "A primeira é aumentar o seu tempo de atividade física."
+    },
+    {
+      "source": "fonte",
+      "start": 11.3,
+      "end": 14.66,
+      "quote": "E não precisa pensar só em academia, caminhar mais, subir escadas,"
+    },
+    {
+      "source": "fonte",
+      "start": 14.86,
+      "end": 16.12,
+      "quote": "se movimentar durante o dia."
+    },
+    {
+      "source": "fonte",
+      "start": 16.3,
+      "end": 17.1,
+      "quote": "Tudo isso conta."
+    },
+    {
+      "source": "fonte",
+      "start": 17.56,
+      "end": 18.85,
+      "quote": "Quanto mais ativo você é, melhor tende a ser sua pressão arterial,"
+    },
+    {
+      "source": "fonte",
+      "start": 19.0,
+      "end": 20.94,
+      "quote": "Quanto mais ativo você é, melhor tende a ser sua pressão arterial,"
+    },
+    {
+      "source": "fonte",
+      "start": 21.2,
+      "end": 24.55,
+      "quote": "sua capacidade, cardio respiratória e a sua saúde metabólica. E a segunda coisa é parar de fumar. O cigarro agrede os vasos sanguíneos e aumenta muito o risco de doenças cardiovasculares."
+    },
+    {
+      "source": "fonte",
+      "start": 24.67,
+      "end": 26.64,
+      "quote": "sua capacidade, cardio respiratória e a sua saúde metabólica. E a segunda coisa é parar de fumar. O cigarro agrede os vasos sanguíneos e aumenta muito o risco de doenças cardiovasculares."
+    },
+    {
+      "source": "fonte",
+      "start": 26.8,
+      "end": 28.78,
+      "quote": "sua capacidade, cardio respiratória e a sua saúde metabólica. E a segunda coisa é parar de fumar. O cigarro agrede os vasos sanguíneos e aumenta muito o risco de doenças cardiovasculares."
+    },
+    {
+      "source": "fonte",
+      "start": 29.08,
+      "end": 31.86,
+      "quote": "sua capacidade, cardio respiratória e a sua saúde metabólica. E a segunda coisa é parar de fumar. O cigarro agrede os vasos sanguíneos e aumenta muito o risco de doenças cardiovasculares."
+    },
+    {
+      "source": "fonte",
+      "start": 31.96,
+      "end": 35.53,
+      "quote": "Duas mudanças simples, mas que podem fazer uma diferença enorme na saúde do seu coração."
+    },
+    {
+      "source": "fonte",
+      "start": 35.68,
+      "end": 37.08,
+      "quote": "Duas mudanças simples, mas que podem fazer uma diferença enorme na saúde do seu coração.",
+      "manter": true
+    }
+  ],
+  "grade": "eq=contrast=1.10:brightness=0.0:saturation=0.98,curves=master='0/0 0.2/0.17 0.5/0.5 0.85/0.83 1/0.94',colorbalance=rs=-0.01:bs=0.02:rm=-0.025:gm=0.0:bm=0.03:rh=-0.04:gh=-0.01:bh=0.03,vignette=angle=PI/4.4,unsharp=5:5:0.5",
+  "total_duration_s": 35.88
+}

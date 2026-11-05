@@ -281,9 +281,25 @@ def extract_segment(
         vf_parts.append(grade_filter)
     vf = ",".join(vf_parts)
 
+    # Frame rate: use the rate the caller resolved once for the whole render
+    # (every segment must share it — concat -c copy in Rule 2 requires a uniform
+    # frame rate). When called standalone with no rate, preserve this source's
+    # own rate; fall back to 24 only if it can't be probed.
+    out_rate = rate if rate is not None else (probe_source_fps(source) or "24")
+
+    # A/V sync: snap the duration to a whole number of frames so the video and
+    # audio of each segment end together. Otherwise the video is rounded to
+    # frames, the audio is not, and the concat drifts the voice out of sync
+    # (measured: +170 ms late after 14 segments).
+    frames = max(1, round(duration * Fraction(out_rate)))
+    duration = float(frames / Fraction(out_rate))
+
     # 30ms audio fades at both edges (Rule 3) — prevent pops
     fade_out_start = max(0.0, duration - 0.03)
-    af = f"afade=t=in:st=0:d=0.03,afade=t=out:st={fade_out_start:.3f}:d=0.03"
+    af = (
+        f"apad=whole_dur={duration:.6f},"
+        f"afade=t=in:st=0:d=0.03,afade=t=out:st={fade_out_start:.6f}:d=0.03"
+    )
 
     if draft:
         preset, crf = "ultrafast", "28"
@@ -292,22 +308,19 @@ def extract_segment(
     else:
         preset, crf = "fast", "20"
 
-    # Frame rate: use the rate the caller resolved once for the whole render
-    # (every segment must share it — concat -c copy in Rule 2 requires a uniform
-    # frame rate). When called standalone with no rate, preserve this source's
-    # own rate; fall back to 24 only if it can't be probed.
-    out_rate = rate if rate is not None else (probe_source_fps(source) or "24")
-
+    # Audio stays PCM in the segments: AAC adds ~21 ms of encoder priming per
+    # file, and the concat demuxer stacks it up as a growing audio delay.
+    # concat_segments encodes the joined audio to AAC once.
     cmd = [
         "ffmpeg", "-y",
         "-ss", f"{seg_start:.3f}",
         "-i", str(source),
-        "-t", f"{duration:.3f}",
+        "-t", f"{duration:.6f}",
         "-vf", vf,
         "-af", af,
         "-c:v", "libx264", "-preset", preset, "-crf", crf,
-        "-pix_fmt", "yuv420p", "-r", out_rate,
-        "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+        "-pix_fmt", "yuv420p", "-r", out_rate, "-frames:v", str(frames),
+        "-c:a", "pcm_s16le", "-ar", "48000",
         "-movflags", "+faststart",
         str(out_path),
     ]
@@ -383,7 +396,8 @@ def extract_all_segments(
 
 
 def concat_segments(segment_paths: list[Path], out_path: Path, edit_dir: Path) -> None:
-    """Lossless concat via the concat demuxer. No re-encode."""
+    """Lossless video concat via the concat demuxer. The PCM audio of the
+    segments is encoded to AAC once, here."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
     concat_list = edit_dir / "_concat.txt"
     concat_list.write_text("".join(f"file '{p.resolve()}'\n" for p in segment_paths))
@@ -392,7 +406,8 @@ def concat_segments(segment_paths: list[Path], out_path: Path, edit_dir: Path) -
         "ffmpeg", "-y",
         "-f", "concat", "-safe", "0",
         "-i", str(concat_list),
-        "-c", "copy",
+        "-c:v", "copy",
+        "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
         "-movflags", "+faststart",
         str(out_path),
     ]
